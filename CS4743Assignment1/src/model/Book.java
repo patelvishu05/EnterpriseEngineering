@@ -7,7 +7,7 @@ public class Book
 	private String genre;
 	private String ISBN;
 	
-	Book(String t, String a, String g, String i)
+	public Book(String t, String a, String g, String i)
 	{
 		this.title = t;
 		this.author = a;
@@ -48,7 +48,10 @@ public class Book
 	public void setISBN(String iSBN) {
 		ISBN = iSBN;
 	}
-	
+	public String toString() {
+		
+		return title; 
+	}
 	
 	
 

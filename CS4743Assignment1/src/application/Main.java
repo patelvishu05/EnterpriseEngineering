@@ -19,15 +19,12 @@ public class Main extends Application
 		try 
 		{
 			FXMLLoader loader = new FXMLLoader();
-			
-			loader.setLocation(getClass().getResource("../BookList.fxml"));
+			loader.setLocation(getClass().getResource("../MainView.fxml"));
 			BorderPane layout= (BorderPane) loader.load();
-			
-			
 			Scene scene= new Scene(layout);
-			
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 		} 
 		catch(Exception e) 
 		{
