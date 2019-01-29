@@ -18,41 +18,41 @@ public class MainController
 	void clickedBookList(ActionEvent event) 
 	{
 		System.out.println("Clicked list view!" );
-	 	try {
-            
+		try {
 
-            FXMLLoader loader = new FXMLLoader(); 
-            loader.setLocation(getClass().getResource("/BookListView.fxml"));
-           // loader.setController(this);
-            //mainView.setCenter(loader.load());
-           mainView.getChildren().clear();
-           mainView.getChildren().add(loader.load()); 
-    
-		
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }   
-		
+
+			FXMLLoader loader = new FXMLLoader(); 
+			loader.setLocation(getClass().getResource("/BookListView.fxml"));
+			// loader.setController(this);
+			//mainView.setCenter(loader.load());
+			mainView.getChildren().clear();
+			mainView.getChildren().add(loader.load()); 
+
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}   
+
 	}
 	public void initialize() {
-try {
-            
+		try {
 
-            FXMLLoader loader = new FXMLLoader(); 
-            loader.setLocation(getClass().getResource("/BookListView.fxml"));
-           // loader.setController(this);
-            //mainView.setCenter(loader.load());
-           mainView.getChildren().clear();
-           mainView.getChildren().add(loader.load()); 
-    
-		
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }   
-		
-		
+
+			FXMLLoader loader = new FXMLLoader(); 
+			loader.setLocation(getClass().getResource("/BookListView.fxml"));
+			// loader.setController(this);
+			//mainView.setCenter(loader.load());
+			mainView.getChildren().clear();
+			mainView.getChildren().add(loader.load()); 
+
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}   
+
+
 	}
 
 	@FXML
