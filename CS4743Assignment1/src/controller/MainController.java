@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-public class MainViewController 
+public class MainController 
 {
 	@FXML private Button exitApp;
 	@FXML private Button bookList;
