@@ -12,7 +12,7 @@ public class MainViewController
 {
 	@FXML private Button exitApp;
 	@FXML private Button bookList;
-	@FXML	AnchorPane mainView; 
+	@FXML private AnchorPane mainView; 
 
 	@FXML
 	void clickedBookList(ActionEvent event) 
