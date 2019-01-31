@@ -21,11 +21,16 @@ public class BookDetailViewController implements MyController
 		
 				
 	 }
+	
+    @FXML
+    void saveBook(ActionEvent event) {
 
-	@FXML
-	void exitApplication(ActionEvent event) 
-	{
-		System.exit(0);
-	}
+    }
+
+//	@FXML
+//	void exitApplication(ActionEvent event) 
+//	{
+//		Platform.exit(0);
+//	}
 
 }

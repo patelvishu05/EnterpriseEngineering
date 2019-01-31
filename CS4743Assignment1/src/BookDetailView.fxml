@@ -7,98 +7,68 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Book Detail View" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Text>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane prefHeight="440.0" prefWidth="760.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="120.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title: ">
-                     <HBox.margin>
-                        <Insets left="300.0" top="30.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                  </Text>
-                  <TextField>
-                     <HBox.margin>
-                        <Insets top="45.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Summary: ">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="210.0" top="30.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField>
-                     <HBox.margin>
-                        <Insets top="45.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year: ">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="300.0" top="30.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField>
-                     <HBox.margin>
-                        <Insets top="45.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN: ">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="300.0" top="30.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField>
-                     <HBox.margin>
-                        <Insets top="45.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button mnemonicParsing="false" text="SAVE">
-                     <HBox.margin>
-                        <Insets left="430.0" top="50.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
+            <Button fx:id="save" mnemonicParsing="false" onAction="#saveBook" prefHeight="98.0" prefWidth="557.0" text="SAVE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title : " textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Summary : " textAlignment="RIGHT" wrappingWidth="192.29296875" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year : " textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN : " textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <TextArea prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea prefHeight="149.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
-   </center>
-</BorderPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="194.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.0" minWidth="10.0" prefWidth="566.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="382.0" minHeight="10.0" prefHeight="284.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="318.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="293.0" minHeight="0.0" prefHeight="69.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>

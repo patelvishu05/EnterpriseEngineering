@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import model.ViewType;
 
@@ -19,6 +21,7 @@ public class MainController implements Initializable
 	@FXML private BorderPane borderPane;
     @FXML private Button exitApp;
     @FXML private Button bookList;
+    @FXML private Label displayLabel;
 
 	private static MainController instance = null;
 	
@@ -44,6 +47,7 @@ public class MainController implements Initializable
 						break;
 						
 			case VIEW2: viewString = "../BookDetailView.fxml";
+						setDisplayLabelText("Book Detail View");
 						controller = new BookDetailViewController();
 						break;			
 		}
@@ -60,6 +64,13 @@ public class MainController implements Initializable
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void setDisplayLabelText(String name)
+	{
+		displayLabel.setText(name);
+		Main.stage.setTitle(name);
+		displayLabel.setStyle("-fx-font-size: 5ex");
 	}
 	
     @FXML

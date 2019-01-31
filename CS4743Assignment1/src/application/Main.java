@@ -13,9 +13,13 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application 
 {
+	public static Stage stage;
+	
 	@Override
-	public void start(Stage stage) throws Exception 
+	public void start(Stage primaryStage) throws Exception 
 	{
+		stage = primaryStage;
+		
 		URL url = getClass().getResource("../MainView.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 
