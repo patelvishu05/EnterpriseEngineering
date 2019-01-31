@@ -43,6 +43,7 @@ public class MainController implements Initializable
 		switch (view)
 		{
 			case VIEW1: viewString = "../BookListView.fxml";
+						setDisplayLabelText("Book List");
 						controller = new BookListController();
 						break;
 						
@@ -76,7 +77,7 @@ public class MainController implements Initializable
     @FXML
     void clickedBookList(ActionEvent event) 
     {
-    	switchView(ViewType.VIEW2);
+    	switchView(ViewType.VIEW1);
     }
 
     @FXML
@@ -84,7 +85,7 @@ public class MainController implements Initializable
     {
     	Platform.exit();
     }
-
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
