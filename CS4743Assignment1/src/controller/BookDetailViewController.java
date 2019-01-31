@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import model.Book;
 
-public class BookDetailViewController 
+public class BookDetailViewController implements MyController
 {
 	
 	

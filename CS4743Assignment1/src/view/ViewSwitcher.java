@@ -2,7 +2,7 @@ package view;
 
 import controller.MyController;
 import javafx.scene.layout.BorderPane;
-import model.View;
+import model.ViewType;
 
 public class ViewSwitcher 
 {

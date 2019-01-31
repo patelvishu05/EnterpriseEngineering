@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import model.Book;
 
-public class BookListController 
+public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist; 
 	private ObservableList<Book> booksObservableList = FXCollections.observableArrayList();
