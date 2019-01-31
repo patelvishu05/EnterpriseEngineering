@@ -22,13 +22,10 @@ public class Main extends Application
 		
 		URL url = getClass().getResource("../MainView.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
-
 		MainController controller = MainController.getInstance();
 		loader.setController(controller);
-
 		Parent rootNode = loader.load();
 		controller.setBorderPane((BorderPane) rootNode);
-
 		stage.setScene(new Scene(rootNode));
 		stage.setTitle("Book");
 		stage.show();
