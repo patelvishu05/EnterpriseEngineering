@@ -1,6 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +18,7 @@ public class BookListController implements MyController
 	@FXML private ListView<Book> booklist;
 	private ArrayList<Book> bookArrayList;
 	private ObservableList<Book> booksObservableList = FXCollections.observableArrayList();
+	private static Logger logger = LogManager.getLogger(BookListController.class);
 	
 	public void initialize() 
 	{
@@ -37,7 +42,7 @@ public class BookListController implements MyController
 		String bookSelected = booklist.getSelectionModel().getSelectedItem().toString();
 		if(event.getClickCount() == 2)
 		{
-			
+			logger.info(bookSelected + " book Selected.");
 			for(Book book: booksObservableList)
 			{
 				if (book.getTitle().equals(bookSelected))

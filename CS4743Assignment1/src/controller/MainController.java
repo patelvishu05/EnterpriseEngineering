@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import application.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +25,7 @@ public class MainController implements Initializable
     @FXML private Button exitApp;
     @FXML private Button bookList;
     @FXML private Label displayLabel;
-
+    private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
 	
 	private MainController() {
@@ -63,6 +66,7 @@ public class MainController implements Initializable
 		}
 		catch (IOException e)
 		{
+			logger.error("Error occured in Loading View in switchView()");
 			e.printStackTrace();
 		}
 	}

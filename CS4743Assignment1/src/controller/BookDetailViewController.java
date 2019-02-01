@@ -3,6 +3,9 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,11 +21,12 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private TextArea bookISBN;
 	@FXML private TextArea bookTitle;
 	public static Book book;
+	private static Logger logger = LogManager.getLogger(BookDetailViewController.class);
 
     @FXML
     void saveBook(ActionEvent event) 
     {
-    	
+    	logger.info("Save Clicked !!");
     }
 
 	@Override
