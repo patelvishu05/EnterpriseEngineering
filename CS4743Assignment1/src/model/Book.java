@@ -1,5 +1,12 @@
 package model;
 
+/**
+ * Book model
+ *  
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class Book 
 {
 	private String title;
@@ -54,4 +61,4 @@ public class Book
 		ISBN = iSBN;
 	}
 
-}
+}	//end of Book Class

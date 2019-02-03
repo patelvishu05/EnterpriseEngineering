@@ -1,7 +1,5 @@
 package application;
-
 import java.net.URL;
-
 import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,16 +8,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-
+/**
+ * The Main Launcher class that launches the
+ * application
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class Main extends Application 
 {
+	//Used for changing the stageTile everytime 
+	//a view is changed
 	public static Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{
 		stage = primaryStage;
-		
 		URL url = getClass().getResource("../MainView.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 		MainController controller = MainController.getInstance();
@@ -29,10 +34,9 @@ public class Main extends Application
 		stage.setScene(new Scene(rootNode));
 		stage.setTitle("Book");
 		stage.show();
-
-	}
+	}	//end of start method
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-}
+}	//end of Main class

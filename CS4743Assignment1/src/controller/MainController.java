@@ -19,6 +19,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import model.ViewType;
 
+/**
+ * MainController handles all events occuring
+ * on the Main view
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class MainController implements Initializable
 {
 	@FXML private BorderPane borderPane;
@@ -28,10 +36,14 @@ public class MainController implements Initializable
     private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
 	
+	//private constructor
 	private MainController() {
 		
 	}
 	
+	//public getInstance method to return 
+	//the instance object, if it does not
+	//exist it creates a new instance
 	public static MainController getInstance()
 	{
 		if(instance == null)
@@ -39,6 +51,8 @@ public class MainController implements Initializable
 		return instance;
 	}
 	
+	//switchView provided a view 
+	//switches to that view accordingly
 	public void switchView(ViewType view)
 	{
 		String viewString="";
@@ -55,7 +69,6 @@ public class MainController implements Initializable
 						controller = new BookDetailViewController();
 						break;			
 		}
-		
 		try
 		{
 			URL url = this.getClass().getResource(viewString);
@@ -71,6 +84,8 @@ public class MainController implements Initializable
 		}
 	}
 	
+	//whenever a view is changed the Title of the
+	//application is changed automatically
 	public void setDisplayLabelText(String name)
 	{
 		displayLabel.setText(name);
@@ -95,6 +110,7 @@ public class MainController implements Initializable
 		
 	}
 
+	//-------------ACCESSORS-------------//
 	public BorderPane getBorderPane() {
 		return borderPane;
 	}
@@ -102,4 +118,6 @@ public class MainController implements Initializable
 	public void setBorderPane(BorderPane borderPane) {
 		this.borderPane = borderPane;
 	}
-}
+	
+	
+}	//end of class MainController

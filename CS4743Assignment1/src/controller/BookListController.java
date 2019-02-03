@@ -13,6 +13,14 @@ import javafx.scene.input.MouseEvent;
 import model.Book;
 import model.ViewType;
 
+/**
+ * BookListController displays the list of books
+ * in a listview
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist;
@@ -20,6 +28,8 @@ public class BookListController implements MyController
 	private ObservableList<Book> booksObservableList = FXCollections.observableArrayList();
 	private static Logger logger = LogManager.getLogger(BookListController.class);
 	
+	//pre fills the listview with the
+	//fake book data
 	public void initialize() 
 	{
 		Book book1 = new Book("Harry Potter I", "J.K. Rowling", "2019", "ISBN-985556555"); 
@@ -30,7 +40,6 @@ public class BookListController implements MyController
 		bookArrayList.add(book2);
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);	
-				
 	 }
 	
 	@FXML
@@ -49,8 +58,8 @@ public class BookListController implements MyController
 				{
 					BookDetailViewController.book = book;
 					MainController.getInstance().switchView(ViewType.VIEW2);
-				}
-			}
-		}
-	}    	
-}
+				}	//end of inner if statement
+			}	//end of for loop
+		}	//end outer-if statement
+	}	//end of handleBookClick method
+}	//end of BookListController class
