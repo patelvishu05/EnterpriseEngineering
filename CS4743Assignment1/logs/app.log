@@ -7,3 +7,8 @@
 22:08:43.763 INFO  controller.BookDetailViewController : Save Clicked !!
 14:07:01.370 INFO  controller.BookListController : Harry Potter II book Selected.
 14:07:03.981 INFO  controller.BookDetailViewController : Save Clicked !!
+14:24:43.427 INFO  controller.BookListController : Harry Potter I book Selected.
+14:24:53.279 INFO  controller.BookDetailViewController : Save Clicked !!
+14:25:00.211 INFO  controller.BookListController : Harry Potter II book Selected.
+14:25:03.826 INFO  controller.BookListController : Harry Potter I book Selected.
+14:25:07.003 INFO  controller.BookListController : Harry Potter II book Selected.
