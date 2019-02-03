@@ -3,20 +3,25 @@ package model;
 public class Book 
 {
 	private String title;
-	private String author;
-	private String genre;
+	private String summary;
+	private String year;
 	private String ISBN;
-	
-	public Book(String t, String a, String g, String i)
+
+	public Book(String t, String s, String y, String i)
 	{
 		this.title = t;
-		this.author = a;
-		this.genre = g;
+		this.summary = s;
+		this.year = y;
 		this.ISBN = i;
 	}
 
+	public String toString() {
+
+		return title; 
+	}
+
 	//---------------------ACCESSORS---------------------//
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -25,20 +30,20 @@ public class Book
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getSummary() {
+		return summary;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
-	public String getGenre() {
-		return genre;
+	public String getYear() {
+		return year;
 	}
 
-	public void setGenre(String genre) {
-		this.genre = genre;
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String getISBN() {
@@ -48,11 +53,5 @@ public class Book
 	public void setISBN(String iSBN) {
 		ISBN = iSBN;
 	}
-	public String toString() {
-		
-		return title; 
-	}
-	
-	
 
 }

@@ -22,8 +22,8 @@ public class BookListController implements MyController
 	
 	public void initialize() 
 	{
-		Book book1 = new Book("Harry Potter I", "J.K. Rowling", "Fiction", "ISBN"); 
-		Book book2 = new Book("Harry Potter II", "J.K. Rowling", "Fiction", "ISBN"); 
+		Book book1 = new Book("Harry Potter I", "J.K. Rowling", "2019", "ISBN-985556555"); 
+		Book book2 = new Book("Harry Potter II", "J.K. Rowling", "2020", "ISBN-94548484"); 
 		
 		bookArrayList = new ArrayList<Book>(); 
 		bookArrayList.add(book1); 

@@ -33,9 +33,9 @@ public class BookDetailViewController implements MyController, Initializable
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		bookTitle.setText(book.getTitle());
-		bookSummary.setText(book.getGenre());
+		bookSummary.setText(book.getSummary());
 		bookISBN.setText(book.getISBN());
-		bookYear.setText(book.getAuthor());
+		bookYear.setText(book.getYear());
 		beautify();
 		
 	}
