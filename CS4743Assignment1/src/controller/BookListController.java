@@ -32,8 +32,8 @@ public class BookListController implements MyController
 	//fake book data
 	public void initialize() 
 	{
-		Book book1 = new Book("Harry Potter I", "J.K. Rowling", "2019", "ISBN-985556555"); 
-		Book book2 = new Book("Harry Potter II", "J.K. Rowling", "2020", "ISBN-94548484"); 
+		Book book1 = new Book(1,"Harry Potter I", "J.K. Rowling", "2019", "985556555"); 
+		Book book2 = new Book(2,"Harry Potter II", "J.K. Rowling", "2020", "94548484"); 
 		
 		bookArrayList = new ArrayList<Book>(); 
 		bookArrayList.add(book1); 

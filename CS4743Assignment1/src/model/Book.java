@@ -9,13 +9,15 @@ package model;
  */
 public class Book 
 {
+	private int id;
 	private String title;
 	private String summary;
 	private String year;
 	private String ISBN;
 
-	public Book(String t, String s, String y, String i)
+	public Book(int id, String t, String s, String y, String i)
 	{
+		this.id = id;
 		this.title = t;
 		this.summary = s;
 		this.year = y;
@@ -28,6 +30,14 @@ public class Book
 	}
 
 	//---------------------ACCESSORS---------------------//
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
