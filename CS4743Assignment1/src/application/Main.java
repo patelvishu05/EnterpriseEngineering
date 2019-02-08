@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
  */
 public class Main extends Application 
 {
+
 	//Used for changing the stageTile everytime 
 	//a view is changed
 	public static Stage stage;
@@ -39,4 +40,17 @@ public class Main extends Application
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+//	@Override
+//	public void init() throws Exception {
+//		// TODO Auto-generated method stub
+//		super.init();
+//	}
+//
+//	@Override
+//	public void stop() throws Exception {
+//		// TODO Auto-generated method stub
+//		super.stop();
+//	}
+	
 }	//end of Main class
