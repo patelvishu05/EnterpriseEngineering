@@ -8,7 +8,9 @@ import org.apache.logging.log4j.Logger;
 import database.BookGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import model.Book;
@@ -26,23 +28,32 @@ public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist;
 	private ArrayList<Book> bookArrayList;
-	private ObservableList<Book> booksObservableList = FXCollections.observableArrayList();
+	@FXML private Button delete;
+	private ObservableList<Book> booksObservableList;
 	private static Logger logger = LogManager.getLogger(BookListController.class);
 	
 	//pre fills the listview with the
 	//fake book data
 	public void initialize() 
-	{		
+	{	
+		booksObservableList = FXCollections.observableArrayList();
 		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);	
 	 }
 	
 	@FXML
+	public void deleteBook(ActionEvent event)
+	{
+		int bookSelected = booklist.getSelectionModel().getSelectedIndex();
+		BookGateway.getInstance().delete(booksObservableList.get(bookSelected));
+		initialize();
+	}
+	
+	@FXML
     public void handleBookClick(MouseEvent event) 
 	{
-		//Handles mouse click events perfectly and 
-		//switches view to detailed view only if
+		//Handles mouse click events perfectly and switches view to detailed view only if
 		//you double click on the book
 		String bookSelected = booklist.getSelectionModel().getSelectedItem().toString();
 		if(event.getClickCount() == 2)

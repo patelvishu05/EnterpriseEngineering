@@ -61,6 +61,29 @@ public class BookGateway
 		return books;
 	}
 	
+	public void delete(Book book)
+	{
+		String dbQuery = "DELETE FROM BookDatabase WHERE (`id` = ?);";
+		PreparedStatement ps = null;
+		
+		try
+		{
+			ps = connection.prepareStatement(dbQuery);
+			ps.setInt(1, book.getId());
+			ps.executeUpdate();
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps != null)
+				ps = null;
+		}
+	}
+	
 	public void insert(Book book)
 	{
 		//TODO: insert book into databases

@@ -72,7 +72,6 @@ public class Main extends Application
 		super.stop();
 		//TODO: add logger log logic 
 		BookGateway.getInstance().getConnection().close();
-		
 	}
 	
 }	//end of Main class

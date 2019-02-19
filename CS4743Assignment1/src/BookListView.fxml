@@ -9,6 +9,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="booklist" layoutX="484.0" layoutY="202.0" onMouseClicked="#handleBookClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="130.0" />
+      <ListView fx:id="booklist" layoutX="484.0" layoutY="202.0" onMouseClicked="#handleBookClick" prefHeight="449.0" prefWidth="680.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="130.0" />
+      <Button fx:id="delete" layoutX="200.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteBook" prefHeight="62.0" prefWidth="208.0" text="Delete">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
