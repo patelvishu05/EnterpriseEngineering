@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import model.ViewType;
 
@@ -30,9 +31,10 @@ import model.ViewType;
 public class MainController implements Initializable
 {
 	@FXML private BorderPane borderPane;
-    @FXML private Button exitApp;
-    @FXML private Button bookList;
-    @FXML private Label displayLabel;
+    @FXML private MenuItem exit;
+    @FXML private BorderPane boderPane;
+    @FXML private MenuItem bookList;
+	
     private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
 	
@@ -88,9 +90,7 @@ public class MainController implements Initializable
 	//application is changed automatically
 	public void setDisplayLabelText(String name)
 	{
-		displayLabel.setText(name);
 		Main.stage.setTitle(name);
-		displayLabel.setStyle("-fx-font-size: 5ex");
 	}
 	
     @FXML
