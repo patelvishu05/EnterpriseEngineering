@@ -1,6 +1,14 @@
 package application;
+import java.io.FileInputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.util.Properties;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
+import com.sun.media.jfxmedia.logging.Logger;
+
 import controller.MainController;
+import database.BookGateway;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -41,16 +49,30 @@ public class Main extends Application
 		launch(args);
 	}
 	
-//	@Override
-//	public void init() throws Exception {
-//		// TODO Auto-generated method stub
-//		super.init();
-//	}
-//
-//	@Override
-//	public void stop() throws Exception {
-//		// TODO Auto-generated method stub
-//		super.stop();
-//	}
+	@Override
+	public void init() throws Exception 
+	{
+		super.init();
+		Properties properties = new Properties();
+		FileInputStream fst = new FileInputStream("./src/database.properties");
+		properties.load(fst);
+		fst.close();
+		
+		//TODO: add logger log logic 
+		MysqlDataSource ds = new MysqlDataSource();
+		ds.setURL(properties.getProperty("MYSQL_DB_URL"));
+		ds.setUser(properties.getProperty("MYSQL_DB_USERNAME"));
+		ds.setPassword(properties.getProperty("MYSQL_DB_PASSWORD"));
+		Connection connection = ds.getConnection();
+		BookGateway.getInstance().setConnection(connection);
+	}
+
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		//TODO: add logger log logic 
+		BookGateway.getInstance().getConnection().close();
+		
+	}
 	
 }	//end of Main class

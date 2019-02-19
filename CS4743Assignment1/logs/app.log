@@ -12,3 +12,20 @@
 14:25:00.211 INFO  controller.BookListController : Harry Potter II book Selected.
 14:25:03.826 INFO  controller.BookListController : Harry Potter I book Selected.
 14:25:07.003 INFO  controller.BookListController : Harry Potter II book Selected.
+13:01:56.036 INFO  controller.BookListController : Harry Potter I book Selected.
+13:01:58.365 INFO  controller.BookDetailViewController : Save Clicked !!
+13:02:35.322 INFO  controller.BookListController : Harry Potter I book Selected.
+15:05:54.642 INFO  controller.BookListController : Harry Potter I book Selected.
+15:06:42.315 INFO  controller.BookListController : Harry Potter I book Selected.
+15:27:42.835 INFO  controller.BookListController : Harry Potter book Selected.
+15:44:14.976 ERROR controller.MainController : Error occured in Loading View in switchView()
+15:46:09.996 INFO  controller.BookListController : Harry Potter book Selected.
+15:56:27.809 INFO  controller.BookListController : Warrior book Selected.
+15:56:30.634 INFO  controller.BookDetailViewController : Save Clicked !!
+15:57:20.840 INFO  controller.BookListController : Warrior book Selected.
+15:57:22.547 INFO  controller.BookDetailViewController : Save Clicked !!
+16:02:48.452 INFO  controller.BookListController : Harry Potter book Selected.
+16:02:50.269 INFO  controller.BookDetailViewController : Save Clicked !!
+16:03:47.165 INFO  controller.BookListController : Warrior book Selected.
+16:03:48.689 INFO  controller.BookDetailViewController : Save Clicked !!
+16:03:55.135 INFO  controller.BookListController : Harry Potter book Selected.

@@ -47,7 +47,7 @@ public class BookDetailViewController implements MyController, Initializable
 		bookTitle.setText(book.getTitle());
 		bookSummary.setText(book.getSummary());
 		bookISBN.setText(book.getISBN());
-		bookYear.setText(book.getYear());
+		bookYear.setText(""+book.getYear());
 		beautify();
 	}
 	

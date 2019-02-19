@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import database.BookGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,13 +32,8 @@ public class BookListController implements MyController
 	//pre fills the listview with the
 	//fake book data
 	public void initialize() 
-	{
-		Book book1 = new Book(1,"Harry Potter I", "J.K. Rowling", "2019", "985556555"); 
-		Book book2 = new Book(2,"Harry Potter II", "J.K. Rowling", "2020", "94548484"); 
-		
-		bookArrayList = new ArrayList<Book>(); 
-		bookArrayList.add(book1); 
-		bookArrayList.add(book2);
+	{		
+		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);	
 	 }
@@ -51,6 +47,7 @@ public class BookListController implements MyController
 		String bookSelected = booklist.getSelectionModel().getSelectedItem().toString();
 		if(event.getClickCount() == 2)
 		{
+			BookGateway.getInstance().getBooks();
 			logger.info(bookSelected + " book Selected.");
 			for(Book book: booksObservableList)
 			{

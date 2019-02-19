@@ -12,15 +12,21 @@ public class Book
 	private int id;
 	private String title;
 	private String summary;
-	private String year;
+	private int year;
 	private String ISBN;
-
-	public Book(int id, String t, String s, String y, String i)
+	private int publisher;
+	
+	public Book() {
+		
+	}
+	
+	public Book(int id, String t, String s, int y, int p, String i)
 	{
 		this.id = id;
 		this.title = t;
 		this.summary = s;
 		this.year = y;
+		this.publisher = p;
 		this.ISBN = i;
 	}
 
@@ -55,11 +61,11 @@ public class Book
 		this.summary = summary;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 
@@ -70,5 +76,14 @@ public class Book
 	public void setISBN(String iSBN) {
 		ISBN = iSBN;
 	}
+
+	public int getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(int publisher) {
+		this.publisher = publisher;
+	}
+	
 
 }	//end of Book Class
