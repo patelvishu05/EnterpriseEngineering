@@ -2,12 +2,14 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import application.Main;
+import database.BookGateway;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import model.Book;
 import model.ViewType;
 
 /**
@@ -32,8 +35,8 @@ public class MainController implements Initializable
 {
 	@FXML private BorderPane borderPane;
     @FXML private MenuItem exit;
-    @FXML private BorderPane boderPane;
     @FXML private MenuItem bookList;
+    @FXML private MenuItem addBook;
 	
     private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
@@ -55,20 +58,21 @@ public class MainController implements Initializable
 	
 	//switchView provided a view 
 	//switches to that view accordingly
-	public void switchView(ViewType view)
+	public void switchView(ViewType view,Book book)
 	{
 		String viewString="";
 		MyController controller = null;
 		switch (view)
 		{
-			case VIEW1: viewString = "../BookListView.fxml";
+			case VIEW1: viewString = "../view/BookListView.fxml";
 						setDisplayLabelText("Book List");
-						controller = new BookListController();
+						List<Book> books = BookGateway.getInstance().getBooks();
+						controller = new BookListController(books);
 						break;
 						
-			case VIEW2: viewString = "../BookDetailView.fxml";
+			case VIEW2: viewString = "../view/BookDetailView.fxml";
 						setDisplayLabelText("Book Detail View");
-						controller = new BookDetailViewController();
+						controller = new BookDetailViewController(book);
 						break;			
 		}
 		try
@@ -96,7 +100,13 @@ public class MainController implements Initializable
     @FXML
     void clickedBookList(ActionEvent event) 
     {
-    	switchView(ViewType.VIEW1);
+    	switchView(ViewType.VIEW1,new Book());
+    }
+    
+    @FXML
+    void clickedAddBook(ActionEvent event)
+    {
+    	switchView(ViewType.VIEW2,new Book());
     }
 
     @FXML

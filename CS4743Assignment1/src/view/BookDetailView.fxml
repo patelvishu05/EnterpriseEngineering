@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane layoutX="128.0" layoutY="106.0" prefHeight="564.0" prefWidth="752.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="106.0">
+         <children>
+            <Button fx:id="save" mnemonicParsing="false" onAction="#saveBook" prefHeight="98.0" prefWidth="557.0" text="SAVE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font size="29.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="100.0" right="100.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title : " textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Summary : " textAlignment="RIGHT" wrappingWidth="192.29296875" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year : " textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN : " textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="bookTitle" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea fx:id="bookSummary" prefHeight="155.0" prefWidth="552.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea fx:id="bookYear" prefHeight="149.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea fx:id="bookISBN" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID :" textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="bookId" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Publisher id :" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="bookPublisher" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="194.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.0" minWidth="10.0" prefWidth="566.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="382.0" minHeight="10.0" prefHeight="181.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="318.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="293.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="293.0" minHeight="0.0" prefHeight="90.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>

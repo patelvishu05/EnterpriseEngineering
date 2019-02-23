@@ -34,7 +34,7 @@ public class Main extends Application
 	public void start(Stage primaryStage) throws Exception 
 	{
 		stage = primaryStage;
-		URL url = getClass().getResource("../MainView.fxml");
+		URL url = getClass().getResource("../view/MainView.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 		MainController controller = MainController.getInstance();
 		loader.setController(controller);

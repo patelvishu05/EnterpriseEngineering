@@ -1,5 +1,7 @@
 package model;
 
+import exception.DBException;
+
 /**
  * Book model
  *  
@@ -35,6 +37,22 @@ public class Book
 		return title; 
 	}
 
+	public void save() throws DBException 
+	{
+		if(!isValidTitle(this.getTitle()))
+			throw new DBException(DBException.getInvalidTitleMessage());
+		
+		if(!isValidSummary(this.getSummary()))
+			throw new DBException(DBException.getInvalidSummaryMessage());
+		
+		if(!isValidYear(this.getYear()))
+			throw new DBException(DBException.getInvalidYearMessage());
+		
+		if(!isValidISBN(this.getISBN()))
+			throw new DBException(DBException.getInvalidISBNMessage());
+	}
+	
+	
 	//---------------------ACCESSORS---------------------//
 
 	public int getId() {
@@ -84,6 +102,24 @@ public class Book
 	public void setPublisher(int publisher) {
 		this.publisher = publisher;
 	}
+	
+	//------------VALIDATORS-------------//
+	public boolean isValidTitle(String title) {
+		return title.length() >= 1 && title.length() < 255;
+	}
+	
+	public boolean isValidSummary(String summary) {
+		return (summary.length() < 65536) || summary.isEmpty();
+	}
+	
+	public boolean isValidYear(int year) {
+		return year >= 1455 && year <= 2019;
+	}
+	
+	public boolean isValidISBN(String isbn) {
+		return isbn.length() <= 13 || isbn.isEmpty();
+	}
+	
 	
 
 }	//end of Book Class

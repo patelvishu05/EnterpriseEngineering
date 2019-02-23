@@ -2,6 +2,8 @@ package database;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import model.Book;
 
 public class BookGateway 
@@ -20,9 +22,9 @@ public class BookGateway
 		return instance;
 	}
 	
-	public ArrayList<Book> getBooks()
+	public List<Book> getBooks()
 	{
-		ArrayList<Book> books = new ArrayList<Book>();
+		List<Book> books = new ArrayList<Book>();
 		ResultSet rs = null;
 		Statement statement = null;
 		Book book = null;
@@ -65,7 +67,6 @@ public class BookGateway
 	{
 		String dbQuery = "DELETE FROM BookDatabase WHERE (`id` = ?);";
 		PreparedStatement ps = null;
-		
 		try
 		{
 			ps = connection.prepareStatement(dbQuery);
@@ -110,8 +111,42 @@ public class BookGateway
 		{
 			if(ps!=null)
 				ps = null;
+		}		
+	}
+	
+	public void update(Book book)
+	{
+		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth' WHERE (`id` = '5');
+		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth', `summary` = 'Fine', `year_published` = '2018', `publisher_id` = '3', `isbn` = '8989555' WHERE (`id` = '5');		
+		String dbQuery = "UPDATE BookDatabase SET "
+				+ " `title` = ?, "
+				+ "`summary` = ?, "
+				+ "`year_published` = ?, "
+				+ "`publisher_id` = ?, "
+				+ "`isbn` = ? "
+				+ "WHERE (`id` = ?)";
+		PreparedStatement ps = null;
+		try
+		{
+			ps = connection.prepareStatement(dbQuery);
+			ps.setString(2, book.getTitle());
+			ps.setString(3, book.getSummary());
+			ps.setInt(4, book.getYear());
+			ps.setInt(5, book.getPublisher());
+			ps.setString(6, book.getISBN());
+			ps.setInt(1, book.getId());
+			ps.executeUpdate();
+			
 		}
-		
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps!=null)
+				ps = null;
+		}		
 		
 	}
 	

@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -27,21 +30,25 @@ import model.ViewType;
 public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist;
-	private ArrayList<Book> bookArrayList;
+	public static List<Book> bookArrayList;
 	@FXML private Button delete;
 	private ObservableList<Book> booksObservableList;
 	private static Logger logger = LogManager.getLogger(BookListController.class);
 	
+	public BookListController(List<Book> books)
+	{
+		this.bookArrayList = books;
+	}
+
 	//pre fills the listview with the
 	//fake book data
 	public void initialize() 
 	{	
-		booksObservableList = FXCollections.observableArrayList();
-		bookArrayList = BookGateway.getInstance().getBooks(); 
+		booksObservableList = FXCollections.observableArrayList(); 
 		booksObservableList.addAll(bookArrayList);	
-		booklist.setItems(booksObservableList);	
-	 }
-	
+		booklist.setItems(booksObservableList);
+	}
+
 	@FXML
 	public void deleteBook(ActionEvent event)
 	{
@@ -49,10 +56,10 @@ public class BookListController implements MyController
 		BookGateway.getInstance().delete(booksObservableList.get(bookSelected));
 		initialize();
 	}
-	
+
 	@FXML
-    public void handleBookClick(MouseEvent event) 
-	{
+	public void handleBookClick(MouseEvent event) 
+	{		
 		//Handles mouse click events perfectly and switches view to detailed view only if
 		//you double click on the book
 		String bookSelected = booklist.getSelectionModel().getSelectedItem().toString();
@@ -64,10 +71,10 @@ public class BookListController implements MyController
 			{
 				if (book.getTitle().equals(bookSelected))
 				{
-					BookDetailViewController.book = book;
-					MainController.getInstance().switchView(ViewType.VIEW2);
+					MainController.getInstance().switchView(ViewType.VIEW2,book);
 				}	//end of inner if statement
 			}	//end of for loop
 		}	//end outer-if statement
 	}	//end of handleBookClick method
+
 }	//end of BookListController class

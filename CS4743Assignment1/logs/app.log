@@ -29,3 +29,127 @@
 16:03:47.165 INFO  controller.BookListController : Warrior book Selected.
 16:03:48.689 INFO  controller.BookDetailViewController : Save Clicked !!
 16:03:55.135 INFO  controller.BookListController : Harry Potter book Selected.
+16:32:06.442 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:32:33.022 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:32:46.499 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:33:19.888 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:24:12.487 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:31:05.126 INFO  controller.BookListController : Harry Potter book Selected.
+16:38:42.752 INFO  controller.BookListController : Harry Potter book Selected.
+16:52:54.688 INFO  controller.BookListController : Harry Potter book Selected.
+16:53:18.030 INFO  controller.BookListController : Harry Potter book Selected.
+16:55:44.853 INFO  controller.BookListController : Harry Potter book Selected.
+16:58:41.122 INFO  controller.BookListController : Harry Potter book Selected.
+16:59:08.705 ERROR controller.MainController : Error occured in Loading View in switchView()
+16:59:11.689 INFO  controller.BookListController : Harry Potter book Selected.
+16:59:33.337 INFO  controller.BookListController : Harry Potter book Selected.
+13:55:26.057 INFO  controller.BookDetailViewController : Save Clicked !!
+14:05:00.856 INFO  controller.BookDetailViewController : Save Clicked !!
+14:05:28.211 INFO  controller.BookDetailViewController : Save Clicked !!
+14:06:32.211 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:44.971 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.065 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.198 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.441 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.563 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.817 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:51.919 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:52.172 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:52.366 INFO  controller.BookDetailViewController : Save Clicked !!
+14:11:55.953 INFO  controller.BookDetailViewController : Save Clicked !!
+14:14:56.954 INFO  controller.BookDetailViewController : Save Clicked !!
+14:22:22.077 INFO  controller.BookDetailViewController : Save Clicked !!
+14:24:16.807 INFO  controller.BookDetailViewController : Save Clicked !!
+14:26:43.425 INFO  controller.BookDetailViewController : Save Clicked !!
+14:27:12.531 INFO  controller.BookDetailViewController : Save Clicked !!
+14:30:07.047 INFO  controller.BookDetailViewController : Save Clicked !!
+14:32:58.978 INFO  controller.BookDetailViewController : Save Clicked !!
+14:33:57.716 INFO  controller.BookListController : Harry Potter book Selected.
+14:35:48.685 INFO  controller.BookDetailViewController : Save Clicked !!
+14:39:34.522 INFO  controller.BookDetailViewController : Save Clicked !!
+14:39:40.041 INFO  controller.BookDetailViewController : Save Clicked !!
+14:39:51.538 INFO  controller.BookDetailViewController : Save Clicked !!
+14:40:02.663 INFO  controller.BookDetailViewController : Save Clicked !!
+14:40:11.351 INFO  controller.BookDetailViewController : Save Clicked !!
+14:44:46.055 INFO  controller.BookDetailViewController : Save Clicked !!
+14:45:01.101 INFO  controller.BookDetailViewController : Save Clicked !!
+14:45:08.194 INFO  controller.BookDetailViewController : Save Clicked !!
+14:45:16.242 INFO  controller.BookDetailViewController : Save Clicked !!
+14:45:22.149 INFO  controller.BookDetailViewController : Save Clicked !!
+14:45:28.239 INFO  controller.BookDetailViewController : Save Clicked !!
+14:49:20.627 INFO  controller.BookDetailViewController : Save Clicked !!
+14:51:32.642 INFO  controller.BookDetailViewController : Save Clicked !!
+14:52:19.616 INFO  controller.BookDetailViewController : Save Clicked !!
+14:52:24.314 INFO  controller.BookDetailViewController : Save Clicked !!
+14:53:54.462 INFO  controller.BookDetailViewController : Save Clicked !!
+14:53:57.443 INFO  controller.BookDetailViewController : Save Clicked !!
+14:53:59.839 INFO  controller.BookDetailViewController : Save Clicked !!
+14:56:07.468 INFO  controller.BookDetailViewController : Save Clicked !!
+14:57:04.867 INFO  controller.BookDetailViewController : Save Clicked !!
+14:57:39.447 INFO  controller.BookDetailViewController : Save Clicked !!
+14:57:42.630 INFO  controller.BookDetailViewController : Save Clicked !!
+14:58:17.947 INFO  controller.BookDetailViewController : Save Clicked !!
+14:58:40.241 INFO  controller.BookDetailViewController : Save Clicked !!
+15:04:04.423 INFO  controller.BookDetailViewController : Save Clicked !!
+15:04:56.732 INFO  controller.BookDetailViewController : Save Clicked !!
+15:06:04.667 INFO  controller.BookDetailViewController : Save Clicked !!
+15:06:08.808 INFO  controller.BookDetailViewController : Save Clicked !!
+15:06:28.417 INFO  controller.BookDetailViewController : Save Clicked !!
+15:06:38.875 INFO  controller.BookDetailViewController : Save Clicked !!
+15:06:43.750 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:01.119 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:06.234 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:09.992 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:17.374 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:18.582 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:18.695 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:18.948 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:19.040 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:19.293 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:27.245 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:44.029 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:46.000 INFO  controller.BookDetailViewController : Save Clicked !!
+15:10:51.219 INFO  controller.BookDetailViewController : Save Clicked !!
+15:11:44.547 INFO  controller.BookDetailViewController : Save Clicked !!
+15:11:50.273 INFO  controller.BookDetailViewController : Save Clicked !!
+15:12:00.895 INFO  controller.BookDetailViewController : Save Clicked !!
+15:12:05.131 INFO  controller.BookDetailViewController : Save Clicked !!
+15:12:55.964 INFO  controller.BookDetailViewController : Save Clicked !!
+15:13:37.536 INFO  controller.BookDetailViewController : Save Clicked !!
+15:13:41.200 INFO  controller.BookDetailViewController : Save Clicked !!
+15:13:45.475 INFO  controller.BookDetailViewController : Save Clicked !!
+15:14:12.466 INFO  controller.BookDetailViewController : Save Clicked !!
+15:14:34.910 INFO  controller.BookDetailViewController : Save Clicked !!
+15:14:41.600 INFO  controller.BookDetailViewController : Save Clicked !!
+15:14:46.300 INFO  controller.BookDetailViewController : Save Clicked !!
+15:18:14.605 INFO  controller.BookDetailViewController : Save Clicked !!
+15:30:21.756 INFO  controller.BookListController : Half Lie book Selected.
+15:30:47.461 INFO  controller.BookDetailViewController : Save Clicked !!
+15:31:24.647 INFO  controller.BookDetailViewController : Save Clicked !!
+15:31:43.438 INFO  controller.BookListController : Three book Selected.
+15:31:47.794 INFO  controller.BookDetailViewController : Save Clicked !!
+15:33:03.083 INFO  controller.BookListController : Half Lie book Selected.
+15:33:10.804 INFO  controller.BookDetailViewController : Save Clicked !!
+15:33:33.851 INFO  controller.BookDetailViewController : Save Clicked !!
+15:39:14.615 INFO  controller.BookListController : Half Truth book Selected.
+15:39:22.963 INFO  controller.BookDetailViewController : Save Clicked !!
+15:40:18.239 INFO  controller.BookListController : Three book Selected.
+15:40:21.975 INFO  controller.BookDetailViewController : Save Clicked !!
+15:46:12.534 INFO  controller.BookListController : Half Lie book Selected.
+15:46:21.380 INFO  controller.BookDetailViewController : Save Clicked !!
+15:47:28.580 INFO  controller.BookListController : Half Lie book Selected.
+15:47:37.403 INFO  controller.BookDetailViewController : Save Clicked !!
+15:50:05.602 INFO  controller.BookListController : One book Selected.
+15:50:10.717 INFO  controller.BookDetailViewController : Save Clicked !!
+15:50:51.403 INFO  controller.BookListController : Three book Selected.
+15:50:58.235 INFO  controller.BookDetailViewController : Save Clicked !!
+15:51:25.197 INFO  controller.BookListController : One book Selected.
+15:51:31.645 INFO  controller.BookDetailViewController : Save Clicked !!
+15:51:32.550 INFO  controller.BookDetailViewController : Save Clicked !!
+15:51:32.651 INFO  controller.BookDetailViewController : Save Clicked !!
+15:51:32.894 INFO  controller.BookDetailViewController : Save Clicked !!
+15:51:33.088 INFO  controller.BookDetailViewController : Save Clicked !!
+16:02:44.726 INFO  controller.BookListController : One book Selected.
+16:02:48.087 INFO  controller.BookDetailViewController : Save Clicked !!
+16:03:15.461 INFO  controller.BookListController : One book Selected.
+16:03:18.380 INFO  controller.BookDetailViewController : Save Clicked !!
