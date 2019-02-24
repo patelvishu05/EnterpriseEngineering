@@ -52,35 +52,36 @@ public class BookDetailViewController implements MyController, Initializable
 	void saveBook(ActionEvent event) 
 	{
 		logger.info("Save Clicked !!");
-		Book book = parseTextArea();
 		try 
 		{
+			Book book = parseTextArea();
 			book.save();
 			ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
 			for(Book b : BookGateway.getInstance().getBooks())
-			{
-				System.out.println(b.getId());
 				primaryKeys.add(b.getId());
-			}
+			
 			if(!(primaryKeys.contains(book.getId())))
-			{
 				BookGateway.getInstance().insert(book);
-				System.out.println("From id");
-			}
 			else
-			{
 				BookGateway.getInstance().update(book);
-				System.out.println("From else");
-			}
+		
 		} 
 		catch (DBException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Invalid Data Entered");
-			alert.setHeaderText(null);
-			alert.setContentText(e.getErrorMessage());
-			alert.showAndWait();
+			errorAlert(e.getErrorMessage());
+		}
+		catch(Exception e) {
+			errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
 		}
 
+	}
+	
+	public void errorAlert(String errorMessage)
+	{
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Invalid Data Entered");
+		alert.setHeaderText(null);
+		alert.setContentText(errorMessage);
+		alert.showAndWait();
 	}
 
 	//initialize method before loading the view populates the 
@@ -98,20 +99,20 @@ public class BookDetailViewController implements MyController, Initializable
 		beautify();
 	}
 
-	public Book parseTextArea()
+	public Book parseTextArea() throws Exception
 	{
 		int id, year, publisher;
 		String title, summary, ISBN;
 		Book book = new Book();
 
 		id = Integer.parseInt(bookId.getText());
-		title = bookTitle.getText();
-		summary = bookSummary.getText();
+		title = (bookTitle.getText() == null) ? "" : bookTitle.getText();
+		summary = (bookSummary.getText() == null) ? "" : bookSummary.getText();
 		year = Integer.parseInt(bookYear.getText());
-		ISBN = bookISBN.getText();
+		ISBN = (bookISBN.getText() == null) ? "" : bookISBN.getText();
 		publisher = Integer.parseInt(bookPublisher.getText());
+			
 		book = new Book(id,title,summary,year,publisher,ISBN);
-
 		return book;
 	}
 

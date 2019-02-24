@@ -39,16 +39,16 @@ public class Book
 
 	public void save() throws DBException 
 	{
-		if(!isValidTitle(this.getTitle()))
+		if(!isValidTitle())
 			throw new DBException(DBException.getInvalidTitleMessage());
 		
-		if(!isValidSummary(this.getSummary()))
+		if(!isValidSummary())
 			throw new DBException(DBException.getInvalidSummaryMessage());
 		
-		if(!isValidYear(this.getYear()))
+		if(!isValidYear())
 			throw new DBException(DBException.getInvalidYearMessage());
 		
-		if(!isValidISBN(this.getISBN()))
+		if(!isValidISBN())
 			throw new DBException(DBException.getInvalidISBNMessage());
 	}
 	
@@ -104,20 +104,20 @@ public class Book
 	}
 	
 	//------------VALIDATORS-------------//
-	public boolean isValidTitle(String title) {
-		return title.length() >= 1 && title.length() < 255;
+	public boolean isValidTitle() {
+		return this.title.length() >= 1 && this.title.length() < 255;
 	}
 	
-	public boolean isValidSummary(String summary) {
-		return (summary.length() < 65536) || summary.isEmpty();
+	public boolean isValidSummary() {
+		return (this.summary.length() < 65536) || this.summary.isEmpty();
 	}
 	
-	public boolean isValidYear(int year) {
-		return year >= 1455 && year <= 2019;
+	public boolean isValidYear() {
+		return this.year >= 1455 && this.year <= 2019;
 	}
 	
-	public boolean isValidISBN(String isbn) {
-		return isbn.length() <= 13 || isbn.isEmpty();
+	public boolean isValidISBN() {
+		return this.ISBN.length() <= 13 || this.ISBN.isEmpty();
 	}
 	
 	
