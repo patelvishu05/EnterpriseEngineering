@@ -119,22 +119,24 @@ public class BookGateway
 		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth' WHERE (`id` = '5');
 		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth', `summary` = 'Fine', `year_published` = '2018', `publisher_id` = '3', `isbn` = '8989555' WHERE (`id` = '5');		
 		String dbQuery = "UPDATE BookDatabase SET "
-				+ " `title` = ?, "
+				+ "`title` = ?, "
 				+ "`summary` = ?, "
 				+ "`year_published` = ?, "
 				+ "`publisher_id` = ?, "
 				+ "`isbn` = ? "
 				+ "WHERE (`id` = ?)";
+		
 		PreparedStatement ps = null;
 		try
 		{
 			ps = connection.prepareStatement(dbQuery);
-			ps.setString(2, book.getTitle());
-			ps.setString(3, book.getSummary());
-			ps.setInt(4, book.getYear());
-			ps.setInt(5, book.getPublisher());
-			ps.setString(6, book.getISBN());
-			ps.setInt(1, book.getId());
+			ps.setString(1, book.getTitle());
+			ps.setString(2, book.getSummary());
+			ps.setInt(3, book.getYear());
+			ps.setInt(4, book.getPublisher());
+			ps.setString(5, book.getISBN());
+			ps.setInt(6, book.getId());
+			System.out.println(ps.toString());
 			ps.executeUpdate();
 			
 		}
