@@ -53,15 +53,19 @@ public class BookDetailViewController implements MyController, Initializable
 	{
 		logger.info("Save Clicked !!");
 		try 
-		{
+		{	
+			Book l = this.book; 
 			Book book = parseTextArea();
 			book.save();
 			ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
 			for(Book b : BookGateway.getInstance().getBooks())
 				primaryKeys.add(b.getId());
-			
-			if(!(primaryKeys.contains(book.getId())))
+			if(!(primaryKeys.contains(book.getId()))) {
+				BookGateway.getInstance().delete(l);
 				BookGateway.getInstance().insert(book);
+				
+				System.out.println("efefefefef" +l.getTitle() +"dedededed");
+			}
 			else
 				BookGateway.getInstance().update(book);
 		
