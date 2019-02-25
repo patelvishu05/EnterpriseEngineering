@@ -97,12 +97,21 @@ public class MainController implements Initializable
 		Main.stage.setTitle(name);
 	}
 	
+	/**
+	 * When booklist option is clicked, display all the books from the database
+	 */
     @FXML
     void clickedBookList(ActionEvent event) 
     {
     	switchView(ViewType.VIEW1,new Book());
     }
     
+    /**
+     * when add book option is clicked display add book form 
+     * where the user fills in data for the book to be saved to the 
+     * database
+     * @param event
+     */
     @FXML
     void clickedAddBook(ActionEvent event)
     {

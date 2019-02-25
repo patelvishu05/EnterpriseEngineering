@@ -46,8 +46,9 @@ public class BookDetailViewController implements MyController, Initializable
 		this.book = book;
 	}
 
-	//saveBook handles the event when the save button
-	//is clicked and logs the event
+	//saveBook handles the saving of book to a database by calling
+	//insert or update method from BookGateway class. If the book already
+	//exists in the database, update it else insert a new entry.
 	@FXML
 	void saveBook(ActionEvent event) 
 	{
@@ -60,15 +61,15 @@ public class BookDetailViewController implements MyController, Initializable
 			ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
 			for(Book b : BookGateway.getInstance().getBooks())
 				primaryKeys.add(b.getId());
-			if(!(primaryKeys.contains(book.getId()))) {
+			if(!(primaryKeys.contains(book.getId()))) 
+			{
 				BookGateway.getInstance().delete(l);
 				BookGateway.getInstance().insert(book);
-				
-				System.out.println("efefefefef" +l.getTitle() +"dedededed");
+				//System.out.println("efefefefef" +l.getTitle() +"dedededed");
 			}
 			else
 				BookGateway.getInstance().update(book);
-		
+
 		} 
 		catch (DBException e) {
 			errorAlert(e.getErrorMessage());
@@ -78,7 +79,13 @@ public class BookDetailViewController implements MyController, Initializable
 		}
 
 	}
-	
+
+	/**
+	 * errorAlert class takes in an error message string
+	 * and displays it onto a JavaFX Alert box of type alert
+	 * 
+	 * @param errorMessage
+	 */
 	public void errorAlert(String errorMessage)
 	{
 		Alert alert = new Alert(AlertType.ERROR);
@@ -103,6 +110,13 @@ public class BookDetailViewController implements MyController, Initializable
 		beautify();
 	}
 
+	/**
+	 * parseTextArea reads from the TextArea fields and
+	 * then saves it to a book object
+	 * 
+	 * @return Book object
+	 * @throws Exception
+	 */
 	public Book parseTextArea() throws Exception
 	{
 		int id, year, publisher;
@@ -115,7 +129,7 @@ public class BookDetailViewController implements MyController, Initializable
 		year = Integer.parseInt(bookYear.getText());
 		ISBN = (bookISBN.getText() == null) ? "" : bookISBN.getText();
 		publisher = Integer.parseInt(bookPublisher.getText());
-			
+
 		book = new Book(id,title,summary,year,publisher,ISBN);
 		return book;
 	}

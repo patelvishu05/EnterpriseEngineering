@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.util.Properties;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-import com.sun.media.jfxmedia.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import controller.BookDetailViewController;
 import controller.MainController;
 import database.BookGateway;
 import javafx.application.Application;
@@ -29,6 +32,7 @@ public class Main extends Application
 	//Used for changing the stageTile everytime 
 	//a view is changed
 	public static Stage stage;
+	private static Logger logger = LogManager.getLogger(Main.class);
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception 
@@ -53,25 +57,31 @@ public class Main extends Application
 	public void init() throws Exception 
 	{
 		super.init();
+		logger.info("Creating Connection to the database....");
 		Properties properties = new Properties();
 		FileInputStream fst = new FileInputStream("./src/database.properties");
 		properties.load(fst);
 		fst.close();
 		
-		//TODO: add logger log logic 
+		//creating connection to the database
 		MysqlDataSource ds = new MysqlDataSource();
 		ds.setURL(properties.getProperty("MYSQL_DB_URL"));
 		ds.setUser(properties.getProperty("MYSQL_DB_USERNAME"));
 		ds.setPassword(properties.getProperty("MYSQL_DB_PASSWORD"));
 		Connection connection = ds.getConnection();
 		BookGateway.getInstance().setConnection(connection);
-	}
+		logger.info("Database Connection created !!");
+	}	//end of init method
 
 	@Override
-	public void stop() throws Exception {
+	public void stop() throws Exception 
+	{
 		super.stop();
-		//TODO: add logger log logic 
+		
+		//close connection to the database
+		logger.info("Closing database connection....."); 
 		BookGateway.getInstance().getConnection().close();
-	}
+		logger.info("Database Connection closed !!");
+	}	//end of stop method
 	
 }	//end of Main class

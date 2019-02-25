@@ -44,11 +44,18 @@ public class BookListController implements MyController
 	//fake book data
 	public void initialize() 
 	{	
-		booksObservableList = FXCollections.observableArrayList(); 
+		booksObservableList = FXCollections.observableArrayList();
+		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);
 	}
 
+	/**
+	 * deleteBook method deletes the book from database by calling the delete 
+	 * method from the BookGateway class.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void deleteBook(ActionEvent event)
 	{
@@ -57,6 +64,12 @@ public class BookListController implements MyController
 		initialize();
 	}
 
+	/**
+	 * handleBookClick method displays a specific book
+	 * when a book is double clicked.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void handleBookClick(MouseEvent event) 
 	{		

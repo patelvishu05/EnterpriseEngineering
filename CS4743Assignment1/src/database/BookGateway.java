@@ -3,16 +3,28 @@ package database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import controller.MainController;
 import model.Book;
 
+/**
+ * BookGateway handles all tasks pertaining to the
+ * database and perform tasks accordingly.
+ * Tasks include create, read, user and update 
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class BookGateway 
 {
 	private static BookGateway instance = null;
+	private static Logger logger = LogManager.getLogger(BookGateway.class);
 	private Connection connection;
 	
-	private BookGateway() 
-	{		
+	private BookGateway() {		
 	}
 	
 	public static BookGateway getInstance()
@@ -22,6 +34,12 @@ public class BookGateway
 		return instance;
 	}
 	
+	/**
+	 * getBooks is the read part of CRUD of our application 
+	 * that reads in all books from the database and
+	 * saves it to a list and sends it to the callee.
+	 * @return books- list of books
+	 */
 	public List<Book> getBooks()
 	{
 		List<Book> books = new ArrayList<Book>();
@@ -57,12 +75,16 @@ public class BookGateway
 			if(statement!=null)
 				statement = null;
 		}
-				
-		
-		//TODO: do something here something cool
 		return books;
-	}
+	}	//end of getBooks method
 	
+	/**
+	 * delete is the delete part of CRUD of our application that
+	 * takes in a book as parameter and deletes it from the 
+	 * database.
+	 * 
+	 * @param book
+	 */
 	public void delete(Book book)
 	{
 		String dbQuery = "DELETE FROM BookDatabase WHERE (`id` = ?);";
@@ -83,8 +105,16 @@ public class BookGateway
 			if(ps != null)
 				ps = null;
 		}
-	}
+		logger.info("Book Deleted: id=" + book.getId() + "\ttitle= " + book.getTitle());
+	}	//end of delete method
 	
+	/**
+	 * insert method receives a book parameter and
+	 * creates a new entry for that book in to the
+	 * book table in the database
+	 * 
+	 * @param book- Book
+	 */
 	public void insert(Book book)
 	{
 		//TODO: insert book into databases
@@ -111,13 +141,20 @@ public class BookGateway
 		{
 			if(ps!=null)
 				ps = null;
-		}		
-	}
+		}
+		logger.info("Book Created: id=" + book.getId() + "\ttitle= " + book.getTitle());
+	}	//end of insert method
 	
+	/**
+	 * update method receives a book  in paramater and make
+	 * updates necessary components of the book in the book
+	 * table database, so that any changes made will be reflected
+	 * throughout the application
+	 * 
+	 * @param book
+	 */
 	public void update(Book book)
 	{
-		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth' WHERE (`id` = '5');
-		//UPDATE `eda635`.`BookDatabase` SET `id` = '2', `title` = 'Truth', `summary` = 'Fine', `year_published` = '2018', `publisher_id` = '3', `isbn` = '8989555' WHERE (`id` = '5');		
 		String dbQuery = "UPDATE BookDatabase SET "
 				+ "`title` = ?, "
 				+ "`summary` = ?, "
@@ -149,8 +186,8 @@ public class BookGateway
 			if(ps!=null)
 				ps = null;
 		}		
-		
-	}
+		logger.info("Book updated");
+	}	//end of update method
 	
 	//--------------ACCESSORS--------------//
 	public Connection getConnection()

@@ -1,5 +1,14 @@
 package exception;
 
+/**
+ * DBException class looks over custom
+ * exceptions to be handled and thrown
+ * upon encountering validation errors
+ * 
+ * @author Vishalumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class DBException extends Exception 
 {
 	private String errorMessage;
