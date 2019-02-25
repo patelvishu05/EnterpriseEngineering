@@ -60,7 +60,7 @@ public class BookListController implements MyController
 	public void deleteBook(ActionEvent event)
 	{
 		int bookSelected = booklist.getSelectionModel().getSelectedIndex();
-		BookGateway.getInstance().delete(booksObservableList.get(bookSelected));
+		BookGateway.getInstance().deleteBook(booksObservableList.get(bookSelected));
 		initialize();
 	}
 

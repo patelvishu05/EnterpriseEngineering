@@ -23,17 +23,17 @@ public class BookGateway
 	private static BookGateway instance = null;
 	private static Logger logger = LogManager.getLogger(BookGateway.class);
 	private Connection connection;
-	
+
 	private BookGateway() {		
 	}
-	
+
 	public static BookGateway getInstance()
 	{
 		if(instance == null)
 			instance = new BookGateway();
 		return instance;
 	}
-	
+
 	/**
 	 * getBooks is the read part of CRUD of our application 
 	 * that reads in all books from the database and
@@ -49,20 +49,20 @@ public class BookGateway
 		try
 		{
 			statement = this.connection.createStatement();
-            rs = statement.executeQuery("SELECT * FROM BookDatabase");
-            while(rs.next())
-            {
-            	book = new Book();
-              	book.setId(Integer.parseInt(rs.getString("id")));
-            	book.setTitle(rs.getString("title"));
-            	book.setSummary(rs.getString("summary"));
-            	book.setYear(Integer.parseInt(rs.getString("year_published")));
-            	book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
-            	book.setISBN(rs.getString("isbn"));
-            	books.add(book);
-            }
-            rs.close();
-            statement.close();
+			rs = statement.executeQuery("SELECT * FROM BookDatabase");
+			while(rs.next())
+			{
+				book = new Book();
+				book.setId(Integer.parseInt(rs.getString("id")));
+				book.setTitle(rs.getString("title"));
+				book.setSummary(rs.getString("summary"));
+				book.setYear(Integer.parseInt(rs.getString("year_published")));
+				book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
+				book.setISBN(rs.getString("isbn"));
+				books.add(book);
+			}
+			rs.close();
+			statement.close();
 		}
 		catch(SQLException e)
 		{
@@ -77,7 +77,7 @@ public class BookGateway
 		}
 		return books;
 	}	//end of getBooks method
-	
+
 	/**
 	 * delete is the delete part of CRUD of our application that
 	 * takes in a book as parameter and deletes it from the 
@@ -85,7 +85,7 @@ public class BookGateway
 	 * 
 	 * @param book
 	 */
-	public void delete(Book book)
+	public void deleteBook(Book book)
 	{
 		String dbQuery = "DELETE FROM BookDatabase WHERE (`id` = ?);";
 		PreparedStatement ps = null;
@@ -94,7 +94,7 @@ public class BookGateway
 			ps = connection.prepareStatement(dbQuery);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -107,7 +107,7 @@ public class BookGateway
 		}
 		logger.info("Book Deleted: id=" + book.getId() + "\ttitle= " + book.getTitle());
 	}	//end of delete method
-	
+
 	/**
 	 * insert method receives a book parameter and
 	 * creates a new entry for that book in to the
@@ -115,7 +115,7 @@ public class BookGateway
 	 * 
 	 * @param book- Book
 	 */
-	public void insert(Book book)
+	public void insertBook(Book book)
 	{
 		//TODO: insert book into databases
 		String dbQuery = "INSERT INTO BookDatabase (`id`, `title`, `summary`, `year_published`, `publisher_id`, `isbn`) "
@@ -131,7 +131,7 @@ public class BookGateway
 			ps.setInt(5, book.getPublisher());
 			ps.setString(6, book.getISBN());
 			ps.executeUpdate();
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -144,7 +144,7 @@ public class BookGateway
 		}
 		logger.info("Book Created: id=" + book.getId() + "\ttitle= " + book.getTitle());
 	}	//end of insert method
-	
+
 	/**
 	 * update method receives a book  in paramater and make
 	 * updates necessary components of the book in the book
@@ -153,7 +153,7 @@ public class BookGateway
 	 * 
 	 * @param book
 	 */
-	public void update(Book book)
+	public void updateBook(Book book) throws SQLException
 	{
 		String dbQuery = "UPDATE BookDatabase SET "
 				+ "`title` = ?, "
@@ -162,39 +162,27 @@ public class BookGateway
 				+ "`publisher_id` = ?, "
 				+ "`isbn` = ? "
 				+ "WHERE (`id` = ?)";
-		
+
 		PreparedStatement ps = null;
-		try
-		{
-			ps = connection.prepareStatement(dbQuery);
-			ps.setString(1, book.getTitle());
-			ps.setString(2, book.getSummary());
-			ps.setInt(3, book.getYear());
-			ps.setInt(4, book.getPublisher());
-			ps.setString(5, book.getISBN());
-			ps.setInt(6, book.getId());
-			System.out.println(ps.toString());
-			ps.executeUpdate();
-			
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if(ps!=null)
-				ps = null;
-		}		
+		ps = connection.prepareStatement(dbQuery);
+		ps.setString(1, book.getTitle());
+		ps.setString(2, book.getSummary());
+		ps.setInt(3, book.getYear());
+		ps.setInt(4, book.getPublisher());
+		ps.setString(5, book.getISBN());
+		ps.setInt(6, book.getId());
+//		System.out.println(ps.toString());
+		ps.executeUpdate();
+
 		logger.info("Book updated");
 	}	//end of update method
-	
+
 	//--------------ACCESSORS--------------//
 	public Connection getConnection()
 	{
 		return this.connection;
 	}
-	
+
 	public void setConnection(Connection connection)
 	{
 		this.connection = connection;

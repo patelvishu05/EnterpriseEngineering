@@ -1,5 +1,6 @@
 package controller;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,22 +58,13 @@ public class BookDetailViewController implements MyController, Initializable
 		{	
 			Book l = this.book; 
 			Book book = parseTextArea();
-			book.save();
-			ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
-			for(Book b : BookGateway.getInstance().getBooks())
-				primaryKeys.add(b.getId());
-			if(!(primaryKeys.contains(book.getId()))) 
-			{
-				BookGateway.getInstance().delete(l);
-				BookGateway.getInstance().insert(book);
-				//System.out.println("efefefefef" +l.getTitle() +"dedededed");
-			}
-			else
-				BookGateway.getInstance().update(book);
-
+			book.save(l,book);
 		} 
 		catch (DBException e) {
 			errorAlert(e.getErrorMessage());
+		}
+		catch(SQLException e) {
+			errorAlert("Either the book does not exist or there is error while updating the book.");
 		}
 		catch(Exception e) {
 			errorAlert("All required fields cannot be left empty and needs valid data to proceed.");

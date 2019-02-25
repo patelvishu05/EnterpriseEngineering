@@ -1,5 +1,9 @@
 package model;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import database.BookGateway;
 import exception.DBException;
 
 /**
@@ -17,11 +21,10 @@ public class Book
 	private int year;
 	private String ISBN;
 	private int publisher;
-	
+
 	public Book() {
-		
 	}
-	
+
 	public Book(int id, String t, String s, int y, int p, String i)
 	{
 		this.id = id;
@@ -37,22 +40,34 @@ public class Book
 		return title; 
 	}
 
-	public void save() throws DBException 
+	public void save(Book l, Book book) throws DBException, SQLException
 	{
 		if(!isValidTitle())
 			throw new DBException(DBException.getInvalidTitleMessage());
-		
+
 		if(!isValidSummary())
 			throw new DBException(DBException.getInvalidSummaryMessage());
-		
+
 		if(!isValidYear())
 			throw new DBException(DBException.getInvalidYearMessage());
-		
+
 		if(!isValidISBN())
 			throw new DBException(DBException.getInvalidISBNMessage());
+
+		ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
+		for(Book b : BookGateway.getInstance().getBooks())
+			primaryKeys.add(b.getId());
+		if(!(primaryKeys.contains(book.getId()))) 
+		{
+			BookGateway.getInstance().deleteBook(l);
+			BookGateway.getInstance().insertBook(book);
+		}
+		else
+			BookGateway.getInstance().updateBook(this);
+
 	}
-	
-	
+
+
 	//---------------------ACCESSORS---------------------//
 
 	public int getId() {
@@ -102,24 +117,24 @@ public class Book
 	public void setPublisher(int publisher) {
 		this.publisher = publisher;
 	}
-	
+
 	//------------VALIDATORS-------------//
 	public boolean isValidTitle() {
 		return this.title.length() >= 1 && this.title.length() < 255;
 	}
-	
+
 	public boolean isValidSummary() {
 		return (this.summary.length() < 65536) || this.summary.isEmpty();
 	}
-	
+
 	public boolean isValidYear() {
 		return this.year >= 1455 && this.year <= 2019;
 	}
-	
+
 	public boolean isValidISBN() {
 		return this.ISBN.length() <= 13 || this.ISBN.isEmpty();
 	}
-	
-	
+
+
 
 }	//end of Book Class
