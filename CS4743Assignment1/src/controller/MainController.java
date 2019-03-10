@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,16 +12,26 @@ import org.apache.logging.log4j.Logger;
 
 import application.Main;
 import database.BookGateway;
+import exception.DBException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle; 
+
+import javafx.scene.control.Alert; 
 import model.Book;
 import model.ViewType;
 
@@ -37,6 +49,8 @@ public class MainController implements Initializable
     @FXML private MenuItem exit;
     @FXML private MenuItem bookList;
     @FXML private MenuItem addBook;
+    
+    public static ViewType currentView;  // I added this variable to keep track of current view to prompt for user to save changes if user tries to exit while in BookDetailView
 	
     private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
@@ -68,11 +82,15 @@ public class MainController implements Initializable
 						setDisplayLabelText("Book List");
 						List<Book> books = BookGateway.getInstance().getBooks();
 						controller = new BookListController(books);
+						currentView = ViewType.VIEW1; 
+						System.out.println("Current view changed to VIEW1"); 
 						break;
 						
 			case VIEW2: viewString = "../view/BookDetailView.fxml";
 						setDisplayLabelText("Book Detail View");
 						controller = new BookDetailViewController(book);
+						currentView = ViewType.VIEW2;
+						System.out.println("Current view changed to VIEW2"); 
 						break;			
 		}
 		try
@@ -97,15 +115,29 @@ public class MainController implements Initializable
 		Main.stage.setTitle(name);
 	}
 	
+	
+	
+	
+	
 	/**
 	 * When booklist option is clicked, display all the books from the database
 	 */
     @FXML
     void clickedBookList(ActionEvent event) 
     {
+    	if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, IDK :(
+    		//prompt user for confirmation 
+    		if (BookDetailViewController.displayPopup() == 1) {
+    			switchView(ViewType.VIEW1,new Book());
+    		}	
+    	}
+    	else{
+    		//go ahead and switch views 
     	switchView(ViewType.VIEW1,new Book());
+    	}
     }
     
+   
     /**
      * when add book option is clicked display add book form 
      * where the user fills in data for the book to be saved to the 
@@ -115,14 +147,33 @@ public class MainController implements Initializable
     @FXML
     void clickedAddBook(ActionEvent event)
     {
+    	
+    	if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, How? IDK :(
+    		//prompt user for confirmation 
+    		if (BookDetailViewController.displayPopup() == 1) {
+    			switchView(ViewType.VIEW2,new Book());
+    		}	
+    	}
+    	else{
+    		//go ahead and switch views 
     	switchView(ViewType.VIEW2,new Book());
+    	}
     }
 
     @FXML
-    void exitApplication(ActionEvent event) 
-    {
-    	Platform.exit();
-    }
+    void exitApplication(ActionEvent event) {
+
+	if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, How? IDK :(
+		//prompt user for confirmation 
+		if (BookDetailViewController.displayPopup() == 1) {
+			Platform.exit();
+		}	
+	}
+	else{
+		//go ahead and switch views 
+		Platform.exit();
+	}
+}
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

@@ -3,6 +3,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import model.Book;
@@ -71,6 +73,36 @@ public class BookDetailViewController implements MyController, Initializable
 		}
 
 	}
+	
+	
+	public static  int displayPopup() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Exit without saving?");
+		alert.setHeaderText("Some of your chages have not been saved,");
+		alert.setContentText("Would you like to save before exiting this book?");
+		alert.setResizable(false);
+		alert.getButtonTypes().setAll(ButtonType.YES, 
+                ButtonType.NO, 
+                ButtonType.CANCEL);
+		Optional<ButtonType> result =  alert.showAndWait(); 		
+		
+		ButtonType button = result.orElse(ButtonType.CANCEL);
+		if (button == ButtonType.YES) {
+			//save book here
+			//How do i save book here? IDK :(
+		    System.out.println("Ok pressed");
+		    return 1; 
+		} else if (button == ButtonType.NO) {
+		    System.out.println("Don't save");
+			
+			return 1; 
+		}
+		
+		
+		return 0;
+	}
+	
+	
 
 	/**
 	 * errorAlert class takes in an error message string
