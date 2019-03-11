@@ -1,12 +1,17 @@
 package database;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import controller.BookDetailViewController;
 import controller.MainController;
+
+import javafx.scene.control.Alert;
+
 import model.Book;
 
 /**
@@ -59,6 +64,8 @@ public class BookGateway
 				book.setYear(Integer.parseInt(rs.getString("year_published")));
 				book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
 				book.setISBN(rs.getString("isbn"));
+				book.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
+				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
 				books.add(book);
 			}
 			rs.close();
@@ -94,7 +101,6 @@ public class BookGateway
 			ps = connection.prepareStatement(dbQuery);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
-
 		}
 		catch(SQLException e)
 		{
@@ -145,6 +151,38 @@ public class BookGateway
 		logger.info("Book Created: id=" + book.getId() + "\ttitle= " + book.getTitle());
 	}	//end of insert method
 
+	
+	public LocalDateTime getBookLastModifiedById(int id) throws SQLException {
+		LocalDateTime date = null;
+		PreparedStatement st = null;
+		try {
+			st = connection.prepareStatement("select * from BookDatabase where id = ?");
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			Timestamp ts = rs.getTimestamp("last_modified");
+			date = ts.toLocalDateTime();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new SQLException(e);
+			}
+		}
+
+		return date;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * update method receives a book  in paramater and make
 	 * updates necessary components of the book in the book
@@ -155,6 +193,18 @@ public class BookGateway
 	 */
 	public void updateBook(Book book) throws SQLException
 	{
+		//First check whether time stamps match 
+		LocalDateTime currentTimestamp = getBookLastModifiedById(book.getId()); 
+		
+		if(!currentTimestamp.equals(book.getLastModified())) {
+			System.out.println("hererer\n");
+			System.out.println("currentTimestamp:"+ currentTimestamp + "bookTimestamp:\n" + book.getLastModified() + "\n" );
+			BookDetailViewController.displaySaveErrorAlert(); 
+			
+			return;
+		}
+		
+		
 		String dbQuery = "UPDATE BookDatabase SET "
 				+ "`title` = ?, "
 				+ "`summary` = ?, "
@@ -173,6 +223,7 @@ public class BookGateway
 		ps.setInt(6, book.getId());
 //		System.out.println(ps.toString());
 		ps.executeUpdate();
+
 
 		logger.info("Book updated");
 	}	//end of update method

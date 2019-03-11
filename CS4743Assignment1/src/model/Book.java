@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import database.BookGateway;
@@ -21,6 +23,7 @@ public class Book
 	private int year;
 	private String ISBN;
 	private int publisher;
+	private LocalDateTime lastModified; 
 
 	public Book() {
 	}
@@ -33,12 +36,14 @@ public class Book
 		this.year = y;
 		this.publisher = p;
 		this.ISBN = i;
+		this.lastModified =  null; 
 	}
 
 	public String toString() {
-
 		return title; 
 	}
+	
+	
 
 	public void save(Book l, Book book) throws DBException, SQLException
 	{
@@ -62,9 +67,10 @@ public class Book
 			BookGateway.getInstance().deleteBook(l);
 			BookGateway.getInstance().insertBook(book);
 		}
-		else
+		else {
 			BookGateway.getInstance().updateBook(this);
-
+			
+		}
 	}
 
 
@@ -135,6 +141,11 @@ public class Book
 		return this.ISBN.length() <= 13 || this.ISBN.isEmpty();
 	}
 
-
+	public void setLastModified(LocalDateTime lastModified) {	
+		this.lastModified = lastModified; 	
+	}
+	public LocalDateTime getLastModified() {
+		return this.lastModified; 
+	}
 
 }	//end of Book Class

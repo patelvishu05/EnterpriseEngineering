@@ -82,6 +82,7 @@ public class BookListController implements MyController
 			logger.info(bookSelected + " book Selected.");
 			for(Book book: booksObservableList)
 			{
+				
 				if (book.getTitle().equals(bookSelected))
 				{
 					MainController.getInstance().switchView(ViewType.VIEW2,book);

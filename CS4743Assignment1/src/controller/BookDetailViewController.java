@@ -47,6 +47,7 @@ public class BookDetailViewController implements MyController, Initializable
 	public BookDetailViewController(Book book)
 	{
 		this.book = book;
+		
 	}
 
 	//saveBook handles the saving of book to a database by calling
@@ -60,6 +61,7 @@ public class BookDetailViewController implements MyController, Initializable
 		{	
 			Book l = this.book; 
 			Book book = parseTextArea();
+			book.setLastModified(l.getLastModified());
 			book.save(l,book);
 		} 
 		catch (DBException e) {
@@ -74,6 +76,15 @@ public class BookDetailViewController implements MyController, Initializable
 
 	}
 	
+	
+	public static void displaySaveErrorAlert() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Cannot Save!");
+		alert.setHeaderText("Record has changed since this view loaded");
+		alert.setContentText("Please go back to the booklist to fetch a fresh copy of the book!");
+		alert.setResizable(false);
+		alert.showAndWait();
+	}
 	
 	public static  int displayPopup() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
