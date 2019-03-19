@@ -42,8 +42,8 @@ public class Book
 	public String toString() {
 		return title; 
 	}
-	
-	
+
+
 
 	public void save(Book l, Book book) throws DBException, SQLException
 	{
@@ -67,9 +67,9 @@ public class Book
 			BookGateway.getInstance().deleteBook(l);
 			BookGateway.getInstance().insertBook(book);
 		}
-		else {
+		else 
+		{
 			BookGateway.getInstance().updateBook(this);
-			
 		}
 	}
 
@@ -124,6 +124,13 @@ public class Book
 		this.publisher = publisher;
 	}
 
+	public void setLastModified(LocalDateTime lastModified) {	
+		this.lastModified = lastModified; 	
+	}
+	public LocalDateTime getLastModified() {
+		return this.lastModified; 
+	}
+
 	//------------VALIDATORS-------------//
 	public boolean isValidTitle() {
 		return this.title.length() >= 1 && this.title.length() < 255;
@@ -141,11 +148,6 @@ public class Book
 		return this.ISBN.length() <= 13 || this.ISBN.isEmpty();
 	}
 
-	public void setLastModified(LocalDateTime lastModified) {	
-		this.lastModified = lastModified; 	
-	}
-	public LocalDateTime getLastModified() {
-		return this.lastModified; 
-	}
+
 
 }	//end of Book Class

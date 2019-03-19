@@ -21,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import model.Book;
+import model.ViewType;
 
 /**
  * BookDetailViewController controls events that
@@ -63,6 +64,7 @@ public class BookDetailViewController implements MyController, Initializable
 			Book book = parseTextArea();
 			book.setLastModified(l.getLastModified());
 			book.save(l,book);
+			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
 			errorAlert(e.getErrorMessage());
@@ -89,7 +91,7 @@ public class BookDetailViewController implements MyController, Initializable
 	public static  int displayPopup() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Exit without saving?");
-		alert.setHeaderText("Some of your chages have not been saved,");
+		alert.setHeaderText("Some of your changes have not been saved,");
 		alert.setContentText("Would you like to save before exiting this book?");
 		alert.setResizable(false);
 		alert.getButtonTypes().setAll(ButtonType.YES, 
@@ -108,8 +110,6 @@ public class BookDetailViewController implements MyController, Initializable
 			
 			return 1; 
 		}
-		
-		
 		return 0;
 	}
 	

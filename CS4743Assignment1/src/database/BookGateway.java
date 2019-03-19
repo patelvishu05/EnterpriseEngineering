@@ -152,10 +152,12 @@ public class BookGateway
 	}	//end of insert method
 
 	
-	public LocalDateTime getBookLastModifiedById(int id) throws SQLException {
+	public LocalDateTime getBookLastModifiedById(int id) throws SQLException 
+	{
 		LocalDateTime date = null;
 		PreparedStatement st = null;
-		try {
+		try 
+		{
 			st = connection.prepareStatement("select * from BookDatabase where id = ?");
 			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
@@ -163,14 +165,21 @@ public class BookGateway
 			Timestamp ts = rs.getTimestamp("last_modified");
 			date = ts.toLocalDateTime();
 			
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 			throw new SQLException(e);
-		} finally {
-			try {
+		} 
+		finally 
+		{
+			try 
+			{
 				if(st != null)
 					st.close();
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 				throw new SQLException(e);
 			}
@@ -196,11 +205,10 @@ public class BookGateway
 		//First check whether time stamps match 
 		LocalDateTime currentTimestamp = getBookLastModifiedById(book.getId()); 
 		
-		if(!currentTimestamp.equals(book.getLastModified())) {
-			System.out.println("hererer\n");
+		if(!currentTimestamp.equals(book.getLastModified())) 
+		{
 			System.out.println("currentTimestamp:"+ currentTimestamp + "bookTimestamp:\n" + book.getLastModified() + "\n" );
 			BookDetailViewController.displaySaveErrorAlert(); 
-			
 			return;
 		}
 		
