@@ -5,10 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.*;
-
-import model.Book;
 import model.Publisher;
 
 public class PublisherTableGateway 
@@ -63,6 +60,14 @@ public class PublisherTableGateway
 		
 		
 		return publisherList;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 	
 

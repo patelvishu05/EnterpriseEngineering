@@ -74,11 +74,11 @@
                   <Font size="30.0" />
                </font>
             </Text>
-            <TextArea fx:id="bookPublisher" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <ComboBox fx:id="bookPublisher" prefHeight="51.0" prefWidth="561.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
+            </ComboBox>
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="194.0" />

@@ -11,16 +11,21 @@ import org.apache.logging.log4j.Logger;
 
 import application.Main;
 import database.BookGateway;
+import database.PublisherTableGateway;
 import exception.DBException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import model.Book;
+import model.Publisher;
 import model.ViewType;
 
 /**
@@ -40,8 +45,8 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private TextArea bookSummary;
 	@FXML private TextArea bookYear;
 	@FXML private TextArea bookISBN;
-	@FXML private TextArea bookPublisher;
-
+	@FXML private ComboBox<Publisher> bookPublisher;
+	private ObservableList<Publisher> publisherObservableList;
 	private Book book;
 	private static Logger logger = LogManager.getLogger(BookDetailViewController.class);
 
@@ -76,6 +81,12 @@ public class BookDetailViewController implements MyController, Initializable
 			errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
 		}
 
+	}
+	
+	@FXML
+	String getSelectedPublisher()
+	{
+		return "";
 	}
 	
 	
@@ -141,7 +152,12 @@ public class BookDetailViewController implements MyController, Initializable
 		bookSummary.setText(book.getSummary());
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
-		bookPublisher.setText(""+book.getPublisher());
+		
+		publisherObservableList  = FXCollections.observableArrayList();
+		List<Publisher> publisherArrayList = PublisherTableGateway.getInstance().fetchPublishers();
+		publisherObservableList.addAll(publisherArrayList);
+		bookPublisher.setItems(publisherObservableList);
+		bookPublisher.getSelectionModel().selectFirst();
 		beautify();
 	}
 
@@ -163,7 +179,8 @@ public class BookDetailViewController implements MyController, Initializable
 		summary = (bookSummary.getText() == null) ? "" : bookSummary.getText();
 		year = Integer.parseInt(bookYear.getText());
 		ISBN = (bookISBN.getText() == null) ? "" : bookISBN.getText();
-		publisher = Integer.parseInt(bookPublisher.getText());
+		Publisher p = bookPublisher.getSelectionModel().getSelectedItem();
+		publisher = p.getPublisherID();
 
 		book = new Book(id,title,summary,year,publisher,ISBN);
 		return book;

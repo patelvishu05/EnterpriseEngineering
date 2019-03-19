@@ -19,6 +19,10 @@ public class Publisher
 		this.publisherName = name;
 		this.dateAdded = d;
 	}
+	
+	public String toString() {
+		return this.publisherName;
+	}
 
 	
 	//----------------------------ACCESSORS-------------------------//	

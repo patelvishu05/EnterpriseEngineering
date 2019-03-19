@@ -66,20 +66,20 @@ public class MainController implements Initializable
 		MyController controller = null;
 		switch (view)
 		{
-		case VIEW1: viewString = "../view/BookListView.fxml";
-		setDisplayLabelText("Book List");
-		List<Book> books = BookGateway.getInstance().getBooks();
-		controller = new BookListController(books);
-		currentView = ViewType.VIEW1; 
-		System.out.println("Current view changed to VIEW1"); 
-		break;
-
-		case VIEW2: viewString = "../view/BookDetailView.fxml";
-		setDisplayLabelText("Book Detail View");
-		controller = new BookDetailViewController(book);
-		currentView = ViewType.VIEW2;
-		System.out.println("Current view changed to VIEW2"); 
-		break;			
+			case VIEW1: viewString = "../view/BookListView.fxml";
+						setDisplayLabelText("Book List");
+						List<Book> books = BookGateway.getInstance().getBooks();
+						controller = new BookListController(books);
+						currentView = ViewType.VIEW1; 
+						System.out.println("Current view changed to VIEW1"); 
+						break;
+	
+			case VIEW2: viewString = "../view/BookDetailView.fxml";
+						setDisplayLabelText("Book Detail View");
+						controller = new BookDetailViewController(book);
+						currentView = ViewType.VIEW2;
+						System.out.println("Current view changed to VIEW2"); 
+						break;			
 		}
 		try
 		{
