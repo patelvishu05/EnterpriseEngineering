@@ -30,7 +30,7 @@ import model.ViewType;
 public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist;
-	public static List<Book> bookArrayList;
+	private List<Book> bookArrayList;
 	@FXML private Button delete;
 	private ObservableList<Book> booksObservableList;
 	private static Logger logger = LogManager.getLogger(BookListController.class);
@@ -45,7 +45,7 @@ public class BookListController implements MyController
 	public void initialize() 
 	{	
 		booksObservableList = FXCollections.observableArrayList();
-		bookArrayList = BookGateway.getInstance().getBooks(); 
+//		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);
 	}

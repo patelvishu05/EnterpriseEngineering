@@ -83,7 +83,8 @@ public class MainController implements Initializable
 						
 			case VIEW3: viewString = "../view/AuditTrailView.fxml";
 						setDisplayLabelText("Audit Trail View");
-						controller = new AuditTrailController();
+						AuditTrailController.book = book;
+						controller = new AuditTrailController(book.getAuditTrail());
 						currentView = ViewType.VIEW3;
 						System.out.println("Current view changed to VIEW3");
 						break;
@@ -120,9 +121,12 @@ public class MainController implements Initializable
 	@FXML
 	void clickedBookList(ActionEvent event) 
 	{
-		if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, IDK :(
+		if (currentView == ViewType.VIEW2) 
+		{
+			//also check whether there are any unsaved changes, IDK :(
 			//prompt user for confirmation 
-			if (BookDetailViewController.displayPopup() == 1) {
+			if (BookDetailViewController.displayPopup() == 1) 
+			{
 				switchView(ViewType.VIEW1,new Book());
 			}	
 		}
@@ -142,7 +146,6 @@ public class MainController implements Initializable
 	@FXML
 	void clickedAddBook(ActionEvent event)
 	{
-
 		if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, How? IDK :(
 			//prompt user for confirmation 
 			if (BookDetailViewController.displayPopup() == 1) {

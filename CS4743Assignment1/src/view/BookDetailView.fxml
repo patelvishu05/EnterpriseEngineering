@@ -81,7 +81,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="auditTrail" mnemonicParsing="false" onAction="#clickedAuditTrail" prefHeight="70.0" prefWidth="270.0" text="Audit Trail" textAlignment="CENTER">
+                  <Button fx:id="auditTrail" disable="true" mnemonicParsing="false" onAction="#clickedAuditTrail" prefHeight="70.0" prefWidth="270.0" text="Audit Trail" textAlignment="CENTER">
                      <font>
                         <Font size="29.0" />
                      </font>

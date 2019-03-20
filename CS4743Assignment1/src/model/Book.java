@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import database.BookGateway;
 import exception.DBException;
@@ -73,6 +74,11 @@ public class Book
 		}
 	}
 
+	
+	public List<AuditTrailEntry> getAuditTrail()
+	{
+		return BookGateway.getInstance().getAudit(this);
+	}
 
 	//---------------------ACCESSORS---------------------//
 

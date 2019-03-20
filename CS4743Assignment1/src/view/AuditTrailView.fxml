@@ -15,8 +15,9 @@
       </Label>
       <TableView fx:id="auditTrailTable" layoutX="140.0" layoutY="163.0" prefHeight="456.0" prefWidth="800.0">
         <columns>
-          <TableColumn fx:id="timeStamp" prefWidth="187.0" text="TIMESTAMP" />
-          <TableColumn fx:id="message" prefWidth="612.0" text="MESSAGE" />
+            <TableColumn fx:id="id" editable="false" prefWidth="66.0" sortable="false" text="ID" visible="false" />
+          <TableColumn fx:id="timeStamp" editable="false" prefWidth="209.0" sortable="false" text="TIMESTAMP" />
+          <TableColumn fx:id="message" editable="false" prefWidth="599.0" sortable="false" text="MESSAGE" />
         </columns>
       </TableView>
       <Button fx:id="back" contentDisplay="CENTER" layoutX="47.0" layoutY="35.0" mnemonicParsing="false" onAction="#clickedBack" prefHeight="39.0" prefWidth="93.0" text="Back">

@@ -2,6 +2,7 @@ package database;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,7 @@ import controller.BookDetailViewController;
 import controller.MainController;
 
 import javafx.scene.control.Alert;
-
+import model.AuditTrailEntry;
 import model.Book;
 
 /**
@@ -84,6 +85,46 @@ public class BookGateway
 		}
 		return books;
 	}	//end of getBooks method
+	
+	
+	public List<AuditTrailEntry> getAudit(Book book)
+	{
+		List<AuditTrailEntry> bookAudits = new ArrayList<AuditTrailEntry>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		AuditTrailEntry audit = null;
+		try
+		{
+			String dbQuery = "SELECT * FROM book_audit_trail where book_id=? ORDER BY date_added ASC";
+			ps = this.connection.prepareStatement(dbQuery);
+			ps.setString(1, ""+book.getId());
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				audit = new AuditTrailEntry();
+				audit.setId(Integer.parseInt(rs.getString("id")));
+				audit.setMessage(rs.getString("entry_msg"));
+				audit.setDateAdded(LocalDateTime.parse(rs.getString("date_added"),formatter));
+				bookAudits.add(audit);
+			}
+			rs.close();
+			ps.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(rs!=null)
+				rs = null;
+			if(ps!=null)
+				ps = null;
+		}
+		return bookAudits;
+	}
+	
 
 	/**
 	 * delete is the delete part of CRUD of our application that
@@ -235,7 +276,8 @@ public class BookGateway
 
 		logger.info("Book updated");
 	}	//end of update method
-
+	
+	
 	//--------------ACCESSORS--------------//
 	public Connection getConnection()
 	{

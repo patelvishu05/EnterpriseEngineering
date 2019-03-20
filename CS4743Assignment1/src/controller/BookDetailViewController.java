@@ -49,13 +49,14 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private ComboBox<Publisher> bookPublisher;
 	private ObservableList<Publisher> publisherObservableList;
 	private Book book;
+	private Book l;
 	private static Logger logger = LogManager.getLogger(BookDetailViewController.class);
 
 	public BookDetailViewController(Book book)
 	{
-		this.book = book;
-		
+		this.book = book;	
 	}
+	
 
 	//saveBook handles the saving of book to a database by calling
 	//insert or update method from BookGateway class. If the book already
@@ -66,7 +67,7 @@ public class BookDetailViewController implements MyController, Initializable
 		logger.info("Save Clicked !!");
 		try 
 		{	
-			Book l = this.book; 
+			l = this.book; 
 			Book book = parseTextArea();
 			book.setLastModified(l.getLastModified());
 			book.save(l,book);
@@ -87,14 +88,14 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML
 	void clickedAuditTrail(ActionEvent event)
 	{
-		MainController.getInstance().switchView(ViewType.VIEW3, new Book());
+		MainController.getInstance().switchView(ViewType.VIEW3, this.book);
 	}
 	
-	@FXML
-	String getSelectedPublisher()
-	{
-		return "";
-	}
+//	@FXML
+//	String getSelectedPublisher()
+//	{
+//		return "";
+//	}
 	
 	
 	public static void displaySaveErrorAlert() {
@@ -153,6 +154,7 @@ public class BookDetailViewController implements MyController, Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
+		this.auditTrail.setDisable(false);
 		publisherObservableList  = FXCollections.observableArrayList();
 		List<Publisher> publisherArrayList = PublisherTableGateway.getInstance().fetchPublishers();
 		publisherObservableList.addAll(publisherArrayList);
@@ -205,5 +207,6 @@ public class BookDetailViewController implements MyController, Initializable
 		bookYear.setStyle("-fx-font-size: 3ex");
 		bookPublisher.setStyle("-fx-font-size: 3ex");
 	}
+	
 
 }	//end of BookDetailViewController class
