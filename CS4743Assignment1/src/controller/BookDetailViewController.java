@@ -49,12 +49,18 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private ComboBox<Publisher> bookPublisher;
 	private ObservableList<Publisher> publisherObservableList;
 	private Book book;
-	private Book l;
+	public static boolean addBook;
+	public static Book previousBook;
+	public static Book editedbook;
 	private static Logger logger = LogManager.getLogger(BookDetailViewController.class);
 
 	public BookDetailViewController(Book book)
 	{
 		this.book = book;	
+	}
+	
+	public BookDetailViewController() {
+		
 	}
 	
 
@@ -67,10 +73,10 @@ public class BookDetailViewController implements MyController, Initializable
 		logger.info("Save Clicked !!");
 		try 
 		{	
-			l = this.book; 
-			Book book = parseTextArea();
-			book.setLastModified(l.getLastModified());
-			book.save(l,book);
+			previousBook = this.book; 
+			editedbook = parseTextArea();
+			editedbook.setLastModified(previousBook.getLastModified());
+			editedbook.save(previousBook,editedbook);
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
@@ -91,12 +97,6 @@ public class BookDetailViewController implements MyController, Initializable
 		MainController.getInstance().switchView(ViewType.VIEW3, this.book);
 	}
 	
-//	@FXML
-//	String getSelectedPublisher()
-//	{
-//		return "";
-//	}
-	
 	
 	public static void displaySaveErrorAlert() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -107,7 +107,8 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.showAndWait();
 	}
 	
-	public static  int displayPopup() {
+	public static int displayPopup() 
+	{
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Exit without saving?");
 		alert.setHeaderText("Some of your changes have not been saved,");
@@ -167,7 +168,13 @@ public class BookDetailViewController implements MyController, Initializable
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
 		bookPublisher.getSelectionModel().select(book.getPublisher());
-
+		Book b = new Book();
+		System.out.println(b + "\n" + this.book);
+		if(addBook == true)
+			auditTrail.setDisable(true);
+		else
+			auditTrail.setDisable(false);
+		addBook = false;
 		beautify();
 	}
 
