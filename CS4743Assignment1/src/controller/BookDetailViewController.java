@@ -40,6 +40,7 @@ import model.ViewType;
 public class BookDetailViewController implements MyController, Initializable
 {
 	@FXML private Button save;
+	@FXML private Button auditTrail;
 	@FXML private TextArea bookId;
 	@FXML private TextArea bookTitle;
 	@FXML private TextArea bookSummary;
@@ -81,6 +82,12 @@ public class BookDetailViewController implements MyController, Initializable
 			errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
 		}
 
+	}
+	
+	@FXML
+	void clickedAuditTrail(ActionEvent event)
+	{
+		MainController.getInstance().switchView(ViewType.VIEW3, new Book());
 	}
 	
 	@FXML
@@ -146,18 +153,19 @@ public class BookDetailViewController implements MyController, Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
+		publisherObservableList  = FXCollections.observableArrayList();
+		List<Publisher> publisherArrayList = PublisherTableGateway.getInstance().fetchPublishers();
+		publisherObservableList.addAll(publisherArrayList);
+		bookPublisher.setItems(publisherObservableList);
+		
 		Main.stage.setTitle(book.getTitle());
 		bookId.setText(""+book.getId());
 		bookTitle.setText(book.getTitle());
 		bookSummary.setText(book.getSummary());
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
-		
-		publisherObservableList  = FXCollections.observableArrayList();
-		List<Publisher> publisherArrayList = PublisherTableGateway.getInstance().fetchPublishers();
-		publisherObservableList.addAll(publisherArrayList);
-		bookPublisher.setItems(publisherObservableList);
-		bookPublisher.getSelectionModel().selectFirst();
+		bookPublisher.getSelectionModel().select(book.getPublisher());
+
 		beautify();
 	}
 

@@ -79,7 +79,14 @@ public class MainController implements Initializable
 						controller = new BookDetailViewController(book);
 						currentView = ViewType.VIEW2;
 						System.out.println("Current view changed to VIEW2"); 
-						break;			
+						break;	
+						
+			case VIEW3: viewString = "../view/AuditTrailView.fxml";
+						setDisplayLabelText("Audit Trail View");
+						controller = new AuditTrailController();
+						currentView = ViewType.VIEW3;
+						System.out.println("Current view changed to VIEW3");
+						break;
 		}
 		try
 		{
