@@ -68,9 +68,13 @@ public class BookDetailViewController implements MyController, Initializable
 
 	}
 
-	//saveBook handles the saving of book to a database by calling
-	//insert or update method from BookGateway class. If the book already
-	//exists in the database, update it else insert a new entry.
+	
+	/**
+	 * saveBook handles the saving of book to a database by calling
+	 * insert or update method from BookGateway class. If the book already
+	 * exists in the database, update it else insert a new entry.
+	 * @param event
+	 */
 	@FXML
 	void saveBook(ActionEvent event) 
 	{
@@ -79,12 +83,12 @@ public class BookDetailViewController implements MyController, Initializable
 		{	
 			previousBook = this.book;
 			editedbook = parseTextArea();
-			System.out.println("~~~~~" + previousBook + "\t" + editedbook);
-//			if(!Book.equalsBook(editedbook,previousBook)) 
-//			{
+			//System.out.println("~~~~~" + previousBook + "\t" + editedbook);
+			//if(!Book.equalsBook(editedbook,previousBook)) 
+			//{
 				editedbook.setLastModified(previousBook.getLastModified());
 				editedbook.save(previousBook,editedbook);
-//			}
+			//}
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
@@ -98,6 +102,12 @@ public class BookDetailViewController implements MyController, Initializable
 		}
 	}
 
+	/**
+	 * If the user clicks audit trail go to audit trail view to display
+	 * audit trails for that specific book
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void clickedAuditTrail(ActionEvent event)
 	{
@@ -105,15 +115,28 @@ public class BookDetailViewController implements MyController, Initializable
 	}
 
 
-	public static void displaySaveErrorAlert() {
+	/**
+	 * If an error occurs while saving book, display them this error
+	 * which will ask them to fetch a fresh copy of the book
+	 * before moving further
+	 */
+	public static void displaySaveErrorAlert() 
+	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("Cannot Save!");
 		alert.setHeaderText("Record has changed since this view loaded");
 		alert.setContentText("Please go back to the booklist to fetch a fresh copy of the book!");
 		alert.setResizable(false);
 		alert.showAndWait();
-	}
+	}	//end of displaySaveErrorAlert method
 
+	/**
+	 * If user forgets to click save before moving out
+	 * to a different view, display them a dialog box which will
+	 * ask them if they want to save the book or not
+	 * 
+	 * @return button choice
+	 */
 	public static int displayPopup() 
 	{
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -121,9 +144,7 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.setHeaderText("Some of your changes have not been saved,");
 		alert.setContentText("Would you like to save before exiting this book?");
 		alert.setResizable(false);
-		alert.getButtonTypes().setAll(ButtonType.YES, 
-				ButtonType.NO, 
-				ButtonType.CANCEL);
+		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 		Optional<ButtonType> result =  alert.showAndWait(); 		
 
 		ButtonType button = result.orElse(ButtonType.CANCEL);
@@ -139,8 +160,7 @@ public class BookDetailViewController implements MyController, Initializable
 			return -1; 
 		}
 		return 0;
-	}
-
+	}	//end of displayPopup method
 
 
 	/**
@@ -156,10 +176,13 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.setHeaderText(null);
 		alert.setContentText(errorMessage);
 		alert.showAndWait();
-	}
+	}	//end of errorAlert method
 
-	//initialize method before loading the view populates the 
-	//text views to show the book details
+	
+	/**
+	 * initialize method before loading the view populates the
+	 * text views to show the book details
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
@@ -185,7 +208,7 @@ public class BookDetailViewController implements MyController, Initializable
 		addBook = false;
 				
 		beautify();
-	}
+	}	//end of initialize method
 
 
 	/**
@@ -211,8 +234,13 @@ public class BookDetailViewController implements MyController, Initializable
 
 		book = new Book(id,title,summary,year,publisher,ISBN);
 		return book;
-	}
+	}	//end of parseTextArea method
 	
+	/**
+	 * startListening method sets listeners for all textAreas, 
+	 * so any change to them is keep tracked of
+	 */
+	@SuppressWarnings(value = { "unchecked","rawtypes" })
 	public void startListening()
 	{
 		MainController.editedBook = new Book();
@@ -247,11 +275,13 @@ public class BookDetailViewController implements MyController, Initializable
 			MainController.editedBook.setPublisher(bookPublisher.getSelectionModel().getSelectedItem().getPublisherID());
 			} });
 		
-	}
+	}	//end of startListening method
 	
 
-	//beautify method applies font styles and sizes
-	//to the text view fields
+	/**
+	 * beautify method applies font styles and sizes
+	 * to the text view fields
+	 */ 
 	public void beautify()
 	{
 		bookId.setStyle("-fx-font-size: 3ex");

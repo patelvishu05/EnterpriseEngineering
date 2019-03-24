@@ -52,12 +52,19 @@ public class Book
 		return title; 
 	}
 	
+	//FOR DEBUG PURPOSE ONLY : Custom print
 	public String something() {
 		return this.title + "\t" + this.id + "\t" + this.summary + "\t" + this.year + "\t" 
 				+ this.publisher + "\t" + this.lastModified;
 	}
 
-	
+	/**
+	 * checks if values for two books are equal or not and based on the result
+	 * returns a true or false value
+	 * @param book1
+	 * @param book2
+	 * @return true or false
+	 */
 	public static boolean equalsBook(Book b1, Book b2)
 	{
 		return 	((b1.getId() == b2.getId() ) &&
@@ -66,8 +73,15 @@ public class Book
 				(b1.getYear() == b2.getYear() ) &&
 				(b1.getISBN().equals(b2.getISBN())) &&
 				(b1.getPublisher() == b2.getPublisher()));
-	}
+	}	//end of equalsBook method
 	
+	/**
+	 * getChanges checks for any values changed for the book and if
+	 * so it returns it for saving it to the audit trails
+	 * @param book1
+	 * @param book2
+	 * @return
+	 */
 	public static String getChanges(Book b1, Book b2)
 	{
 		String ret="";
@@ -84,8 +98,15 @@ public class Book
 		if(b1.getPublisher() != b2.getPublisher())
 			ret += "Book Publisher changed from " + b2.getPublisher() + " to " + b1.getPublisher() + "\n";
 		return ret;
-	}
+	}	//end of getChanges method
 
+	/**
+	 * save method helps us save book to the database by asking the BookGateway to do it
+	 * @param l
+	 * @param book
+	 * @throws DBException
+	 * @throws SQLException
+	 */
 	public void save(Book l, Book book) throws DBException, SQLException
 	{
 		if(!isValidTitle())
@@ -113,15 +134,13 @@ public class Book
 		{
 			BookGateway.getInstance().updateBook(this);
 		}
-	}
+	}	//end of save method
 
-	
+	//---------------------ACCESSORS---------------------//
 	public List<AuditTrailEntry> getAuditTrail()
 	{
 		return BookGateway.getInstance().getAudit(this);
 	}
-
-	//---------------------ACCESSORS---------------------//
 
 	public int getId() {
 		return id;
@@ -194,7 +213,5 @@ public class Book
 	public boolean isValidISBN() {
 		return this.ISBN.length() <= 13 || this.ISBN.equals("");
 	}
-
-
 
 }	//end of Book Class

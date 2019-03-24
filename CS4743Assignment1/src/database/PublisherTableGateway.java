@@ -8,6 +8,14 @@ import java.util.List;
 import org.apache.logging.log4j.*;
 import model.Publisher;
 
+/**
+ * PublisherTableGateway handles all tasks pertaining
+ * to publisher table in the database like inserting
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class PublisherTableGateway 
 {
 	private static PublisherTableGateway instance = null;
@@ -24,6 +32,11 @@ public class PublisherTableGateway
 		return instance;
 	}
 	
+	/**
+	 * fetchPublisher method will fetch all the publishers from 
+	 * our database and return it to the callee
+	 * @return list of publishers
+	 */
 	public List<Publisher> fetchPublishers()
 	{
 		List<Publisher> publisherList = new ArrayList<Publisher>();
@@ -57,11 +70,13 @@ public class PublisherTableGateway
 			if(statement != null)
 				statement = null;
 		}
-		
-		
+				
 		return publisherList;
-	}
-
+	}	//end of fetchPublishers method
+	
+	
+	//-------------------------ACCESSORS---------------------------//
+	
 	public Connection getConnection() {
 		return connection;
 	}
@@ -70,5 +85,4 @@ public class PublisherTableGateway
 		this.connection = connection;
 	}
 	
-
-}
+}	//end of PublisherTableGateway class

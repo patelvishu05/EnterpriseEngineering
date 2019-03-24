@@ -40,8 +40,9 @@ public class BookListController implements MyController
 		this.bookArrayList = books;
 	}
 
-	//pre fills the listview with the
-	//fake book data
+	/**
+	* Fill the list view with the books from our database
+	*/
 	public void initialize() 
 	{	
 		booksObservableList = FXCollections.observableArrayList();
@@ -82,7 +83,6 @@ public class BookListController implements MyController
 			logger.info(bookSelected + " book Selected.");
 			for(Book book: booksObservableList)
 			{
-				
 				if (book.getTitle().equals(bookSelected))
 				{
 					MainController.getInstance().switchView(ViewType.VIEW2,book);

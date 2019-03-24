@@ -20,6 +20,14 @@ import model.AuditTrailEntry;
 import model.Book;
 import model.ViewType;
 
+/**
+ * AuditTrailController class controls actions that occurs
+ * on AuditTrailView and handles events accordingly
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class AuditTrailController implements MyController, Initializable
 {
 	@FXML private Label bookTitleLabel;
@@ -37,7 +45,11 @@ public class AuditTrailController implements MyController, Initializable
 	{
 		this.audits = a;
 	}
-		
+	
+	/**
+	 * initialize method initialized the view with the provided details
+	 * and sets them to be viewed by the user
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
@@ -52,13 +64,17 @@ public class AuditTrailController implements MyController, Initializable
 		auditArrayList.addAll(this.audits);
 		auditObsList.addAll(auditArrayList);
 		auditTrailTable.setItems(auditObsList);
-	}
+	}	//end of initialize method
 	
+	/**
+	 * If the user clicks back button go back to the the
+	 * book detailview for the book that was open
+	 * @param event
+	 */
 	@FXML
 	void clickedBack(ActionEvent event)
 	{
-		//TODO: Remember to go back to the book that was already open
 		MainController.getInstance().switchView(ViewType.VIEW2, book);
-	}
+	}	//end of clickedBack method
 	
-}
+}	//end of AuditTrailController class

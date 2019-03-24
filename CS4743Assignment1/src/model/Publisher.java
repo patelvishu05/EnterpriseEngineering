@@ -2,6 +2,13 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Publisher model
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class Publisher 
 {
 	private int publisherID;
@@ -51,4 +58,4 @@ public class Publisher
 		this.dateAdded = dateAdded;
 	}
 
-}
+}	//end of Publisher class

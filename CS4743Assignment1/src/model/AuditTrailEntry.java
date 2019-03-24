@@ -2,6 +2,13 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Audit Trail Entry model
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class AuditTrailEntry 
 {
 	private int id;
@@ -19,6 +26,7 @@ public class AuditTrailEntry
 		this.message = m;
 	}
 
+	//----------------ACCESSORS------------------//
 	public int getId() {
 		return id;
 	}
@@ -43,4 +51,4 @@ public class AuditTrailEntry
 		this.message = message;
 	}
 	
-}
+}	//end of AuditTrailEntry class

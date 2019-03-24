@@ -109,7 +109,7 @@ public class MainController implements Initializable
 			logger.error("Error occured in Loading View in switchView()");
 			e.printStackTrace();
 		}
-	}
+	}	//end method switchView
 
 	//whenever a view is changed the Title of the
 	//application is changed automatically
@@ -144,7 +144,7 @@ public class MainController implements Initializable
 			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
 			return;
 		}
-	}
+	}	//end of clickedBookList method
 	
 	/**
 	 * when add book option is clicked display add book form 
@@ -176,8 +176,12 @@ public class MainController implements Initializable
 			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
 			return;
 		}
-	}
+	}	//end of clickedAddBook method
 
+	/**
+	 * Exit application if the user clicks exit
+	 * @param event
+	 */
 	@FXML
 	void exitApplication(ActionEvent event) 
 	{
@@ -201,25 +205,30 @@ public class MainController implements Initializable
 			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
 			return;
 		}
-	}
+	}	//end of exitApplication
 	
+	/**
+	 * saveHelper method helps save book when the user misses to click save and 
+	 * moves away from the view
+	 * @throws Exception
+	 */
 	public void saveHelper() throws Exception
 	{
-//		try 
-//		{
+		try 
+		{
 			editedBook.setLastModified(previousBook.getLastModified());
 			editedBook.save(previousBook,editedBook);
-//		}
-//		catch (DBException e) {
-//			BookDetailViewController.errorAlert(e.getErrorMessage());
-//		}
-//		catch(SQLException e) {
-//			BookDetailViewController.errorAlert("Either the book does not exist or there is error while updating the book.");
-//		}
-//		catch(Exception e) {
-//			BookDetailViewController.errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
-//		}
-	}
+		}
+		catch (DBException e) {
+			BookDetailViewController.errorAlert(e.getErrorMessage());
+		}
+		catch(SQLException e) {
+			BookDetailViewController.errorAlert("Either the book does not exist or there is error while updating the book.");
+		}
+		catch(Exception e) {
+			BookDetailViewController.displaySaveErrorAlert();
+		}
+	}	//end of saveHelper method
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
