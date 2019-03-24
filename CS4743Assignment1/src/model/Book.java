@@ -27,6 +27,13 @@ public class Book
 	private LocalDateTime lastModified; 
 
 	public Book() {
+		this.id = 0;
+		this.title = "";
+		this.summary = "";
+		this.year = 0;
+		this.ISBN = "";
+		this.publisher = 0;
+		
 	}
 
 	public Book(int id, String t, String s, int y, int p, String i)
@@ -43,7 +50,22 @@ public class Book
 	public String toString() {
 		return title; 
 	}
+	
+	public String something() {
+		return this.title + "\t" + this.id + "\t" + this.summary + "\t" + this.year + "\t" 
+				+ this.publisher + "\t" + this.lastModified;
+	}
 
+	
+	public static boolean equalsBook(Book b1, Book b2)
+	{
+		return 	((b1.getId() == b2.getId() ) &&
+				(b1.getTitle().equals(b2.getTitle()) ) &&
+				(b1.getSummary().equals(b2.getSummary()) ) &&
+				(b1.getYear() == b2.getYear() ) &&
+				(b1.getISBN().equals(b2.getISBN())) &&
+				(b1.getPublisher() == b2.getPublisher()));
+	}	
 
 
 	public void save(Book l, Book book) throws DBException, SQLException
@@ -151,7 +173,7 @@ public class Book
 	}
 
 	public boolean isValidISBN() {
-		return this.ISBN.length() <= 13 || this.ISBN.isEmpty();
+		return this.ISBN.length() <= 13 || this.ISBN.equals("");
 	}
 
 

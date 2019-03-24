@@ -13,6 +13,8 @@ import application.Main;
 import database.BookGateway;
 import database.PublisherTableGateway;
 import exception.DBException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.control.Alert.AlertType;
 import model.Book;
 import model.Publisher;
@@ -56,13 +59,14 @@ public class BookDetailViewController implements MyController, Initializable
 
 	public BookDetailViewController(Book book)
 	{
-		this.book = book;	
+		this.book = book;
+		previousBook = book;
+		MainController.previousBook = book;
 	}
-	
+
 	public BookDetailViewController() {
-		
+
 	}
-	
 
 	//saveBook handles the saving of book to a database by calling
 	//insert or update method from BookGateway class. If the book already
@@ -73,10 +77,14 @@ public class BookDetailViewController implements MyController, Initializable
 		logger.info("Save Clicked !!");
 		try 
 		{	
-			previousBook = this.book; 
+			previousBook = this.book;
 			editedbook = parseTextArea();
-			editedbook.setLastModified(previousBook.getLastModified());
-			editedbook.save(previousBook,editedbook);
+			System.out.println("~~~~~" + previousBook + "\t" + editedbook);
+			if(!Book.equalsBook(editedbook,previousBook)) 
+			{
+				editedbook.setLastModified(previousBook.getLastModified());
+				editedbook.save(previousBook,editedbook);
+			}
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
@@ -88,16 +96,15 @@ public class BookDetailViewController implements MyController, Initializable
 		catch(Exception e) {
 			errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
 		}
-
 	}
-	
+
 	@FXML
 	void clickedAuditTrail(ActionEvent event)
 	{
 		MainController.getInstance().switchView(ViewType.VIEW3, this.book);
 	}
-	
-	
+
+
 	public static void displaySaveErrorAlert() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("Cannot Save!");
@@ -106,7 +113,7 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.setResizable(false);
 		alert.showAndWait();
 	}
-	
+
 	public static int displayPopup() 
 	{
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -115,25 +122,26 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.setContentText("Would you like to save before exiting this book?");
 		alert.setResizable(false);
 		alert.getButtonTypes().setAll(ButtonType.YES, 
-                ButtonType.NO, 
-                ButtonType.CANCEL);
+				ButtonType.NO, 
+				ButtonType.CANCEL);
 		Optional<ButtonType> result =  alert.showAndWait(); 		
-		
+
 		ButtonType button = result.orElse(ButtonType.CANCEL);
-		if (button == ButtonType.YES) {
-			//save book here
-			//How do i save book here? IDK :(
-		    System.out.println("Ok pressed");
-		    return 1; 
-		} else if (button == ButtonType.NO) {
-		    System.out.println("Don't save");
-			
+		
+		if (button == ButtonType.YES) 
+		{
+			System.out.println("Ok pressed");
 			return 1; 
+		} 
+		else if (button == ButtonType.NO) 
+		{
+			System.out.println("Don't save");
+			return -1; 
 		}
 		return 0;
 	}
-	
-	
+
+
 
 	/**
 	 * errorAlert class takes in an error message string
@@ -141,7 +149,7 @@ public class BookDetailViewController implements MyController, Initializable
 	 * 
 	 * @param errorMessage
 	 */
-	public void errorAlert(String errorMessage)
+	public static void errorAlert(String errorMessage)
 	{
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Invalid Data Entered");
@@ -160,7 +168,7 @@ public class BookDetailViewController implements MyController, Initializable
 		List<Publisher> publisherArrayList = PublisherTableGateway.getInstance().fetchPublishers();
 		publisherObservableList.addAll(publisherArrayList);
 		bookPublisher.setItems(publisherObservableList);
-		
+		startListening();
 		Main.stage.setTitle(book.getTitle());
 		bookId.setText(""+book.getId());
 		bookTitle.setText(book.getTitle());
@@ -168,15 +176,17 @@ public class BookDetailViewController implements MyController, Initializable
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
 		bookPublisher.getSelectionModel().select(book.getPublisher());
-		Book b = new Book();
-		System.out.println(b + "\n" + this.book);
+		System.out.println("--->" + this.book);
+		
 		if(addBook == true)
 			auditTrail.setDisable(true);
 		else
 			auditTrail.setDisable(false);
 		addBook = false;
+				
 		beautify();
 	}
+
 
 	/**
 	 * parseTextArea reads from the TextArea fields and
@@ -202,6 +212,43 @@ public class BookDetailViewController implements MyController, Initializable
 		book = new Book(id,title,summary,year,publisher,ISBN);
 		return book;
 	}
+	
+	public void startListening()
+	{
+		MainController.editedBook = new Book();
+		
+		bookId.textProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				MainController.editedBook.setId(Integer.parseInt(bookId.getText()));
+			} });
+		
+		bookTitle.textProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				MainController.editedBook.setTitle((bookTitle.getText() == null) ? "" : bookTitle.getText());
+			} });
+		
+		bookSummary.textProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				MainController.editedBook.setSummary((bookSummary.getText() == null) ? "" : bookSummary.getText());
+			} });
+		
+		bookYear.textProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+				MainController.editedBook.setYear(Integer.parseInt(bookYear.getText()));
+			} });
+		
+		bookISBN.textProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+			MainController.editedBook.setISBN((bookISBN.getText() == null) ? "" : bookISBN.getText());
+			} });
+		
+		bookPublisher.valueProperty().addListener(new ChangeListener() { @Override
+			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+			MainController.editedBook.setPublisher(bookPublisher.getSelectionModel().getSelectedItem().getPublisherID());
+			} });
+		
+	}
+	
 
 	//beautify method applies font styles and sizes
 	//to the text view fields
@@ -215,5 +262,5 @@ public class BookDetailViewController implements MyController, Initializable
 		bookPublisher.setStyle("-fx-font-size: 3ex");
 	}
 	
-
+	
 }	//end of BookDetailViewController class

@@ -66,7 +66,7 @@ public class BookGateway
 				book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
 				book.setISBN(rs.getString("isbn"));
 				book.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
-				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
+//				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
 				books.add(book);
 			}
 			rs.close();

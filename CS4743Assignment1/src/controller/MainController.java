@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import application.Main;
 import database.BookGateway;
+import exception.DBException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,6 +43,11 @@ public class MainController implements Initializable
 
 	private static Logger logger = LogManager.getLogger(MainController.class);
 	private static MainController instance = null;
+	
+	//----
+	public static Book editedBook;
+	public static Book previousBook;
+	//---
 
 	//private constructor
 	private MainController() {
@@ -66,28 +72,28 @@ public class MainController implements Initializable
 		MyController controller = null;
 		switch (view)
 		{
-		case VIEW1: viewString = "../view/BookListView.fxml";
-		setDisplayLabelText("Book List");
-		List<Book> books = BookGateway.getInstance().getBooks();
-		controller = new BookListController(books);
-		currentView = ViewType.VIEW1; 
-		System.out.println("Current view changed to VIEW1"); 
-		break;
+			case VIEW1: viewString = "../view/BookListView.fxml";
+						setDisplayLabelText("Book List");
+						List<Book> books = BookGateway.getInstance().getBooks();
+						controller = new BookListController(books);
+						currentView = ViewType.VIEW1; 
+						System.out.println("Current view changed to VIEW1"); 
+						break;
 
-		case VIEW2: viewString = "../view/BookDetailView.fxml";
-		setDisplayLabelText("Book Detail View");
-		controller = new BookDetailViewController(book);
-		currentView = ViewType.VIEW2;
-		System.out.println("Current view changed to VIEW2"); 
-		break;	
+			case VIEW2: viewString = "../view/BookDetailView.fxml";
+						setDisplayLabelText("Book Detail View");
+						controller = new BookDetailViewController(book);
+						currentView = ViewType.VIEW2;
+						System.out.println("Current view changed to VIEW2"); 
+						break;	
 
-		case VIEW3: viewString = "../view/AuditTrailView.fxml";
-		setDisplayLabelText("Audit Trail View");
-		AuditTrailController.book = book;
-		controller = new AuditTrailController(book.getAuditTrail());
-		currentView = ViewType.VIEW3;
-		System.out.println("Current view changed to VIEW3");
-		break;
+			case VIEW3: viewString = "../view/AuditTrailView.fxml";
+						setDisplayLabelText("Audit Trail View");
+						AuditTrailController.book = book;
+						controller = new AuditTrailController(book.getAuditTrail());
+						currentView = ViewType.VIEW3;
+						System.out.println("Current view changed to VIEW3");
+						break;
 		}
 		try
 		{
@@ -111,30 +117,26 @@ public class MainController implements Initializable
 		Main.stage.setTitle(name);
 	}
 
-
-
-
-
 	/**
 	 * When booklist option is clicked, display all the books from the database
 	 */
 	@FXML
 	void clickedBookList(ActionEvent event) 
 	{
-		if (currentView == ViewType.VIEW2 ) 
+		if (currentView == ViewType.VIEW2) 
 		{
-			if (BookDetailViewController.displayPopup() == 1) 
+			if(!Book.equalsBook(editedBook,previousBook)) 
 			{
-				switchView(ViewType.VIEW1,new Book());
-			}	
-		}
-		else{
-			//go ahead and switch views 
-			switchView(ViewType.VIEW1,new Book());
-		}
+				int choice = BookDetailViewController.displayPopup();
+				if (choice == 1) 
+					saveHelper();
+				if (choice == 0) 
+					return;
+			}
+		} 
+		switchView(ViewType.VIEW1,new Book());
 	}
-
-
+	
 	/**
 	 * when add book option is clicked display add book form 
 	 * where the user fills in data for the book to be saved to the 
@@ -144,17 +146,19 @@ public class MainController implements Initializable
 	@FXML
 	void clickedAddBook(ActionEvent event)
 	{
+		if (currentView == ViewType.VIEW2) 
+		{
+			if(!Book.equalsBook(editedBook,previousBook)) 
+			{
+				int choice = BookDetailViewController.displayPopup();
+				if (choice == 1)
+					saveHelper();
+				if (choice == 0)
+					return;
+			}
+		}
 		BookDetailViewController.addBook = true;
-		if (currentView == ViewType.VIEW2) {//also check whether there are any unsaved changes, How? IDK :(
-			//prompt user for confirmation 
-			if (BookDetailViewController.displayPopup() == 1) {
-				switchView(ViewType.VIEW2,new Book());
-			}	
-		}
-		else{
-			//go ahead and switch views 
-			switchView(ViewType.VIEW2,new Book());
-		}
+		switchView(ViewType.VIEW2,new Book());
 	}
 
 	@FXML
@@ -162,14 +166,33 @@ public class MainController implements Initializable
 	{
 		if (currentView == ViewType.VIEW2) 
 		{
-			//also check whether there are any unsaved changes, How? IDK :(
-			//prompt user for confirmation 
-			if (BookDetailViewController.displayPopup() == 1) 
-				Platform.exit();
+			if(!Book.equalsBook(editedBook,previousBook)) 
+			{
+				int choice = BookDetailViewController.displayPopup();
+				if (choice == 1)
+					saveHelper();
+				if (choice == 0)
+					return;
+			}
 		}
-		else
+		Platform.exit();
+	}
+	
+	public void saveHelper()
+	{
+		try 
 		{
-			Platform.exit();
+			editedBook.setLastModified(previousBook.getLastModified());
+			editedBook.save(previousBook,editedBook);
+		}
+		catch (DBException e) {
+			BookDetailViewController.errorAlert(e.getErrorMessage());
+		}
+		catch(SQLException e) {
+			BookDetailViewController.errorAlert("Either the book does not exist or there is error while updating the book.");
+		}
+		catch(Exception e) {
+			BookDetailViewController.errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
 		}
 	}
 
