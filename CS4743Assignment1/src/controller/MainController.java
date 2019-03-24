@@ -123,18 +123,26 @@ public class MainController implements Initializable
 	@FXML
 	void clickedBookList(ActionEvent event) 
 	{
-		if (currentView == ViewType.VIEW2) 
+		try
 		{
-			if(!Book.equalsBook(editedBook,previousBook)) 
+			if (currentView == ViewType.VIEW2) 
 			{
-				int choice = BookDetailViewController.displayPopup();
-				if (choice == 1) 
-					saveHelper();
-				if (choice == 0) 
-					return;
-			}
-		} 
-		switchView(ViewType.VIEW1,new Book());
+				if(!Book.equalsBook(editedBook,previousBook)) 
+				{
+					int choice = BookDetailViewController.displayPopup();
+					if (choice == 1) 
+						saveHelper();
+					if (choice == 0) 
+						return;
+				}
+			} 
+			switchView(ViewType.VIEW1,new Book());
+		}
+		catch(Exception e)
+		{
+			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
+			return;
+		}
 	}
 	
 	/**
@@ -146,54 +154,70 @@ public class MainController implements Initializable
 	@FXML
 	void clickedAddBook(ActionEvent event)
 	{
-		if (currentView == ViewType.VIEW2) 
+		try
 		{
-			if(!Book.equalsBook(editedBook,previousBook)) 
+			if (currentView == ViewType.VIEW2) 
 			{
-				int choice = BookDetailViewController.displayPopup();
-				if (choice == 1)
-					saveHelper();
-				if (choice == 0)
-					return;
+				if(!Book.equalsBook(editedBook,previousBook)) 
+				{
+					int choice = BookDetailViewController.displayPopup();
+					if (choice == 1)
+						saveHelper();
+					if (choice == 0)
+						return;
+				}
 			}
+			BookDetailViewController.addBook = true;
+			switchView(ViewType.VIEW2,new Book());
 		}
-		BookDetailViewController.addBook = true;
-		switchView(ViewType.VIEW2,new Book());
+		catch(Exception e)
+		{
+			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
+			return;
+		}
 	}
 
 	@FXML
 	void exitApplication(ActionEvent event) 
 	{
-		if (currentView == ViewType.VIEW2) 
+		try
 		{
-			if(!Book.equalsBook(editedBook,previousBook)) 
+			if (currentView == ViewType.VIEW2) 
 			{
-				int choice = BookDetailViewController.displayPopup();
-				if (choice == 1)
-					saveHelper();
-				if (choice == 0)
-					return;
+				if(!Book.equalsBook(editedBook,previousBook)) 
+				{
+					int choice = BookDetailViewController.displayPopup();
+					if (choice == 1)
+						saveHelper();
+					if (choice == 0)
+						return;
+				}
 			}
+			Platform.exit();
 		}
-		Platform.exit();
+		catch(Exception e)
+		{
+			BookDetailViewController.errorAlert("An error occured while saving the book. Please try again after some time");
+			return;
+		}
 	}
 	
-	public void saveHelper()
+	public void saveHelper() throws Exception
 	{
-		try 
-		{
+//		try 
+//		{
 			editedBook.setLastModified(previousBook.getLastModified());
 			editedBook.save(previousBook,editedBook);
-		}
-		catch (DBException e) {
-			BookDetailViewController.errorAlert(e.getErrorMessage());
-		}
-		catch(SQLException e) {
-			BookDetailViewController.errorAlert("Either the book does not exist or there is error while updating the book.");
-		}
-		catch(Exception e) {
-			BookDetailViewController.errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
-		}
+//		}
+//		catch (DBException e) {
+//			BookDetailViewController.errorAlert(e.getErrorMessage());
+//		}
+//		catch(SQLException e) {
+//			BookDetailViewController.errorAlert("Either the book does not exist or there is error while updating the book.");
+//		}
+//		catch(Exception e) {
+//			BookDetailViewController.errorAlert("All required fields cannot be left empty and needs valid data to proceed.");
+//		}
 	}
 
 	@Override

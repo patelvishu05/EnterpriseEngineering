@@ -166,7 +166,8 @@ public class BookGateway
 	{
 		//TODO: insert book into databases
 		String dbQuery = "INSERT INTO BookDatabase (`id`, `title`, `summary`, `year_published`, `publisher_id`, `isbn`) "
-				+ "VALUES (?,?,?,?,?,?);";
+				+ "VALUES (?,?,?,?,?,?); ";
+		String dbQuery2 = "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
 		PreparedStatement ps = null;
 		try
 		{
@@ -178,7 +179,11 @@ public class BookGateway
 			ps.setInt(5, book.getPublisher());
 			ps.setString(6, book.getISBN());
 			ps.executeUpdate();
-
+			ps = connection.prepareStatement(dbQuery2);
+			ps.setInt(1,book.getId());
+			ps.setString(2, "Book Added !");
+			System.out.println(ps.toString());
+			ps.executeUpdate();
 		}
 		catch(SQLException e)
 		{

@@ -80,11 +80,11 @@ public class BookDetailViewController implements MyController, Initializable
 			previousBook = this.book;
 			editedbook = parseTextArea();
 			System.out.println("~~~~~" + previousBook + "\t" + editedbook);
-			if(!Book.equalsBook(editedbook,previousBook)) 
-			{
+//			if(!Book.equalsBook(editedbook,previousBook)) 
+//			{
 				editedbook.setLastModified(previousBook.getLastModified());
 				editedbook.save(previousBook,editedbook);
-			}
+//			}
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
@@ -201,10 +201,10 @@ public class BookDetailViewController implements MyController, Initializable
 		String title, summary, ISBN;
 		Book book = new Book();
 
-		id = Integer.parseInt(bookId.getText());
+		id = Integer.parseInt(bookId.getText().equals("") ? "0" : bookId.getText());
 		title = (bookTitle.getText() == null) ? "" : bookTitle.getText();
 		summary = (bookSummary.getText() == null) ? "" : bookSummary.getText();
-		year = Integer.parseInt(bookYear.getText());
+		year = Integer.parseInt(bookYear.getText().equals("") ? "0" : bookYear.getText());
 		ISBN = (bookISBN.getText() == null) ? "" : bookISBN.getText();
 		Publisher p = bookPublisher.getSelectionModel().getSelectedItem();
 		publisher = p.getPublisherID();
@@ -219,7 +219,7 @@ public class BookDetailViewController implements MyController, Initializable
 		
 		bookId.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setId(Integer.parseInt(bookId.getText()));
+				MainController.editedBook.setId(Integer.parseInt(bookId.getText().equals("") ? "0" : bookId.getText()) );
 			} });
 		
 		bookTitle.textProperty().addListener(new ChangeListener() { @Override
@@ -234,7 +234,7 @@ public class BookDetailViewController implements MyController, Initializable
 		
 		bookYear.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setYear(Integer.parseInt(bookYear.getText()));
+				MainController.editedBook.setYear(Integer.parseInt(bookYear.getText().equals("") ? "0" :bookYear.getText()));
 			} });
 		
 		bookISBN.textProperty().addListener(new ChangeListener() { @Override
