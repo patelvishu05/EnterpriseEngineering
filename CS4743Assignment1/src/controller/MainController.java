@@ -47,6 +47,7 @@ public class MainController implements Initializable
 	//----
 	public static Book editedBook;
 	public static Book previousBook;
+	public static String auditChange;
 	//---
 
 	//private constructor

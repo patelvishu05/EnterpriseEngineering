@@ -266,6 +266,8 @@ public class BookGateway
 				+ "`publisher_id` = ?, "
 				+ "`isbn` = ? "
 				+ "WHERE (`id` = ?)";
+		
+		String dbQuery2= "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
 
 		PreparedStatement ps = null;
 		ps = connection.prepareStatement(dbQuery);
@@ -276,6 +278,10 @@ public class BookGateway
 		ps.setString(5, book.getISBN());
 		ps.setInt(6, book.getId());
 //		System.out.println(ps.toString());
+		ps.executeUpdate();
+		ps = connection.prepareStatement(dbQuery2);
+		ps.setInt(1,book.getId());
+		ps.setString(2,MainController.auditChange);
 		ps.executeUpdate();
 
 

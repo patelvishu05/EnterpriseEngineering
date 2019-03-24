@@ -176,7 +176,7 @@ public class BookDetailViewController implements MyController, Initializable
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
 		bookPublisher.getSelectionModel().select(book.getPublisher());
-		System.out.println("--->" + this.book);
+//		System.out.println("--->" + this.book);
 		
 		if(addBook == true)
 			auditTrail.setDisable(true);

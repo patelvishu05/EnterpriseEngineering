@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.MainController;
 import database.BookGateway;
 import exception.DBException;
 
@@ -65,8 +66,25 @@ public class Book
 				(b1.getYear() == b2.getYear() ) &&
 				(b1.getISBN().equals(b2.getISBN())) &&
 				(b1.getPublisher() == b2.getPublisher()));
-	}	
-
+	}
+	
+	public static String getChanges(Book b1, Book b2)
+	{
+		String ret="";
+		if(b1.getId()!= b2.getId())
+			ret += "Book Id changed from " + b2.getId() + " to " + b1.getId() + "\n";
+		if(!(b1.getTitle().equals(b2.getTitle())))
+			ret += "Book Title changed from " + b2.getTitle() + " to " + b1.getTitle() + "\n";
+		if(!(b1.getSummary().equals(b2.getSummary())))
+			ret += "Book Summary changed from " + b2.getSummary() + " to " + b1.getSummary() + "\n";
+		if(b1.getYear() != b2.getYear())
+			ret += "Book Year changed from " + b2.getYear() + " to " + b1.getYear() + "\n";
+		if(!(b1.getISBN().equals(b2.getISBN())))
+			ret += "Book ISBN changed from " + b2.getISBN() + " to " +b1.getISBN() + "\n";
+		if(b1.getPublisher() != b2.getPublisher())
+			ret += "Book Publisher changed from " + b2.getPublisher() + " to " + b1.getPublisher() + "\n";
+		return ret;
+	}
 
 	public void save(Book l, Book book) throws DBException, SQLException
 	{
@@ -82,6 +100,7 @@ public class Book
 		if(!isValidISBN())
 			throw new DBException(DBException.getInvalidISBNMessage());
 
+		MainController.auditChange = getChanges(book,l);
 		ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
 		for(Book b : BookGateway.getInstance().getBooks())
 			primaryKeys.add(b.getId());
