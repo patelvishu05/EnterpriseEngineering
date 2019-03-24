@@ -171,7 +171,7 @@ public class BookGateway
 		PreparedStatement ps = null;
 		try
 		{
-			ps = connection.prepareStatement(dbQuery);
+			ps = connection.prepareStatement(dbQuery,Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, book.getId());
 			ps.setString(2, book.getTitle());
 			ps.setString(3, book.getSummary());
@@ -179,11 +179,15 @@ public class BookGateway
 			ps.setInt(5, book.getPublisher());
 			ps.setString(6, book.getISBN());
 			ps.executeUpdate();
+			
+			ResultSet rs = ps.getGeneratedKeys();
+			rs.next();
 			ps = connection.prepareStatement(dbQuery2);
-			ps.setInt(1,book.getId());
+			ps.setInt(1,rs.getInt(1));
 			ps.setString(2, "Book Added !");
 			System.out.println(ps.toString());
 			ps.executeUpdate();
+			rs = null;
 		}
 		catch(SQLException e)
 		{

@@ -45,7 +45,7 @@ public class BookListController implements MyController
 	public void initialize() 
 	{	
 		booksObservableList = FXCollections.observableArrayList();
-//		bookArrayList = BookGateway.getInstance().getBooks(); 
+		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);
 	}
