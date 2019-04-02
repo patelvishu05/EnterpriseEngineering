@@ -601,3 +601,21 @@
 17:59:37.011 INFO  application.Main : Database Connection created !!
 17:59:42.773 INFO  application.Main : Closing database connection.....
 17:59:42.774 INFO  application.Main : Database Connection closed !!
+13:42:35.062 INFO  application.Main : Creating Connection to the database....
+13:42:36.026 INFO  application.Main : Database Connection created !!
+13:43:18.345 INFO  controller.BookListController : Senior Design book Selected.
+13:43:41.741 INFO  application.Main : Creating Connection to the database....
+13:43:42.269 INFO  application.Main : Database Connection created !!
+13:43:52.437 INFO  controller.BookListController : Senior Design book Selected.
+13:43:54.204 INFO  controller.BookDetailViewController : Save Clicked !!
+13:43:54.399 INFO  database.BookGateway : Book updated
+13:43:58.178 INFO  controller.BookDetailViewController : Save Clicked !!
+13:44:09.492 INFO  controller.BookListController : Senior Design book Selected.
+13:44:13.783 INFO  controller.BookListController : Senior Design book Selected.
+13:44:16.847 INFO  controller.BookDetailViewController : Save Clicked !!
+13:44:17.057 INFO  database.BookGateway : Book updated
+13:44:21.422 INFO  controller.BookDetailViewController : Save Clicked !!
+13:44:46.061 INFO  application.Main : Closing database connection.....
+13:44:46.064 INFO  application.Main : Database Connection closed !!
+13:44:47.374 INFO  application.Main : Closing database connection.....
+13:44:47.377 INFO  application.Main : Database Connection closed !!
