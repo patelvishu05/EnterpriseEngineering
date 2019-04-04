@@ -141,6 +141,11 @@ public class Book
 	{
 		return BookGateway.getInstance().getAudit(this);
 	}
+	
+	public List<AuthorBook> getAuthors() 
+	{
+		return BookGateway.getInstance().getAuthorsForBook(this);
+	}
 
 	public int getId() {
 		return id;

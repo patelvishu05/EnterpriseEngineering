@@ -13,6 +13,7 @@ import controller.MainController;
 
 import javafx.scene.control.Alert;
 import model.AuditTrailEntry;
+import model.AuthorBook;
 import model.Book;
 
 /**
@@ -85,6 +86,14 @@ public class BookGateway
 		}
 		return books;
 	}	//end of getBooks method
+	
+	
+	public List<AuthorBook> getAuthorsForBook(Book book)
+	{
+		List<AuthorBook> bookAuthors = new ArrayList<AuthorBook>();
+		
+		return bookAuthors;
+	}
 	
 	
 	public List<AuditTrailEntry> getAudit(Book book)

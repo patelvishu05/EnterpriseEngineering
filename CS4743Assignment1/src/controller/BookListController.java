@@ -76,14 +76,16 @@ public class BookListController implements MyController
 	{		
 		//Handles mouse click events perfectly and switches view to detailed view only if
 		//you double click on the book
-		String bookSelected = booklist.getSelectionModel().getSelectedItem().toString();
-		if(event.getClickCount() == 2)
+		//String bookSelected = booklist.getSelectionModel().getSelectedItem().getTitle();
+		Book bookSelected = booklist.getSelectionModel().getSelectedItem();
+		System.out.println(bookSelected);
+		if(event.getClickCount() == 2 && bookSelected != null)
 		{
 			BookGateway.getInstance().getBooks();
 			logger.info(bookSelected + " book Selected.");
 			for(Book book: booksObservableList)
 			{
-				if (book.getTitle().equals(bookSelected))
+				if (book.getTitle().equals(bookSelected.getTitle()))
 				{
 					MainController.getInstance().switchView(ViewType.VIEW2,book);
 				}	//end of inner if statement
