@@ -7,9 +7,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane layoutX="128.0" layoutY="106.0" prefHeight="564.0" prefWidth="752.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="106.0">
+      <GridPane layoutX="109.0" layoutY="161.0" prefHeight="599.0" prefWidth="743.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="109.0" AnchorPane.rightAnchor="748.0" AnchorPane.topAnchor="161.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title : " textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
@@ -71,9 +71,9 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ComboBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <HBox prefHeight="75.0" prefWidth="587.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
-                  <Button fx:id="save" mnemonicParsing="false" onAction="#saveBook" prefHeight="70.0" prefWidth="270.0" text="Save" textAlignment="CENTER">
+                  <Button fx:id="save" mnemonicParsing="false" onAction="#saveBook" prefHeight="80.0" prefWidth="265.0" text="Save" textAlignment="CENTER">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -81,7 +81,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="auditTrail" disable="true" mnemonicParsing="false" onAction="#clickedAuditTrail" prefHeight="70.0" prefWidth="270.0" text="Audit Trail" textAlignment="CENTER">
+                  <Button fx:id="auditTrail" disable="true" mnemonicParsing="false" onAction="#clickedAuditTrail" prefHeight="80.0" prefWidth="259.0" text="Audit Trail" textAlignment="CENTER">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -109,5 +109,31 @@
             <RowConstraints maxHeight="293.0" minHeight="0.0" prefHeight="90.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <TableView fx:id="authorTable" layoutX="904.0" layoutY="167.0" prefHeight="492.0" prefWidth="615.0">
+        <columns>
+          <TableColumn fx:id="author" editable="false" prefWidth="433.0" sortable="false" text="Author" />
+          <TableColumn fx:id="royalty" editable="false" prefWidth="181.0" sortable="false" text="Royalty" />
+        </columns>
+      </TableView>
+      <HBox layoutX="943.0" layoutY="675.0" prefHeight="75.0" prefWidth="538.0">
+         <children>
+            <Button fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" prefHeight="80.0" prefWidth="265.0" text="Add Author" textAlignment="CENTER">
+               <font>
+                  <Font size="29.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="deleteAuthor" mnemonicParsing="false" onAction="#deleteAuthorClicked" prefHeight="80.0" prefWidth="259.0" text="Delete Author" textAlignment="CENTER">
+               <font>
+                  <Font size="29.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

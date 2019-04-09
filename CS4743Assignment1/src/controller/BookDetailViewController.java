@@ -24,6 +24,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.control.Alert.AlertType;
@@ -50,6 +52,16 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private TextArea bookYear;
 	@FXML private TextArea bookISBN;
 	@FXML private ComboBox<Publisher> bookPublisher;
+	
+	//TODO: fix tablecolumn infer type
+    @FXML private TableView<?> authorTable;
+	@FXML private TableColumn<?, ?> author;
+	@FXML private TableColumn<?, ?> royalty;
+	
+	@FXML private Button addAuthor;
+	@FXML private Button deleteAuthor;
+
+	
 	private ObservableList<Publisher> publisherObservableList;
 	private Book book;
 	public static boolean addBook;
@@ -291,6 +303,17 @@ public class BookDetailViewController implements MyController, Initializable
 		bookYear.setStyle("-fx-font-size: 3ex");
 		bookPublisher.setStyle("-fx-font-size: 3ex");
 	}
+	
+	
+	@FXML
+    void addAuthorClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteAuthorClicked(ActionEvent event) {
+
+    }
 	
 	
 }	//end of BookDetailViewController class
