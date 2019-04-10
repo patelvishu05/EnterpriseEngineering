@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import controller.MainController;
 
 import javafx.scene.control.Alert;
 import model.AuditTrailEntry;
+import model.Author;
 import model.AuthorBook;
 import model.Book;
 
@@ -91,6 +93,64 @@ public class BookGateway
 	public List<AuthorBook> getAuthorsForBook(Book book)
 	{
 		List<AuthorBook> bookAuthors = new ArrayList<AuthorBook>();
+		
+		Book b = null;
+		Author a = null;
+		AuthorBook ab = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String dbQuery = "SELECT * from author_book " + 
+						"    INNER JOIN AuthorDatabase AD on author_book.author_id = AD.author_id " + 
+						"    INNER JOIN BookDatabase BD on author_book.book_id = BD.id "     +  
+						"    WHERE book_id=?;";
+		try
+		{
+			ps = this.connection.prepareStatement(dbQuery);
+			ps.setString(1, ""+book.getId());
+			rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				b = new Book();
+				b.setId(Integer.parseInt(rs.getString("id")));
+				b.setTitle(rs.getString("title"));
+				b.setSummary(rs.getString("summary"));
+				b.setYear(Integer.parseInt(rs.getString("year_published")));
+				b.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
+				b.setISBN(rs.getString("isbn"));
+				b.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
+				
+				a = new Author();
+				a.setId(Integer.parseInt(rs.getString("author_id")));
+				a.setFirstName(rs.getString("first_name"));
+				a.setLastName(rs.getString("last_name"));
+				a.setDateOfBirth(LocalDate.parse(rs.getString("dob"), formatter));
+				a.setGender(rs.getString("gender"));
+				a.setWebsite(rs.getString("web_site"));
+				
+				ab = new AuthorBook();
+				ab.setAuthor(a);
+				ab.setBook(b);
+				System.out.println(rs.getString("royalty"));
+				double royalty = Double.parseDouble(rs.getString("royalty")) * 100000;
+				ab.setRoyalty((int) royalty );
+				
+				bookAuthors.add(ab);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(rs!=null)
+				rs = null;
+			if(ps!=null)
+				ps = null;
+		}
 		
 		return bookAuthors;
 	}
@@ -282,21 +342,23 @@ public class BookGateway
 		
 		String dbQuery2= "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
 
-		PreparedStatement ps = null;
-		ps = connection.prepareStatement(dbQuery);
-		ps.setString(1, book.getTitle());
-		ps.setString(2, book.getSummary());
-		ps.setInt(3, book.getYear());
-		ps.setInt(4, book.getPublisher());
-		ps.setString(5, book.getISBN());
-		ps.setInt(6, book.getId());
-//		System.out.println(ps.toString());
-		ps.executeUpdate();
-		ps = connection.prepareStatement(dbQuery2);
-		ps.setInt(1,book.getId());
-		ps.setString(2,MainController.auditChange);
-		ps.executeUpdate();
-
+		if(!(MainController.auditChange.equals("")))
+		{
+			PreparedStatement ps = null;
+			ps = connection.prepareStatement(dbQuery);
+			ps.setString(1, book.getTitle());
+			ps.setString(2, book.getSummary());
+			ps.setInt(3, book.getYear());
+			ps.setInt(4, book.getPublisher());
+			ps.setString(5, book.getISBN());
+			ps.setInt(6, book.getId());
+	//		System.out.println(ps.toString());
+			ps.executeUpdate();
+			ps = connection.prepareStatement(dbQuery2);
+			ps.setInt(1,book.getId());
+			ps.setString(2,MainController.auditChange);
+			ps.executeUpdate();
+		}
 
 		logger.info("Book updated");
 	}	//end of update method

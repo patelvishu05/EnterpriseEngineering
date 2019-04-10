@@ -13,11 +13,11 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <TableView fx:id="auditTrailTable" layoutX="140.0" layoutY="163.0" prefHeight="456.0" prefWidth="800.0">
+      <TableView fx:id="auditTrailTable" layoutX="47.0" layoutY="164.0" prefHeight="497.0" prefWidth="986.0">
         <columns>
             <TableColumn fx:id="id" editable="false" prefWidth="66.0" sortable="false" text="ID" visible="false" />
           <TableColumn fx:id="timeStamp" editable="false" prefWidth="209.0" sortable="false" text="TIMESTAMP" />
-          <TableColumn fx:id="message" editable="false" prefWidth="599.0" sortable="false" text="MESSAGE" />
+          <TableColumn fx:id="message" editable="false" prefWidth="776.0" sortable="false" text="MESSAGE" />
         </columns>
       </TableView>
       <Button fx:id="back" contentDisplay="CENTER" layoutX="47.0" layoutY="35.0" mnemonicParsing="false" onAction="#clickedBack" prefHeight="39.0" prefWidth="93.0" text="Back">

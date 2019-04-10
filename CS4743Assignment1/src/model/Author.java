@@ -19,7 +19,9 @@ public class Author {
 		this.website = ""; 		
 	}
 	
-	
+	public String toString() {
+		return this.firstName + " " + this.lastName;
+	}
 
 	public int getId() {
 		return id;

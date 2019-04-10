@@ -1,4 +1,5 @@
 package controller;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,17 +19,27 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.AuthorBook;
 import model.Book;
 import model.Publisher;
 import model.ViewType;
@@ -54,12 +65,16 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private ComboBox<Publisher> bookPublisher;
 	
 	//TODO: fix tablecolumn infer type
-    @FXML private TableView<?> authorTable;
-	@FXML private TableColumn<?, ?> author;
-	@FXML private TableColumn<?, ?> royalty;
+    @FXML private TableView<AuthorBook> authorTable;
+	@FXML private TableColumn<AuthorBook, String> author;
+	@FXML private TableColumn<AuthorBook, Integer> royalty;
 	
 	@FXML private Button addAuthor;
 	@FXML private Button deleteAuthor;
+	
+	//---
+	
+	//---
 
 	
 	private ObservableList<Publisher> publisherObservableList;
@@ -220,8 +235,21 @@ public class BookDetailViewController implements MyController, Initializable
 		addBook = false;
 				
 		beautify();
+		populateAuthorTable();
 	}	//end of initialize method
 
+	
+	public void populateAuthorTable()
+	{
+		List<AuthorBook> authorBookList = book.getAuthors();
+//		System.out.println(authorBookList);
+		ObservableList<AuthorBook> obsList = FXCollections.observableArrayList();
+		obsList.addAll(authorBookList);
+		author.setCellValueFactory(new PropertyValueFactory("Author"));
+		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));
+		authorTable.setItems(obsList);
+	}
+	
 
 	/**
 	 * parseTextArea reads from the TextArea fields and
@@ -306,8 +334,9 @@ public class BookDetailViewController implements MyController, Initializable
 	
 	
 	@FXML
-    void addAuthorClicked(ActionEvent event) {
-
+    void addAuthorClicked(ActionEvent event) 
+	{
+				
     }
 
     @FXML

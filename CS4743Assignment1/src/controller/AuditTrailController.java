@@ -38,7 +38,7 @@ public class AuditTrailController implements MyController, Initializable
 	@FXML private TableColumn<AuditTrailEntry,Integer> id;
 	@FXML private TableColumn<AuditTrailEntry,String> message;
 	@FXML private TableColumn<AuditTrailEntry,LocalDateTime> timeStamp;
-	private ObservableList auditObsList;
+	private ObservableList<AuditTrailEntry> auditObsList;
 	private ArrayList<AuditTrailEntry> auditArrayList;
 	
 	public AuditTrailController(List<AuditTrailEntry> a)

@@ -9,12 +9,21 @@ public class AuthorBook {
 	private int royalty;
 	private boolean newRecord;
 	
-	AuthorBook(){
+	public AuthorBook(Author a, Book b, int r, boolean n)
+	{
+		this.author = a;
+		this.book = b;
+		this.royalty = r;
+		this.newRecord = n;
+	}
+	
+	public AuthorBook(){
 		this.author = null; 
 		this.book = null;  
 		this.royalty=0; 
 		this.newRecord = true; 
 	}
+		
 	public Author getAuthor() {
 		return author;
 	}
