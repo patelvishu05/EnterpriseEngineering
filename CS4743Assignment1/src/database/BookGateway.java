@@ -89,6 +89,28 @@ public class BookGateway
 		return books;
 	}	//end of getBooks method
 	
+	public void deleteAuthorForBook(AuthorBook book)
+	{
+		String dbQuery = "DELETE FROM `author_book` WHERE `author_id` = ? AND `book_id` = ?;";
+		PreparedStatement ps = null;
+		try
+		{
+			ps = connection.prepareStatement(dbQuery);
+			ps.setInt(1, book.getAuthor().getId());
+			ps.setInt(2, book.getBook().getId());
+			ps.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps != null)
+				ps = null;
+		}
+		logger.info("Author Deleted for Book=" + book.getBook().getTitle());
+	}
 	
 	public List<AuthorBook> getAuthorsForBook(Book book)
 	{

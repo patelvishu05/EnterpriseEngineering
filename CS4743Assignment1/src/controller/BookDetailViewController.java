@@ -28,10 +28,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -68,7 +70,7 @@ public class BookDetailViewController implements MyController, Initializable
     @FXML private TableView<AuthorBook> authorTable;
 	@FXML private TableColumn<AuthorBook, String> author;
 	@FXML private TableColumn<AuthorBook, Integer> royalty;
-	
+	private ObservableList<AuthorBook> obsList;
 	@FXML private Button addAuthor;
 	@FXML private Button deleteAuthor;
 	
@@ -243,7 +245,7 @@ public class BookDetailViewController implements MyController, Initializable
 	{
 		List<AuthorBook> authorBookList = book.getAuthors();
 //		System.out.println(authorBookList);
-		ObservableList<AuthorBook> obsList = FXCollections.observableArrayList();
+		obsList = FXCollections.observableArrayList();
 		obsList.addAll(authorBookList);
 		author.setCellValueFactory(new PropertyValueFactory("Author"));
 		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));
@@ -340,8 +342,11 @@ public class BookDetailViewController implements MyController, Initializable
     }
 
     @FXML
-    void deleteAuthorClicked(ActionEvent event) {
-
+    void deleteAuthorClicked(ActionEvent event) 
+    {
+    	int selected = authorTable.getSelectionModel().getSelectedIndex();
+    	BookGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
+    	populateAuthorTable();
     }
 	
 	
