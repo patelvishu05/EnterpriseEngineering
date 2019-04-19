@@ -1,8 +1,6 @@
 package controller;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -11,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import application.Main;
+import database.AuthorTableGateway;
 import database.BookGateway;
 import database.PublisherTableGateway;
 import exception.DBException;
@@ -19,11 +18,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -33,14 +29,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.util.Callback;
+import model.Author;
 import model.AuthorBook;
 import model.Book;
 import model.Publisher;
@@ -65,20 +61,19 @@ public class BookDetailViewController implements MyController, Initializable
 	@FXML private TextArea bookYear;
 	@FXML private TextArea bookISBN;
 	@FXML private ComboBox<Publisher> bookPublisher;
-	
-	//TODO: fix tablecolumn infer type
-    @FXML private TableView<AuthorBook> authorTable;
+
+	@FXML private TableView<AuthorBook> authorTable;
 	@FXML private TableColumn<AuthorBook, String> author;
 	@FXML private TableColumn<AuthorBook, Integer> royalty;
 	private ObservableList<AuthorBook> obsList;
 	@FXML private Button addAuthor;
 	@FXML private Button deleteAuthor;
-	
-	//---
-	
+
 	//---
 
-	
+	//---
+
+
 	private ObservableList<Publisher> publisherObservableList;
 	private Book book;
 	public static boolean addBook;
@@ -97,7 +92,7 @@ public class BookDetailViewController implements MyController, Initializable
 
 	}
 
-	
+
 	/**
 	 * saveBook handles the saving of book to a database by calling
 	 * insert or update method from BookGateway class. If the book already
@@ -115,8 +110,8 @@ public class BookDetailViewController implements MyController, Initializable
 			//System.out.println("~~~~~" + previousBook + "\t" + editedbook);
 			//if(!Book.equalsBook(editedbook,previousBook)) 
 			//{
-				editedbook.setLastModified(previousBook.getLastModified());
-				editedbook.save(previousBook,editedbook);
+			editedbook.setLastModified(previousBook.getLastModified());
+			editedbook.save(previousBook,editedbook);
 			//}
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
@@ -177,7 +172,7 @@ public class BookDetailViewController implements MyController, Initializable
 		Optional<ButtonType> result =  alert.showAndWait(); 		
 
 		ButtonType button = result.orElse(ButtonType.CANCEL);
-		
+
 		if (button == ButtonType.YES) 
 		{
 			System.out.println("Ok pressed");
@@ -207,7 +202,7 @@ public class BookDetailViewController implements MyController, Initializable
 		alert.showAndWait();
 	}	//end of errorAlert method
 
-	
+
 	/**
 	 * initialize method before loading the view populates the
 	 * text views to show the book details
@@ -228,30 +223,30 @@ public class BookDetailViewController implements MyController, Initializable
 		bookISBN.setText(book.getISBN());
 		bookYear.setText(""+book.getYear());
 		bookPublisher.getSelectionModel().select(book.getPublisher());
-//		System.out.println("--->" + this.book);
-		
+		//		System.out.println("--->" + this.book);
+
 		if(addBook == true)
 			auditTrail.setDisable(true);
 		else
 			auditTrail.setDisable(false);
 		addBook = false;
-				
+
 		beautify();
 		populateAuthorTable();
 	}	//end of initialize method
 
-	
+
 	public void populateAuthorTable()
 	{
 		List<AuthorBook> authorBookList = book.getAuthors();
-//		System.out.println(authorBookList);
+		//		System.out.println(authorBookList);
 		obsList = FXCollections.observableArrayList();
 		obsList.addAll(authorBookList);
 		author.setCellValueFactory(new PropertyValueFactory("Author"));
 		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));
 		authorTable.setItems(obsList);
 	}
-	
+
 
 	/**
 	 * parseTextArea reads from the TextArea fields and
@@ -277,7 +272,7 @@ public class BookDetailViewController implements MyController, Initializable
 		book = new Book(id,title,summary,year,publisher,ISBN);
 		return book;
 	}	//end of parseTextArea method
-	
+
 	/**
 	 * startListening method sets listeners for all textAreas, 
 	 * so any change to them is keep tracked of
@@ -286,39 +281,39 @@ public class BookDetailViewController implements MyController, Initializable
 	public void startListening()
 	{
 		MainController.editedBook = new Book();
-		
+
 		bookId.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setId(Integer.parseInt(bookId.getText().replaceAll("[^0-9]", "").equals("") ? "0" : bookId.getText()) );
-			} });
-		
+			MainController.editedBook.setId(Integer.parseInt(bookId.getText().replaceAll("[^0-9]", "").equals("") ? "0" : bookId.getText()) );
+		} });
+
 		bookTitle.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setTitle((bookTitle.getText() == null) ? "" : bookTitle.getText());
-			} });
-		
+			MainController.editedBook.setTitle((bookTitle.getText() == null) ? "" : bookTitle.getText());
+		} });
+
 		bookSummary.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setSummary((bookSummary.getText() == null) ? "" : bookSummary.getText());
-			} });
-		
+			MainController.editedBook.setSummary((bookSummary.getText() == null) ? "" : bookSummary.getText());
+		} });
+
 		bookYear.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				MainController.editedBook.setYear(Integer.parseInt(bookYear.getText().replaceAll("[^0-9]", "").equals("") ? "0" :bookYear.getText()));
-			} });
-		
+			MainController.editedBook.setYear(Integer.parseInt(bookYear.getText().replaceAll("[^0-9]", "").equals("") ? "0" :bookYear.getText()));
+		} });
+
 		bookISBN.textProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
 			MainController.editedBook.setISBN((bookISBN.getText() == null) ? "" : bookISBN.getText());
-			} });
-		
+		} });
+
 		bookPublisher.valueProperty().addListener(new ChangeListener() { @Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
 			MainController.editedBook.setPublisher(bookPublisher.getSelectionModel().getSelectedItem().getPublisherID());
-			} });
-		
+		} });
+
 	}	//end of startListening method
-	
+
 
 	/**
 	 * beautify method applies font styles and sizes
@@ -333,21 +328,74 @@ public class BookDetailViewController implements MyController, Initializable
 		bookYear.setStyle("-fx-font-size: 3ex");
 		bookPublisher.setStyle("-fx-font-size: 3ex");
 	}
-	
-	
-	@FXML
-    void addAuthorClicked(ActionEvent event) 
-	{
-				
-    }
 
-    @FXML
-    void deleteAuthorClicked(ActionEvent event) 
-    {
-    	int selected = authorTable.getSelectionModel().getSelectedIndex();
-    	BookGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
-    	populateAuthorTable();
-    }
-	
-	
+
+	@FXML
+	void addAuthorClicked(ActionEvent event) 
+	{
+		AuthorBook currentAuthorBook = null;
+		
+		Dialog<AuthorBook> dialog = new Dialog<AuthorBook>();
+		dialog.setTitle("Add author");
+		dialog.setHeaderText("Add author");
+		ComboBox<Author> cAuthor = new ComboBox<Author>();
+		
+		List<Author> AuthorL = AuthorTableGateway.getInstance().getAuthors();
+		ObservableList<Author> oAuthor = FXCollections.observableArrayList();
+		oAuthor.addAll(AuthorL);
+		cAuthor.setItems(oAuthor);
+		
+		TextField royalty = new TextField();
+		
+		GridPane grid = new GridPane();
+		grid.add(new Label("Select Author :"), 1, 1);
+		grid.add(cAuthor, 2, 1);
+		grid.add(new Label("Royalty :"), 1, 2);
+		grid.add(royalty, 2, 2);
+		
+		dialog.getDialogPane().setContent(grid);
+		
+		ButtonType ok = new ButtonType("Okay", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().add(ok);
+		
+		dialog.setResultConverter(new Callback<ButtonType, AuthorBook>(){
+
+			@Override
+			public AuthorBook call(ButtonType b) {
+				if(b == ok)
+				{
+					AuthorBook temp = new AuthorBook();
+					temp.setRoyalty((int)(Double.parseDouble(royalty.getText() == null ? "1.0000" : royalty.getText()) * 100000));
+					temp.setAuthor(cAuthor.getSelectionModel().getSelectedItem());
+					temp.setBook(MainController.editedBook);
+					return temp;
+				}
+				return null;
+			}
+			
+		});
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner(Main.stage);
+		Optional<AuthorBook> result = dialog.showAndWait();
+		
+		if(result.isPresent())
+		{
+			currentAuthorBook = result.get();
+			System.out.println(currentAuthorBook);
+		}
+		
+	}
+
+	@FXML
+	void deleteAuthorClicked(ActionEvent event) 
+	{
+		int selected = authorTable.getSelectionModel().getSelectedIndex();
+		if(selected > 0 && selected < obsList.size())
+		{
+			BookGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
+			populateAuthorTable();
+		}
+	}
+
+
 }	//end of BookDetailViewController class

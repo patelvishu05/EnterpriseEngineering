@@ -19,6 +19,16 @@ public class Author {
 		this.website = ""; 		
 	}
 	
+	public Author(int id, String fn, String ln, LocalDate bd, String g, String w)
+	{
+		this.id = id;
+		this.firstName = fn;
+		this.lastName = ln;
+		this.dateOfBirth = bd;
+		this.gender = g;
+		this.website = w;
+	}
+	
 	public String toString() {
 		return this.firstName + " " + this.lastName;
 	}

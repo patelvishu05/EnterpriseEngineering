@@ -18,10 +18,14 @@ public class AuthorBook {
 	}
 	
 	public AuthorBook(){
-		this.author = null; 
-		this.book = null;  
+		this.author = new Author(); 
+		this.book = new Book();  
 		this.royalty=0; 
 		this.newRecord = true; 
+	}
+	
+	public String toString() {
+		return this.author + " " + this.book + " " + this.royalty + this.newRecord;
 	}
 		
 	public Author getAuthor() {

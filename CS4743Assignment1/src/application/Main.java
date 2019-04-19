@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import controller.BookDetailViewController;
 import controller.MainController;
+import database.AuthorTableGateway;
 import database.BookGateway;
 import database.PublisherTableGateway;
 import javafx.application.Application;
@@ -72,6 +73,7 @@ public class Main extends Application
 		Connection connection = ds.getConnection();
 		BookGateway.getInstance().setConnection(connection);
 		PublisherTableGateway.getInstance().setConnection(connection);
+		AuthorTableGateway.getInstance().setConnection(connection);
 		logger.info("Database Connection created !!");
 	}	//end of init method
 
