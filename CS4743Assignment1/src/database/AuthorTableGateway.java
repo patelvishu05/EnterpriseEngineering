@@ -1,16 +1,17 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import model.Author;
+import model.AuthorBook;
+import model.Book;
 
 public class AuthorTableGateway 
 {
@@ -64,6 +65,39 @@ public class AuthorTableGateway
 				st = null;
 		}
 		return authorList;
+	}
+	
+	public void addAuthorToBook(AuthorBook ab) {
+		PreparedStatement ps = null;
+		ResultSet rs= null;
+		try {
+			String dbQuery = "INSERT INTO `author_book` (`author_id`, `book_id`, `royalty`) VALUES (?, ?, ?);";
+			String dbQuery2 = "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
+			
+			ps = connection.prepareStatement(dbQuery,Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, ab.getAuthor().getId());
+			ps.setInt(2, ab.getBook().getId());
+			ps.setBigDecimal(3, new BigDecimal(((double)ab.getRoyalty()) / 100000));		
+			ps.executeUpdate();
+			
+			rs = ps.getGeneratedKeys();
+			rs.next();
+			ps = connection.prepareStatement(dbQuery2);
+			ps.setInt(1,ab.getBook().getId());
+			ps.setString(2, ab.getAuthor().getFirstName() + " " + ab.getAuthor().getLastName() + " Author Added !");
+			System.out.println(ps.toString());
+			ps.executeUpdate();
+			rs = null;
+			
+						
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null)
+				rs = null;
+			if(ps != null)
+				ps = null;
+		}
 	}
 
 	//--------------ACCESSORS--------------//

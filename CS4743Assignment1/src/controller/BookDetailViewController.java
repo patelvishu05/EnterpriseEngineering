@@ -382,6 +382,8 @@ public class BookDetailViewController implements MyController, Initializable
 		{
 			currentAuthorBook = result.get();
 			System.out.println(currentAuthorBook);
+			AuthorTableGateway.getInstance().addAuthorToBook(currentAuthorBook);
+			populateAuthorTable();
 		}
 		
 	}
