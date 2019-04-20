@@ -9,6 +9,8 @@ import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import model.Author;
 import model.AuthorBook;
 import model.Book;
@@ -98,6 +100,41 @@ public class AuthorTableGateway
 			if(ps != null)
 				ps = null;
 		}
+	}
+	
+	public boolean isDuplicateRecord(AuthorBook ab) 
+	{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		boolean flag = false;
+		try 
+		{
+			String dbQuery = "SELECT * FROM `author_book` WHERE `author_id` = ? AND`book_id` = ?;";
+			st = this.connection.prepareStatement(dbQuery);
+			st.setInt(1, ab.getAuthor().getId());
+			st.setInt(2, ab.getBook().getId());
+			rs = st.executeQuery(dbQuery);
+			
+			if(rs.next())
+				flag = true;
+		}
+		catch(SQLException e) 
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Duplicate Author Entry !!");
+			alert.setContentText("The author " + ab.getAuthor().getFirstName() + " " +
+					ab.getAuthor().getLastName() + " already exists for the book " + 
+					ab.getBook().getTitle());
+			alert.show();
+		}
+		finally
+		{
+			if(rs!=null)
+				rs = null;
+			if(st!=null)
+				st = null;
+		}
+		return flag;
 	}
 
 	//--------------ACCESSORS--------------//

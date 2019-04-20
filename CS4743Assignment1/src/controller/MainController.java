@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import model.Author;
 import model.Book;
 import model.ViewType;
 
@@ -38,6 +39,7 @@ public class MainController implements Initializable
 	@FXML private MenuItem exit;
 	@FXML private MenuItem bookList;
 	@FXML private MenuItem addBook;
+	@FXML private MenuItem addAuthor;
 
 	public static ViewType currentView;  // I added this variable to keep track of current view to prompt for user to save changes if user tries to exit while in BookDetailView
 
@@ -49,6 +51,10 @@ public class MainController implements Initializable
 	public static Book previousBook;
 	public static String auditChange;
 	//---
+	
+	//______
+	public Author selectedAuthor;
+	//______
 
 	//private constructor
 	private MainController() {
@@ -94,6 +100,13 @@ public class MainController implements Initializable
 						controller = new AuditTrailController(book.getAuditTrail());
 						currentView = ViewType.VIEW3;
 						System.out.println("Current view changed to VIEW3");
+						break;
+						
+			case VIEW4: viewString = "../view/AuthorDetailView.fxml";
+						setDisplayLabelText("Author Detail View");
+						controller = new AuthorDetailController(selectedAuthor);
+						currentView = ViewType.VIEW4;
+						System.out.println("Current View changed to VIEW4");
 						break;
 		}
 		try
@@ -229,6 +242,11 @@ public class MainController implements Initializable
 			BookDetailViewController.displaySaveErrorAlert();
 		}
 	}	//end of saveHelper method
+	
+	@FXML
+	void addAuthorClicked(ActionEvent event) {
+		switchView(ViewType.VIEW4,new Book());
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

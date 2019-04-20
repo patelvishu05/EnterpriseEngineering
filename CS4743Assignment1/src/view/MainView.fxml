@@ -19,6 +19,11 @@
               <MenuItem fx:id="addbook" mnemonicParsing="false" onAction="#clickedAddBook" text="Add book" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Author">
+              <items>
+                <MenuItem fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" text="Add Author" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Exit">
             <items>
               <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitApplication" text="Exit" />

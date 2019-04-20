@@ -382,8 +382,20 @@ public class BookDetailViewController implements MyController, Initializable
 		{
 			currentAuthorBook = result.get();
 			System.out.println(currentAuthorBook);
-			AuthorTableGateway.getInstance().addAuthorToBook(currentAuthorBook);
-			populateAuthorTable();
+			if(AuthorTableGateway.getInstance().isDuplicateRecord(currentAuthorBook))
+			{
+				AuthorTableGateway.getInstance().addAuthorToBook(currentAuthorBook);
+				populateAuthorTable();
+			}
+			else
+			{
+//				Alert alert = new Alert(AlertType.INFORMATION);
+//				alert.setHeaderText("Duplicate Author Entry !!");
+//				alert.setContentText("The author " + currentAuthorBook.getAuthor().getFirstName() + " " +
+//						currentAuthorBook.getAuthor().getLastName() + " already exists for the book " + 
+//						currentAuthorBook.getBook().getTitle());
+//				alert.show();
+			}
 		}
 		
 	}
