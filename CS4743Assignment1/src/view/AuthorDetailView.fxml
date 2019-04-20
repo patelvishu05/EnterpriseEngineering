@@ -84,19 +84,8 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </TextArea>
-            <Label prefHeight="45.0" prefWidth="95.0" text="Royalty :" GridPane.rowIndex="6">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="authorRoyalty" prefHeight="19.0" prefWidth="385.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </GridPane.margin>
-            </TextArea>
          </children>
       </GridPane>
-      <Label fx:id="addAuthorBookDisplay" layoutX="123.0" layoutY="49.0" prefHeight="69.0" prefWidth="473.0" />
       <Button fx:id="ok" defaultButton="true" layoutX="211.0" layoutY="629.0" mnemonicParsing="false" onAction="#clickedOk" prefHeight="54.0" prefWidth="149.0" text="OK" />
       <Button fx:id="cancel" layoutX="392.0" layoutY="629.0" mnemonicParsing="false" onAction="#clickedCancel" prefHeight="54.0" prefWidth="149.0" text="Cancel" />
    </children>

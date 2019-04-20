@@ -20,17 +20,17 @@ public class AuthorTableGateway
 	private static AuthorTableGateway instance;	
 	private static Logger logger = LogManager.getLogger(AuthorTableGateway.class);
 	private Connection connection;
-	
+
 	private AuthorTableGateway(){
-		
+
 	}
-	
+
 	public static AuthorTableGateway getInstance() {
 		if(instance == null)
 			instance = new AuthorTableGateway();
 		return instance;
 	}
-	
+
 	public List<Author> getAuthors() 
 	{
 		List<Author> authorList = new ArrayList<Author>();
@@ -42,7 +42,7 @@ public class AuthorTableGateway
 			String dbQuery = "SELECT * from AuthorDatabase";
 			st = this.connection.createStatement();
 			rs = st.executeQuery(dbQuery);
-			
+
 			while(rs.next())
 			{
 				author = new Author();
@@ -68,20 +68,20 @@ public class AuthorTableGateway
 		}
 		return authorList;
 	}
-	
+
 	public void addAuthorToBook(AuthorBook ab) {
 		PreparedStatement ps = null;
 		ResultSet rs= null;
 		try {
 			String dbQuery = "INSERT INTO `author_book` (`author_id`, `book_id`, `royalty`) VALUES (?, ?, ?);";
 			String dbQuery2 = "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
-			
+
 			ps = connection.prepareStatement(dbQuery,Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, ab.getAuthor().getId());
 			ps.setInt(2, ab.getBook().getId());
 			ps.setBigDecimal(3, new BigDecimal(((double)ab.getRoyalty()) / 100000));		
 			ps.executeUpdate();
-			
+
 			rs = ps.getGeneratedKeys();
 			rs.next();
 			ps = connection.prepareStatement(dbQuery2);
@@ -90,8 +90,8 @@ public class AuthorTableGateway
 			System.out.println(ps.toString());
 			ps.executeUpdate();
 			rs = null;
-			
-						
+
+
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -101,7 +101,7 @@ public class AuthorTableGateway
 				ps = null;
 		}
 	}
-	
+
 	public boolean isDuplicateRecord(AuthorBook ab) 
 	{
 		PreparedStatement st = null;
@@ -114,7 +114,7 @@ public class AuthorTableGateway
 			st.setInt(1, ab.getAuthor().getId());
 			st.setInt(2, ab.getBook().getId());
 			rs = st.executeQuery(dbQuery);
-			
+
 			if(rs.next())
 				flag = true;
 		}
@@ -137,8 +137,35 @@ public class AuthorTableGateway
 		return flag;
 	}
 
+	public void insertAuthor(Author a)
+	{
+		String dbQuery = "INSERT INTO `AuthorDatabase` (`author_id`, `first_name`, `last_name`, `dob`, `gender`, `web_site`) VALUES (?,?,?,?,?,?)";		
+		PreparedStatement ps = null;
+		try
+		{
+			ps = connection.prepareStatement(dbQuery,Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, a.getId());
+			ps.setString(2, a.getFirstName());
+			ps.setString(3, a.getLastName());
+			ps.setDate(4, Date.valueOf(a.getDateOfBirth()));
+			ps.setString(5, a.getGender());
+			ps.setString(6, a.getWebsite());
+			ps.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps!=null)
+				ps = null;
+		}
+		logger.info("Book Created: id=" + a.getId() + "\tName= " + a.getFirstName() + " " + a.getLastName());
+	}
+
 	//--------------ACCESSORS--------------//
-	
+
 	public Connection getConnection() {
 		return connection;
 	}

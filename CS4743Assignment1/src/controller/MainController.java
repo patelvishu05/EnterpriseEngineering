@@ -108,6 +108,10 @@ public class MainController implements Initializable
 						currentView = ViewType.VIEW4;
 						System.out.println("Current View changed to VIEW4");
 						break;
+			
+//			case HOME: viewString = "../view/MainView.fxml";
+//						controller = this.getInstance();
+						
 		}
 		try
 		{
@@ -245,6 +249,7 @@ public class MainController implements Initializable
 	
 	@FXML
 	void addAuthorClicked(ActionEvent event) {
+		this.selectedAuthor = new Author();
 		switchView(ViewType.VIEW4,new Book());
 	}
 
