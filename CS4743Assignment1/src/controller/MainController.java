@@ -108,10 +108,7 @@ public class MainController implements Initializable
 						currentView = ViewType.VIEW4;
 						System.out.println("Current View changed to VIEW4");
 						break;
-			
-//			case HOME: viewString = "../view/MainView.fxml";
-//						controller = this.getInstance();
-						
+								
 		}
 		try
 		{

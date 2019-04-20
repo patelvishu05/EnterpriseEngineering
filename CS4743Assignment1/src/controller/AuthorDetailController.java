@@ -14,9 +14,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import model.Author;
 import model.Book;
@@ -52,11 +54,21 @@ public class AuthorDetailController implements Initializable, MyController
 		Author createdAuthor = new Author(id, fn, ln, bd, g, w);
 		AuthorTableGateway.getInstance().insertAuthor(createdAuthor);
 		System.out.println(createdAuthor);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("Success !!");
+		alert.setContentText("Author " + createdAuthor.getFirstName() + " " + createdAuthor.getLastName() +
+				" successfully added to the Database !!");
+		alert.showAndWait();
+		switchToHomeView();
 	}
 
 	@FXML
 	void clickedCancel(ActionEvent event) 
 	{
+		switchToHomeView();
+	}
+	
+	public void switchToHomeView() {
 		try 
 		{
 			URL url = Main.class.getResource("../view/MainView.fxml");
@@ -69,7 +81,7 @@ public class AuthorDetailController implements Initializable, MyController
 			Main.stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}	
 	}
 
 	@Override

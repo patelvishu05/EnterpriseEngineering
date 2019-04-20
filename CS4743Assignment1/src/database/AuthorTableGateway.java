@@ -113,19 +113,20 @@ public class AuthorTableGateway
 			st = this.connection.prepareStatement(dbQuery);
 			st.setInt(1, ab.getAuthor().getId());
 			st.setInt(2, ab.getBook().getId());
-			rs = st.executeQuery(dbQuery);
+			rs = st.executeQuery();
 
 			if(rs.next())
 				flag = true;
 		}
 		catch(SQLException e) 
 		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Duplicate Author Entry !!");
-			alert.setContentText("The author " + ab.getAuthor().getFirstName() + " " +
-					ab.getAuthor().getLastName() + " already exists for the book " + 
-					ab.getBook().getTitle());
-			alert.show();
+			e.printStackTrace();
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setHeaderText("Duplicate Author Entry !!");
+//			alert.setContentText("The author " + ab.getAuthor().getFirstName() + " " +
+//					ab.getAuthor().getLastName() + " already exists for the book " + 
+//					ab.getBook().getTitle());
+//			alert.show();
 		}
 		finally
 		{

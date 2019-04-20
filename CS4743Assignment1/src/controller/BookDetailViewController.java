@@ -245,6 +245,7 @@ public class BookDetailViewController implements MyController, Initializable
 		author.setCellValueFactory(new PropertyValueFactory("Author"));
 		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));
 		authorTable.setItems(obsList);
+		authorTable.setStyle("-fx-font-size: 3ex");
 	}
 
 
@@ -382,19 +383,19 @@ public class BookDetailViewController implements MyController, Initializable
 		{
 			currentAuthorBook = result.get();
 			System.out.println(currentAuthorBook);
-			if(AuthorTableGateway.getInstance().isDuplicateRecord(currentAuthorBook))
+			if(!(AuthorTableGateway.getInstance().isDuplicateRecord(currentAuthorBook)))
 			{
 				AuthorTableGateway.getInstance().addAuthorToBook(currentAuthorBook);
 				populateAuthorTable();
 			}
 			else
 			{
-//				Alert alert = new Alert(AlertType.INFORMATION);
-//				alert.setHeaderText("Duplicate Author Entry !!");
-//				alert.setContentText("The author " + currentAuthorBook.getAuthor().getFirstName() + " " +
-//						currentAuthorBook.getAuthor().getLastName() + " already exists for the book " + 
-//						currentAuthorBook.getBook().getTitle());
-//				alert.show();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setHeaderText("Duplicate Author Entry !!");
+				alert.setContentText("The author " + currentAuthorBook.getAuthor().getFirstName() + " " +
+						currentAuthorBook.getAuthor().getLastName() + " already exists for the book " + 
+						currentAuthorBook.getBook().getTitle());
+				alert.show();
 			}
 		}
 		
@@ -404,7 +405,8 @@ public class BookDetailViewController implements MyController, Initializable
 	void deleteAuthorClicked(ActionEvent event) 
 	{
 		int selected = authorTable.getSelectionModel().getSelectedIndex();
-		if(selected > 0 && selected < obsList.size())
+		System.out.println("------>>>" + selected);
+		if(selected >= 0 && selected < obsList.size())
 		{
 			BookGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
 			populateAuthorTable();
