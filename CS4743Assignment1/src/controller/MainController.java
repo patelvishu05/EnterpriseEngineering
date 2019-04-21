@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import model.Author;
+import model.AuthorBook;
 import model.Book;
 import model.ViewType;
 
@@ -54,6 +55,8 @@ public class MainController implements Initializable
 	
 	//______
 	public Author selectedAuthor;
+	public static boolean royaltyChanged = false;
+	public static AuthorBook rab;
 	//______
 
 	//private constructor

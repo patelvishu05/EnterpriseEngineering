@@ -9,6 +9,7 @@ import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import controller.MainController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.Author;
@@ -21,8 +22,7 @@ public class AuthorTableGateway
 	private static Logger logger = LogManager.getLogger(AuthorTableGateway.class);
 	private Connection connection;
 
-	private AuthorTableGateway(){
-
+	private AuthorTableGateway() {
 	}
 
 	public static AuthorTableGateway getInstance() {
@@ -86,7 +86,13 @@ public class AuthorTableGateway
 			rs.next();
 			ps = connection.prepareStatement(dbQuery2);
 			ps.setInt(1,ab.getBook().getId());
-			ps.setString(2, ab.getAuthor().getFirstName() + " " + ab.getAuthor().getLastName() + " Author Added !");
+			if(MainController.royaltyChanged)
+				ps.setString(2, MainController.rab.getAuthor().getFirstName() + " " + 
+								MainController.rab.getAuthor().getLastName() + "'s royalty " +
+								"changed from " + (((double)MainController.rab.getRoyalty()) / 100000) + "%" + 
+								" to " + (((double)ab.getRoyalty()) / 100000) + "%");
+			else
+				ps.setString(2, ab.getAuthor().getFirstName() + " " + ab.getAuthor().getLastName() + " Author Added !");
 			System.out.println(ps.toString());
 			ps.executeUpdate();
 			rs = null;
@@ -105,13 +111,26 @@ public class AuthorTableGateway
 	public void deleteAuthorForBook(AuthorBook book)
 	{
 		String dbQuery = "DELETE FROM `author_book` WHERE `author_id` = ? AND `book_id` = ?;";
+		String dbQuery2 = "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try
 		{
-			ps = connection.prepareStatement(dbQuery);
+			ps = connection.prepareStatement(dbQuery,Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, book.getAuthor().getId());
 			ps.setInt(2, book.getBook().getId());
 			ps.executeUpdate();
+			
+			rs = ps.getGeneratedKeys();
+			rs.next();
+			ps = connection.prepareStatement(dbQuery2);
+			ps.setInt(1,book.getBook().getId());
+			if(MainController.royaltyChanged == false)
+				ps.setString(2, book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName() + " Author Deleted !");
+			System.out.println(ps.toString());
+			ps.executeUpdate();
+			rs = null;
+			
 		}
 		catch(SQLException e)
 		{
@@ -121,6 +140,8 @@ public class AuthorTableGateway
 		{
 			if(ps != null)
 				ps = null;
+			if(rs != null)
+				rs = null;
 		}
 		logger.info("Author Deleted for Book=" + book.getBook().getTitle());
 	}

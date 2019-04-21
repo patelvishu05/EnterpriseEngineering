@@ -258,7 +258,10 @@ public class BookDetailViewController implements MyController, Initializable
 		     }
 		  });
 		
-		
+		if(obsList.size() <= 0)
+			deleteAuthor.setDisable(true);
+		else
+			deleteAuthor.setDisable(false);
 		authorTable.setItems(obsList);
 		authorTable.setStyle("-fx-font-size: 3ex");
 	}
@@ -483,9 +486,12 @@ public class BookDetailViewController implements MyController, Initializable
 				AuthorBook newRecord = result.get();
 				if(!(AuthorTableGateway.getInstance().isDuplicateRecord(newRecord)))
 				{
+					MainController.royaltyChanged = true;
+					MainController.rab = authorSelected;
 					AuthorTableGateway.getInstance().deleteAuthorForBook(authorSelected);
 					AuthorTableGateway.getInstance().addAuthorToBook(newRecord);
 					populateAuthorTable();
+					MainController.royaltyChanged = false;
 				}
 				else
 				{
