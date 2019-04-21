@@ -127,11 +127,13 @@ public class Book
 			primaryKeys.add(b.getId());
 		if(!(primaryKeys.contains(book.getId()))) 
 		{
+			System.out.println("1" + l + "\t" + book);
 			BookGateway.getInstance().deleteBook(l);
 			BookGateway.getInstance().insertBook(book);
 		}
 		else 
 		{
+			System.out.println("2" + l + "\t" + book);
 			BookGateway.getInstance().updateBook(this);
 		}
 	}	//end of save method

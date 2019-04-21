@@ -69,7 +69,7 @@ public class BookGateway
 				book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
 				book.setISBN(rs.getString("isbn"));
 				book.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
-//				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
+				//				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
 				books.add(book);
 			}
 			rs.close();
@@ -88,30 +88,30 @@ public class BookGateway
 		}
 		return books;
 	}	//end of getBooks method
-	
 
-	
+
+
 	public List<AuthorBook> getAuthorsForBook(Book book)
 	{
 		List<AuthorBook> bookAuthors = new ArrayList<AuthorBook>();
-		
+
 		Book b = null;
 		Author a = null;
 		AuthorBook ab = null;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String dbQuery = "SELECT * from author_book " + 
-						"    INNER JOIN AuthorDatabase AD on author_book.author_id = AD.author_id " + 
-						"    INNER JOIN BookDatabase BD on author_book.book_id = BD.id "     +  
-						"    WHERE book_id=?;";
+				"    INNER JOIN AuthorDatabase AD on author_book.author_id = AD.author_id " + 
+				"    INNER JOIN BookDatabase BD on author_book.book_id = BD.id "     +  
+				"    WHERE book_id=?;";
 		try
 		{
 			ps = this.connection.prepareStatement(dbQuery);
 			ps.setString(1, ""+book.getId());
 			rs = ps.executeQuery();
-			
+
 			while(rs.next())
 			{
 				b = new Book();
@@ -122,7 +122,7 @@ public class BookGateway
 				b.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
 				b.setISBN(rs.getString("isbn"));
 				b.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
-				
+
 				a = new Author();
 				a.setId(Integer.parseInt(rs.getString("author_id")));
 				a.setFirstName(rs.getString("first_name"));
@@ -130,16 +130,18 @@ public class BookGateway
 				a.setDateOfBirth(LocalDate.parse(rs.getString("dob"), formatter));
 				a.setGender(rs.getString("gender"));
 				a.setWebsite(rs.getString("web_site"));
-				
+
 				ab = new AuthorBook();
 				ab.setAuthor(a);
 				ab.setBook(b);
 				System.out.println(rs.getString("royalty"));
 				double royalty = Double.parseDouble(rs.getString("royalty")) * 100000;
 				ab.setRoyalty((int) royalty );
-				
+
 				bookAuthors.add(ab);
 			}
+			rs.close();
+			ps.close();
 		}
 		catch(SQLException e)
 		{
@@ -152,11 +154,11 @@ public class BookGateway
 			if(ps!=null)
 				ps = null;
 		}
-		
+
 		return bookAuthors;
 	}
-	
-	
+
+
 	public List<AuditTrailEntry> getAudit(Book book)
 	{
 		List<AuditTrailEntry> bookAudits = new ArrayList<AuditTrailEntry>();
@@ -194,7 +196,7 @@ public class BookGateway
 		}
 		return bookAudits;
 	}
-	
+
 
 	/**
 	 * delete is the delete part of CRUD of our application that
@@ -212,6 +214,7 @@ public class BookGateway
 			ps = connection.prepareStatement(dbQuery);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
+			ps.close();
 		}
 		catch(SQLException e)
 		{
@@ -249,7 +252,7 @@ public class BookGateway
 			ps.setInt(5, book.getPublisher());
 			ps.setString(6, book.getISBN());
 			ps.executeUpdate();
-			
+
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			ps = connection.prepareStatement(dbQuery2);
@@ -257,7 +260,8 @@ public class BookGateway
 			ps.setString(2, "Book Added !");
 			System.out.println(ps.toString());
 			ps.executeUpdate();
-			rs = null;
+			rs.close();
+			ps.close();
 		}
 		catch(SQLException e)
 		{
@@ -271,7 +275,7 @@ public class BookGateway
 		logger.info("Book Created: id=" + book.getId() + "\ttitle= " + book.getTitle());
 	}	//end of insert method
 
-	
+
 	public LocalDateTime getBookLastModifiedById(int id) throws SQLException 
 	{
 		LocalDateTime date = null;
@@ -284,7 +288,7 @@ public class BookGateway
 			rs.next();
 			Timestamp ts = rs.getTimestamp("last_modified");
 			date = ts.toLocalDateTime();
-			
+			st.close();
 		} 
 		catch (SQLException e) 
 		{
@@ -293,25 +297,17 @@ public class BookGateway
 		} 
 		finally 
 		{
-			try 
-			{
-				if(st != null)
-					st.close();
-			} 
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-				throw new SQLException(e);
-			}
+			if(st != null)
+				st= null;
 		}
 
 		return date;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * update method receives a book  in paramater and make
 	 * updates necessary components of the book in the book
@@ -324,15 +320,14 @@ public class BookGateway
 	{
 		//First check whether time stamps match 
 		LocalDateTime currentTimestamp = getBookLastModifiedById(book.getId()); 
-		
+
 		if(!currentTimestamp.equals(book.getLastModified())) 
 		{
 			System.out.println("currentTimestamp:"+ currentTimestamp + "bookTimestamp:\n" + book.getLastModified() + "\n" );
 			BookDetailViewController.displaySaveErrorAlert(); 
 			return;
 		}
-		
-		
+
 		String dbQuery = "UPDATE BookDatabase SET "
 				+ "`title` = ?, "
 				+ "`summary` = ?, "
@@ -340,7 +335,7 @@ public class BookGateway
 				+ "`publisher_id` = ?, "
 				+ "`isbn` = ? "
 				+ "WHERE (`id` = ?)";
-		
+
 		String dbQuery2= "INSERT INTO book_audit_trail (`book_id` ,`entry_msg`) VALUES (?,?);";
 
 		if(!(MainController.auditChange.equals("")))
@@ -353,18 +348,19 @@ public class BookGateway
 			ps.setInt(4, book.getPublisher());
 			ps.setString(5, book.getISBN());
 			ps.setInt(6, book.getId());
-	//		System.out.println(ps.toString());
+			//		System.out.println(ps.toString());
 			ps.executeUpdate();
 			ps = connection.prepareStatement(dbQuery2);
 			ps.setInt(1,book.getId());
 			ps.setString(2,MainController.auditChange);
 			ps.executeUpdate();
+			ps.close();
 		}
 
 		logger.info("Book updated");
 	}	//end of update method
-	
-	
+
+
 	//--------------ACCESSORS--------------//
 	public Connection getConnection()
 	{

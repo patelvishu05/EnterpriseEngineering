@@ -22,6 +22,7 @@
             <Menu mnemonicParsing="false" text="Author">
               <items>
                 <MenuItem fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" text="Add Author" />
+                  <MenuItem fx:id="authorList" mnemonicParsing="false" onAction="#clickedAuthorList" text="Author List" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Exit">

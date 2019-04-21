@@ -54,6 +54,8 @@ public class AuthorTableGateway
 				author.setWebsite(rs.getString("web_site"));
 				authorList.add(author);
 			}
+			rs.close();
+			st.close();
 		}
 		catch(SQLException e) 
 		{
@@ -95,8 +97,8 @@ public class AuthorTableGateway
 				ps.setString(2, ab.getAuthor().getFirstName() + " " + ab.getAuthor().getLastName() + " Author Added !");
 			System.out.println(ps.toString());
 			ps.executeUpdate();
-			rs = null;
-
+			rs.close();
+			ps.close();
 
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -129,8 +131,8 @@ public class AuthorTableGateway
 				ps.setString(2, book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName() + " Author Deleted !");
 			System.out.println(ps.toString());
 			ps.executeUpdate();
-			rs = null;
-			
+			rs.close();
+			ps.close();			
 		}
 		catch(SQLException e)
 		{
@@ -168,6 +170,8 @@ public class AuthorTableGateway
 				if(temp.getRoyalty() == ab.getRoyalty())
 					flag = true;
 			}
+			rs.close();
+			st.close();
 		}
 		catch(SQLException e) 
 		{
@@ -197,6 +201,7 @@ public class AuthorTableGateway
 			ps.setString(5, a.getGender());
 			ps.setString(6, a.getWebsite());
 			ps.executeUpdate();
+			ps.close();
 		}
 		catch(SQLException e)
 		{
@@ -208,6 +213,66 @@ public class AuthorTableGateway
 				ps = null;
 		}
 		logger.info("Book Created: id=" + a.getId() + "\tName= " + a.getFirstName() + " " + a.getLastName());
+	}
+	
+	public void deleteAuthor(Author a)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			String dbQuery = "DELETE from `AuthorDatabase` WHERE author_id = ?;";
+			
+			ps = this.connection.prepareStatement(dbQuery);
+			ps.setInt(1, a.getId());
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch(SQLException e)
+		{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Delete Error !!");
+			alert.setContentText("Cannot delete this author because he is " + 
+					"associated with atleast 1 book");
+			alert.showAndWait();
+		}
+		finally
+		{
+			if(ps!=null)
+				ps = null;
+		}
+	}
+	
+	public void updateAuthor(Author a)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			String dbQuery = "UPDATE `AuthorDatabase` SET"
+					+ "`first_name` = ?, "
+					+ "`last_name` = ?, "
+					+ "`dob` = ?, "
+					+ "`gender` = ?, "
+					+ "`web_site` = ?"
+					+ " WHERE (`author_id` = ?);";
+			ps = this.connection.prepareStatement(dbQuery);
+			ps.setString(1, a.getFirstName());
+			ps.setString(2, a.getLastName());
+			ps.setDate(3, Date.valueOf(a.getDateOfBirth()));
+			ps.setString(4, a.getGender());
+			ps.setString(5, a.getWebsite());
+			ps.setInt(6, a.getId());
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps != null)
+				ps = null;
+		}
 	}
 
 	//--------------ACCESSORS--------------//

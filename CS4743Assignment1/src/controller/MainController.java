@@ -41,6 +41,7 @@ public class MainController implements Initializable
 	@FXML private MenuItem bookList;
 	@FXML private MenuItem addBook;
 	@FXML private MenuItem addAuthor;
+	@FXML private MenuItem authorList;
 
 	public static ViewType currentView;  // I added this variable to keep track of current view to prompt for user to save changes if user tries to exit while in BookDetailView
 
@@ -54,9 +55,11 @@ public class MainController implements Initializable
 	//---
 	
 	//______
-	public Author selectedAuthor;
+	public static Author selectedAuthor;
 	public static boolean royaltyChanged = false;
 	public static AuthorBook rab;
+	public static Author previousAuthor;
+	public static Author editedAuthor;
 	//______
 
 	//private constructor
@@ -110,6 +113,13 @@ public class MainController implements Initializable
 						controller = new AuthorDetailController(selectedAuthor);
 						currentView = ViewType.VIEW4;
 						System.out.println("Current View changed to VIEW4");
+						break;
+			
+			case VIEW5: viewString = "../view/AuthorListView.fxml";
+						setDisplayLabelText("Author List View");
+						controller = new AuthorListController();
+						currentView = ViewType.VIEW5;
+						System.out.println("Current View changed to VIEW5");
 						break;
 								
 		}
@@ -251,6 +261,11 @@ public class MainController implements Initializable
 	void addAuthorClicked(ActionEvent event) {
 		this.selectedAuthor = new Author();
 		switchView(ViewType.VIEW4,new Book());
+	}
+	
+	@FXML
+	void clickedAuthorList(ActionEvent event) {
+		switchView(ViewType.VIEW5, new Book());
 	}
 
 	@Override

@@ -1,6 +1,11 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import controller.MainController;
+import database.AuthorTableGateway;
+import database.BookGateway;
 
 public class Author {
 	private int id;
@@ -31,6 +36,23 @@ public class Author {
 	
 	public String toString() {
 		return this.firstName + " " + this.lastName;
+	}
+	
+	public void save(Author a, Author b) {
+		ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
+		for(Author temp : AuthorTableGateway.getInstance().getAuthors())
+			primaryKeys.add(temp.getId());
+		if(!(primaryKeys.contains(b.getId()))) 
+		{
+			System.out.println("1" + a + "\t" + b);
+			AuthorTableGateway.getInstance().deleteAuthor(a);
+			AuthorTableGateway.getInstance().insertAuthor(b);
+		}
+		else 
+		{
+			System.out.println("2" + a + "\t" + b);
+			AuthorTableGateway.getInstance().updateAuthor(b);
+		}
 	}
 
 	public int getId() {

@@ -61,7 +61,7 @@ public class BookListController implements MyController
 	public void deleteBook(ActionEvent event)
 	{
 		int bookSelected = booklist.getSelectionModel().getSelectedIndex();
-		if(bookSelected > 0 && bookSelected < booksObservableList.size())
+		if(bookSelected >= 0 && bookSelected < booksObservableList.size())
 		{
 			BookGateway.getInstance().deleteBook(booksObservableList.get(bookSelected));
 			initialize();

@@ -112,7 +112,7 @@ public class BookDetailViewController implements MyController, Initializable
 		{	
 			previousBook = this.book;
 			editedbook = parseTextArea();
-			//System.out.println("~~~~~" + previousBook + "\t" + editedbook);
+			System.out.println("~~~~~" + previousBook + "\t" + editedbook);
 			//if(!Book.equalsBook(editedbook,previousBook)) 
 			//{
 			editedbook.setLastModified(previousBook.getLastModified());
