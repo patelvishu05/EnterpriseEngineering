@@ -109,7 +109,7 @@
             <RowConstraints maxHeight="293.0" minHeight="0.0" prefHeight="90.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <TableView fx:id="authorTable" layoutX="904.0" layoutY="167.0" prefHeight="492.0" prefWidth="615.0">
+      <TableView fx:id="authorTable" layoutX="904.0" layoutY="167.0" onMouseClicked="#handleAuthorClicked" prefHeight="492.0" prefWidth="615.0">
         <columns>
           <TableColumn fx:id="author" editable="false" prefWidth="433.0" sortable="false" text="Author" />
           <TableColumn fx:id="royalty" editable="false" prefWidth="181.0" sortable="false" text="Royalty" />

@@ -101,12 +101,36 @@ public class AuthorTableGateway
 				ps = null;
 		}
 	}
+	
+	public void deleteAuthorForBook(AuthorBook book)
+	{
+		String dbQuery = "DELETE FROM `author_book` WHERE `author_id` = ? AND `book_id` = ?;";
+		PreparedStatement ps = null;
+		try
+		{
+			ps = connection.prepareStatement(dbQuery);
+			ps.setInt(1, book.getAuthor().getId());
+			ps.setInt(2, book.getBook().getId());
+			ps.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(ps != null)
+				ps = null;
+		}
+		logger.info("Author Deleted for Book=" + book.getBook().getTitle());
+	}
 
 	public boolean isDuplicateRecord(AuthorBook ab) 
 	{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		boolean flag = false;
+		AuthorBook temp = null;
 		try 
 		{
 			String dbQuery = "SELECT * FROM `author_book` WHERE `author_id` = ? AND`book_id` = ?;";
@@ -116,17 +140,17 @@ public class AuthorTableGateway
 			rs = st.executeQuery();
 
 			if(rs.next())
-				flag = true;
+			{
+				temp = new AuthorBook();
+				double royalty = Double.parseDouble(rs.getString("royalty")) * 100000;
+				temp.setRoyalty((int) royalty );
+				if(temp.getRoyalty() == ab.getRoyalty())
+					flag = true;
+			}
 		}
 		catch(SQLException e) 
 		{
 			e.printStackTrace();
-//			Alert alert = new Alert(AlertType.INFORMATION);
-//			alert.setHeaderText("Duplicate Author Entry !!");
-//			alert.setContentText("The author " + ab.getAuthor().getFirstName() + " " +
-//					ab.getAuthor().getLastName() + " already exists for the book " + 
-//					ab.getBook().getTitle());
-//			alert.show();
 		}
 		finally
 		{

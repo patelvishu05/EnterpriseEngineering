@@ -13,6 +13,8 @@ import database.AuthorTableGateway;
 import database.BookGateway;
 import database.PublisherTableGateway;
 import exception.DBException;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,13 +28,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.util.Callback;
@@ -64,7 +69,7 @@ public class BookDetailViewController implements MyController, Initializable
 
 	@FXML private TableView<AuthorBook> authorTable;
 	@FXML private TableColumn<AuthorBook, String> author;
-	@FXML private TableColumn<AuthorBook, Integer> royalty;
+	@FXML private TableColumn<AuthorBook, String> royalty;
 	private ObservableList<AuthorBook> obsList;
 	@FXML private Button addAuthor;
 	@FXML private Button deleteAuthor;
@@ -243,7 +248,17 @@ public class BookDetailViewController implements MyController, Initializable
 		obsList = FXCollections.observableArrayList();
 		obsList.addAll(authorBookList);
 		author.setCellValueFactory(new PropertyValueFactory("Author"));
-		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));
+//		royalty.setCellValueFactory(new PropertyValueFactory("Royalty"));		
+				
+		royalty.setCellValueFactory(new Callback<CellDataFeatures<AuthorBook,String>, ObservableValue<String>>() {
+			@Override
+		     public ObservableValue<String> call(CellDataFeatures<AuthorBook, String> p) {
+				String s = (((double)p.getValue().getRoyalty()) / 100000) + "%";
+		         return new ReadOnlyObjectWrapper(s);
+		     }
+		  });
+		
+		
 		authorTable.setItems(obsList);
 		authorTable.setStyle("-fx-font-size: 3ex");
 	}
@@ -363,10 +378,10 @@ public class BookDetailViewController implements MyController, Initializable
 
 			@Override
 			public AuthorBook call(ButtonType b) {
-				if(b == ok)
+				if(b == ok && cAuthor.getSelectionModel().getSelectedItem() != null)
 				{
 					AuthorBook temp = new AuthorBook();
-					temp.setRoyalty((int)(Double.parseDouble(royalty.getText() == null ? "1.0000" : royalty.getText()) * 100000));
+					temp.setRoyalty((int)(Double.parseDouble(royalty.getText().equals("") ? "1.0000" : royalty.getText()) * 100000));
 					temp.setAuthor(cAuthor.getSelectionModel().getSelectedItem());
 					temp.setBook(MainController.editedBook);
 					return temp;
@@ -405,11 +420,83 @@ public class BookDetailViewController implements MyController, Initializable
 	void deleteAuthorClicked(ActionEvent event) 
 	{
 		int selected = authorTable.getSelectionModel().getSelectedIndex();
-		System.out.println("------>>>" + selected);
 		if(selected >= 0 && selected < obsList.size())
 		{
-			BookGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
+			AuthorTableGateway.getInstance().deleteAuthorForBook(obsList.get(selected));
 			populateAuthorTable();
+		}
+	}
+	
+	@FXML
+	void handleAuthorClicked(MouseEvent event)
+	{
+		AuthorBook authorSelected = authorTable.getSelectionModel().getSelectedItem();
+		if(event.getClickCount() == 2 && authorSelected != null)
+		{
+			System.out.println(authorSelected);
+			
+			Dialog<AuthorBook> dialog = new Dialog<AuthorBook>();
+			dialog.setTitle("Edit Author");
+			ComboBox<Author> cAuthor = new ComboBox<Author>();
+			
+			List<Author> AuthorL = AuthorTableGateway.getInstance().getAuthors();
+			ObservableList<Author> oAuthor = FXCollections.observableArrayList();
+			oAuthor.addAll(AuthorL);
+			cAuthor.setItems(oAuthor);
+			cAuthor.getSelectionModel().select(authorSelected.getAuthor());			
+			TextField royalty = new TextField(""+(((double)authorSelected.getRoyalty()) / 100000));
+			
+			GridPane grid = new GridPane();
+			grid.add(new Label("Select Author :"), 1, 1);
+			grid.add(cAuthor, 2, 1);
+			grid.add(new Label("Royalty :"), 1, 2);
+			grid.add(royalty, 2, 2);
+			
+			dialog.getDialogPane().setContent(grid);
+			
+			ButtonType ok = new ButtonType("Okay", ButtonData.OK_DONE);
+			dialog.getDialogPane().getButtonTypes().add(ok);
+			
+			dialog.setResultConverter(new Callback<ButtonType, AuthorBook>(){
+
+				@Override
+				public AuthorBook call(ButtonType b) {
+					if(b == ok && cAuthor.getSelectionModel().getSelectedItem() != null)
+					{
+						AuthorBook temp = new AuthorBook();
+						temp.setRoyalty((int)(Double.parseDouble(royalty.getText().equals("") ? "1.0000" : royalty.getText()) * 100000));
+						temp.setAuthor(cAuthor.getSelectionModel().getSelectedItem());
+						temp.setBook(MainController.editedBook);
+						System.out.println(temp.getRoyalty());
+						return temp;
+					}
+					return null;
+				}
+				
+			});
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.initOwner(Main.stage);
+			Optional<AuthorBook> result = dialog.showAndWait();
+			
+			if(result.isPresent())
+			{
+				AuthorBook newRecord = result.get();
+				if(!(AuthorTableGateway.getInstance().isDuplicateRecord(newRecord)))
+				{
+					AuthorTableGateway.getInstance().deleteAuthorForBook(authorSelected);
+					AuthorTableGateway.getInstance().addAuthorToBook(newRecord);
+					populateAuthorTable();
+				}
+				else
+				{
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setHeaderText("Duplicate Author Entry !!");
+					alert.setContentText("The author " + authorSelected.getAuthor().getFirstName() + " " +
+							authorSelected.getAuthor().getLastName() + " already exists for the book " + 
+							authorSelected.getBook().getTitle());
+					alert.show();
+				}
+			}
 		}
 	}
 
