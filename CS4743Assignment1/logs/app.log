@@ -619,3 +619,40 @@
 13:44:46.064 INFO  application.Main : Database Connection closed !!
 13:44:47.374 INFO  application.Main : Closing database connection.....
 13:44:47.377 INFO  application.Main : Database Connection closed !!
+16:02:59.830 INFO  application.Main : Creating Connection to the database....
+16:03:00.681 INFO  application.Main : Database Connection created !!
+16:03:06.279 INFO  controller.BookListController : Harry Potter book Selected.
+16:04:06.468 INFO  controller.BookDetailViewController : Save Clicked !!
+16:04:06.552 INFO  database.BookGateway : Book updated
+16:04:09.908 INFO  controller.BookListController : Harry Potter book Selected.
+16:04:11.377 INFO  controller.BookDetailViewController : Save Clicked !!
+16:04:11.477 INFO  database.BookGateway : Book updated
+16:04:12.439 INFO  controller.BookListController : OptimisticLockingTest book Selected.
+16:04:13.337 INFO  controller.BookDetailViewController : Save Clicked !!
+16:04:13.410 INFO  database.BookGateway : Book updated
+16:04:14.844 INFO  controller.BookListController : Niks book Selected.
+16:04:16.013 INFO  controller.BookDetailViewController : Save Clicked !!
+16:04:16.108 INFO  database.BookGateway : Book updated
+16:06:38.014 INFO  controller.BookListController : Senior Design book Selected.
+16:07:08.606 INFO  application.Main : Closing database connection.....
+16:07:08.610 INFO  application.Main : Database Connection closed !!
+15:43:57.211 INFO  application.Main : Creating Connection to the database....
+15:43:57.756 INFO  application.Main : Database Connection created !!
+15:44:03.214 INFO  controller.BookListController : Harry Potter book Selected.
+15:45:31.665 INFO  application.Main : Closing database connection.....
+15:45:31.669 INFO  application.Main : Database Connection closed !!
+15:47:03.717 INFO  application.Main : Creating Connection to the database....
+15:47:04.125 INFO  application.Main : Database Connection created !!
+15:47:08.852 INFO  controller.BookListController : Sunnytyyty book Selected.
+15:50:04.794 INFO  application.Main : Closing database connection.....
+15:50:04.798 INFO  application.Main : Database Connection closed !!
+15:50:19.225 INFO  application.Main : Creating Connection to the database....
+15:50:19.465 INFO  application.Main : Database Connection created !!
+15:50:23.374 INFO  controller.BookListController : Homework34 book Selected.
+15:50:36.515 INFO  application.Main : Closing database connection.....
+15:50:36.518 INFO  application.Main : Database Connection closed !!
+15:51:17.342 INFO  application.Main : Creating Connection to the database....
+15:51:17.667 INFO  application.Main : Database Connection created !!
+15:51:22.479 INFO  controller.BookListController : Harry Potter book Selected.
+15:52:33.684 INFO  application.Main : Closing database connection.....
+15:52:33.687 INFO  application.Main : Database Connection closed !!

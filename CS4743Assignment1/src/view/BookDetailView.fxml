@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane layoutX="109.0" layoutY="161.0" prefHeight="599.0" prefWidth="743.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="109.0" AnchorPane.rightAnchor="748.0" AnchorPane.topAnchor="161.0">
+      <GridPane layoutX="109.0" layoutY="161.0" prefHeight="599.0" prefWidth="743.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="840.0" AnchorPane.topAnchor="161.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title : " textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
@@ -109,13 +109,13 @@
             <RowConstraints maxHeight="293.0" minHeight="0.0" prefHeight="90.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <TableView fx:id="authorTable" layoutX="904.0" layoutY="167.0" onMouseClicked="#handleAuthorClicked" prefHeight="492.0" prefWidth="615.0">
+      <TableView fx:id="authorTable" layoutX="783.0" layoutY="167.0" onMouseClicked="#handleAuthorClicked" prefHeight="492.0" prefWidth="615.0">
         <columns>
           <TableColumn fx:id="author" editable="false" prefWidth="433.0" sortable="false" text="Author" />
           <TableColumn fx:id="royalty" editable="false" prefWidth="181.0" sortable="false" text="Royalty" />
         </columns>
       </TableView>
-      <HBox layoutX="943.0" layoutY="675.0" prefHeight="75.0" prefWidth="538.0">
+      <HBox layoutX="822.0" layoutY="678.0" prefHeight="75.0" prefWidth="538.0">
          <children>
             <Button fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" prefHeight="80.0" prefWidth="265.0" text="Add Author" textAlignment="CENTER">
                <font>
