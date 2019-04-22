@@ -7,6 +7,13 @@ import controller.MainController;
 import database.AuthorTableGateway;
 import database.BookGateway;
 
+/**
+ * Author model
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class Author {
 	private int id;
 	private String firstName;
@@ -54,6 +61,8 @@ public class Author {
 			AuthorTableGateway.getInstance().updateAuthor(b);
 		}
 	}
+	
+	//--------------ACCESSORS--------------//
 
 	public int getId() {
 		return id;

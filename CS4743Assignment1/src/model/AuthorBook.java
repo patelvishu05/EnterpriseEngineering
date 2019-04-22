@@ -1,7 +1,12 @@
 package model;
 
-
-
+/**
+ * AuthorBook model
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class AuthorBook {
 	
 	private Author author;
@@ -27,6 +32,8 @@ public class AuthorBook {
 	public String toString() {
 		return this.author + " " + this.book + " " + this.royalty + this.newRecord;
 	}
+	
+	//--------------ACCESSORS--------------//
 		
 	public Author getAuthor() {
 		return author;

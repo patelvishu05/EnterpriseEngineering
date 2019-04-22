@@ -26,6 +26,15 @@ import model.Author;
 import model.Book;
 import model.ViewType;
 
+/**
+ * AuthorDetailController controls events that
+ * occurs on the AuthorDetailView and handles events
+ * accordingly.
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class AuthorDetailController implements Initializable, MyController 
 {
 	@FXML private Button ok;
@@ -44,6 +53,10 @@ public class AuthorDetailController implements Initializable, MyController
 		this.author = a;
 	}
 	
+	/**
+	 * clickedOk method helps save author to the database
+	 * @param event
+	 */
 	@FXML
 	void clickedOk(ActionEvent event) 
 	{
@@ -51,22 +64,7 @@ public class AuthorDetailController implements Initializable, MyController
 		System.out.println("~~~~~~~~~~~~~>Here");
 		System.out.println(MainController.previousAuthor + "-->\t" + MainController.editedAuthor);
 		author.save(MainController.previousAuthor, MainController.editedAuthor);
-//		String g = authorGender.getText() == null ? "" : authorGender.getText();
-//		String w = authorWebsite.getText() == null ? "" : authorWebsite.getText();
-//		String ln = authorLastName.getText() == null ? "" : authorLastName.getText();
-//		String fn = authorFirstName.getText() == null ? "" : authorFirstName.getText();
-//		int id = authorId.getText() == null ? 0 : Integer.parseInt(authorId.getText());
-//		LocalDate bd = authorBday.getText() == null ? LocalDate.MIN : LocalDate.parse(authorBday.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//		
-//		Author createdAuthor = new Author(id, fn, ln, bd, g, w);
-//		AuthorTableGateway.getInstance().insertAuthor(createdAuthor);
-//		System.out.println(createdAuthor);
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setHeaderText("Success !!");
-//		alert.setContentText("Author " + createdAuthor.getFirstName() + " " + createdAuthor.getLastName() +
-//				" successfully added to the Database !!");
-//		alert.showAndWait();
-//		switchToHomeView();
+		switchToHomeView();
 	}
 
 	@FXML
@@ -75,6 +73,9 @@ public class AuthorDetailController implements Initializable, MyController
 		MainController.getInstance().switchView(ViewType.VIEW5, new Book());
 	}
 	
+	/**
+	 * switchToHomeView method helps switch to home view
+	 */
 	public void switchToHomeView() {
 		try 
 		{
@@ -91,6 +92,9 @@ public class AuthorDetailController implements Initializable, MyController
 		}	
 	}
 
+	/**
+	 * initialize method helps initialize gui fields
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
@@ -101,12 +105,13 @@ public class AuthorDetailController implements Initializable, MyController
 		authorLastName.setText(author.getLastName());
 		authorWebsite.setText(author.getWebsite());
 		authorBday.setText(author.getDateOfBirth() == LocalDate.MIN ? "" + (("" + author.getDateOfBirth()).replaceAll(".*", "")) : "" + author.getDateOfBirth() );
-//		if(this.author == new Author())
-//			authorBday.setText(("" + author.getDateOfBirth()).replaceAll(".*", ""));
-//		else
-//			authorBday.setText("" + author.getDateOfBirth());
-	}
+	}	//end of initalize method
 	
+	/**
+	 * startListening() method keeps listening 
+	 * the event changes on gui components. If fields
+	 * change
+	 */
 	@SuppressWarnings(value = { "unchecked","rawtypes" })
 	public void startListening()
 	{
@@ -143,6 +148,6 @@ public class AuthorDetailController implements Initializable, MyController
 			MainController.editedAuthor.setDateOfBirth(authorBday.getText() == null ? LocalDate.MIN : LocalDate.parse(authorBday.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		} });
 		
-	}
+	}	//end of startListening method
 
-}
+}	//end of AuthorDetailController class

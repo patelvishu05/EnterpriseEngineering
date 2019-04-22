@@ -90,7 +90,13 @@ public class BookGateway
 	}	//end of getBooks method
 
 
-
+	/**
+	 * getAuthorsForBook method helps get AuthorBook from
+	 * author_book database
+	 * 
+	 * @param book
+	 * @return
+	 */
 	public List<AuthorBook> getAuthorsForBook(Book book)
 	{
 		List<AuthorBook> bookAuthors = new ArrayList<AuthorBook>();
@@ -158,7 +164,12 @@ public class BookGateway
 		return bookAuthors;
 	}
 
-
+	/**
+	 * getAudit helps get audit trails for book
+	 * 
+	 * @param book
+	 * @return
+	 */
 	public List<AuditTrailEntry> getAudit(Book book)
 	{
 		List<AuditTrailEntry> bookAudits = new ArrayList<AuditTrailEntry>();
@@ -303,10 +314,6 @@ public class BookGateway
 
 		return date;
 	}
-
-
-
-
 
 	/**
 	 * update method receives a book  in paramater and make

@@ -348,7 +348,10 @@ public class BookDetailViewController implements MyController, Initializable
 		bookPublisher.setStyle("-fx-font-size: 3ex");
 	}
 
-
+	/**
+	 * addAuthorClicked method helps add author for current books
+	 * @param event
+	 */
 	@FXML
 	void addAuthorClicked(ActionEvent event) 
 	{
@@ -419,6 +422,10 @@ public class BookDetailViewController implements MyController, Initializable
 		
 	}
 
+	/**
+	 * deleteAuthorClicked helps delete selected author from the database
+	 * @param event
+	 */
 	@FXML
 	void deleteAuthorClicked(ActionEvent event) 
 	{
@@ -430,6 +437,11 @@ public class BookDetailViewController implements MyController, Initializable
 		}
 	}
 	
+	/**
+	 * if author is double clicked switch view for showing
+	 * details and allow edits to the author
+	 * @param event
+	 */
 	@FXML
 	void handleAuthorClicked(MouseEvent event)
 	{

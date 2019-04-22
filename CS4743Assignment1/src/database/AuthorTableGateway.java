@@ -16,6 +16,15 @@ import model.Author;
 import model.AuthorBook;
 import model.Book;
 
+/**
+ * AuthorTableGateway handles all tasks pertaining to the
+ * Authordatabase and perform tasks accordingly.
+ * Tasks include create, read, user and update 
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class AuthorTableGateway 
 {
 	private static AuthorTableGateway instance;	
@@ -31,6 +40,12 @@ public class AuthorTableGateway
 		return instance;
 	}
 
+	/**
+	 * getAuthors is the read part of CRUD of our application 
+	 * that reads in all authors from the database and
+	 * saves it to a list and sends it to the callee.
+	 * @return authors- list of authors
+	 */
 	public List<Author> getAuthors() 
 	{
 		List<Author> authorList = new ArrayList<Author>();
@@ -71,6 +86,10 @@ public class AuthorTableGateway
 		return authorList;
 	}
 
+	/**
+	 * addAuthorToBook helps associate author to existing books
+	 * @param ab
+	 */
 	public void addAuthorToBook(AuthorBook ab) {
 		PreparedStatement ps = null;
 		ResultSet rs= null;
@@ -110,6 +129,10 @@ public class AuthorTableGateway
 		}
 	}
 	
+	/**
+	 * deleteAuthorForBook helps dissociate author from the selected book
+	 * @param book
+	 */
 	public void deleteAuthorForBook(AuthorBook book)
 	{
 		String dbQuery = "DELETE FROM `author_book` WHERE `author_id` = ? AND `book_id` = ?;";
@@ -148,6 +171,12 @@ public class AuthorTableGateway
 		logger.info("Author Deleted for Book=" + book.getBook().getTitle());
 	}
 
+	/**
+	 * isDuplicateRecord method helps check if duplicate records 
+	 * exist in database
+	 * @param ab
+	 * @return
+	 */
 	public boolean isDuplicateRecord(AuthorBook ab) 
 	{
 		PreparedStatement st = null;
@@ -187,6 +216,10 @@ public class AuthorTableGateway
 		return flag;
 	}
 
+	/**
+	 * insertAuthor helps insert authors to author database
+	 * @param a
+	 */
 	public void insertAuthor(Author a)
 	{
 		String dbQuery = "INSERT INTO `AuthorDatabase` (`author_id`, `first_name`, `last_name`, `dob`, `gender`, `web_site`) VALUES (?,?,?,?,?,?)";		
@@ -215,6 +248,10 @@ public class AuthorTableGateway
 		logger.info("Book Created: id=" + a.getId() + "\tName= " + a.getFirstName() + " " + a.getLastName());
 	}
 	
+	/**
+	 * deleteAuthor helps delete author from author database
+	 * @param a
+	 */
 	public void deleteAuthor(Author a)
 	{
 		PreparedStatement ps = null;
@@ -242,6 +279,11 @@ public class AuthorTableGateway
 		}
 	}
 	
+	/**
+	 * updateAuthor helps mak changes to author in the author database
+	 * for the selected author
+	 * @param a
+	 */
 	public void updateAuthor(Author a)
 	{
 		PreparedStatement ps = null;
