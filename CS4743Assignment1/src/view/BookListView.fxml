@@ -9,11 +9,92 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="booklist" layoutX="484.0" layoutY="202.0" onMouseClicked="#handleBookClick" prefHeight="449.0" prefWidth="680.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="130.0" />
-      <Button fx:id="delete" layoutX="200.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteBook" prefHeight="62.0" prefWidth="208.0" text="Delete">
+      <ListView fx:id="booklist" layoutX="96.0" layoutY="152.0" onMouseClicked="#handleBookClick" prefHeight="391.0" prefWidth="913.0" AnchorPane.bottomAnchor="177.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="152.0" />
+      <GridPane layoutX="96.0" layoutY="617.0" prefHeight="62.0" prefWidth="887.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="105.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="190.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="delete" mnemonicParsing="false" onAction="#deleteBook" prefHeight="89.0" prefWidth="190.0" text="Delete" GridPane.columnIndex="5">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="first" mnemonicParsing="false" onAction="#clickedFirst" prefHeight="90.0" prefWidth="193.0" text="First">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="prev" mnemonicParsing="false" onAction="#clickedPrev" prefHeight="102.0" prefWidth="230.0" text="Prev" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="next" mnemonicParsing="false" onAction="#clickedNext" prefHeight="78.0" prefWidth="308.0" text="Next" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="last" mnemonicParsing="false" onAction="#clickedLast" prefHeight="91.0" prefWidth="215.0" text="Last" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <GridPane layoutX="130.0" layoutY="75.0" prefHeight="62.0" prefWidth="820.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="691.0" minWidth="10.0" prefWidth="691.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" prefWidth="129.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="searchBox" onAction="#clickedBookSearch" prefHeight="64.0" prefWidth="691.0" promptText="Search Book here">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Button fx:id="search" mnemonicParsing="false" onAction="#clickedBookSearch" prefHeight="64.0" prefWidth="144.0" text="Search" GridPane.columnIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+      <Label fx:id="fetchLabel" alignment="CENTER" layoutX="238.0" layoutY="556.0" prefHeight="27.0" prefWidth="603.0" textFill="#0c9e1f">
          <font>
-            <Font size="27.0" />
-         </font>
-      </Button>
+            <Font size="19.0" />
+         </font></Label>
    </children>
 </AnchorPane>

@@ -366,6 +366,53 @@ public class BookGateway
 
 		logger.info("Book updated");
 	}	//end of update method
+	
+	public List<Book> searchBooks(String searchWord)
+	{
+		List<Book> books = new ArrayList<Book>();
+		Book book = null;
+		ResultSet rs = null;
+		PreparedStatement st = null;
+		
+		try
+		{
+			String dbQuery = "SELECT * FROM BookDatabase WHERE title REGEXP ?;";
+			st = this.connection.prepareStatement(dbQuery);
+			st.setString(1, searchWord);
+
+			System.out.println(st.toString());		
+			rs = st.executeQuery();
+				
+					
+			while(rs.next())
+			{
+				book = new Book();
+				book.setId(Integer.parseInt(rs.getString("id")));
+				book.setTitle(rs.getString("title"));
+				book.setSummary(rs.getString("summary"));
+				book.setYear(Integer.parseInt(rs.getString("year_published")));
+				book.setPublisher(Integer.parseInt(rs.getString("publisher_id")));
+				book.setISBN(rs.getString("isbn"));
+				book.setLastModified(rs.getTimestamp("last_modified").toLocalDateTime());
+				books.add(book);
+			}
+			
+			rs.close();
+			st.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(rs!=null)
+				rs = null;
+			if(st !=null)
+				st = null;
+		}
+		return books;
+	}
 
 
 	//--------------ACCESSORS--------------//

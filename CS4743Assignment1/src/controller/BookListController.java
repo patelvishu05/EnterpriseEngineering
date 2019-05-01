@@ -14,7 +14,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.Book;
 import model.ViewType;
@@ -30,25 +32,36 @@ import model.ViewType;
 public class BookListController implements MyController
 {
 	@FXML private ListView<Book> booklist;
-	private List<Book> bookArrayList;
+	@FXML private TextField searchBox;
 	@FXML private Button delete;
+	@FXML private Button next;
+	@FXML private Button last;
+	@FXML private Button prev;
+	@FXML private Button first;
+	@FXML private Button search;
+	@FXML private Label fetchLabel;
+
+	private List<Book> bookArrayList;
 	private ObservableList<Book> booksObservableList;
 	private static Logger logger = LogManager.getLogger(BookListController.class);
-	
+
+
+
 	public BookListController(List<Book> books)
 	{
 		this.bookArrayList = books;
 	}
 
 	/**
-	* Fill the list view with the books from our database
-	*/
+	 * Fill the list view with the books from our database
+	 */
 	public void initialize() 
 	{	
 		booksObservableList = FXCollections.observableArrayList();
 		bookArrayList = BookGateway.getInstance().getBooks(); 
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);
+		booklist.setStyle("-fx-font-size:1.5em;");
 	}
 
 	/**
@@ -95,5 +108,44 @@ public class BookListController implements MyController
 			}	//end of for loop
 		}	//end outer-if statement
 	}	//end of handleBookClick method
+	
+	@FXML
+	void clickedBookSearch(ActionEvent event)
+	{
+		String findBook = searchBox.getText();
+		System.out.println(findBook);
+		List<Book> searchBooks = BookGateway.getInstance().searchBooks(findBook);
+		booksObservableList.clear();
+		booksObservableList.addAll(searchBooks);
+		booklist.setItems(booksObservableList);
+		int size = searchBooks.size();
+		fetchLabel.setText("Fetched Records " + (size - (size - 1)) + " to " + size + " out of " + size);
+	}
+
+	@FXML
+	void clickedFirst(ActionEvent event) 
+	{
+
+	}
+
+	@FXML
+	void clickedPrev(ActionEvent event) 
+	{
+
+	}
+
+	@FXML
+	void clickedNext(ActionEvent event) 
+	{
+
+	}
+
+	@FXML
+	void clickedLast(ActionEvent event) 
+	{
+
+	}
+
+
 
 }	//end of BookListController class

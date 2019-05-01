@@ -214,7 +214,7 @@ public class Book
 	}
 
 	public boolean isValidYear() {
-		return this.year >= 1455 && this.year <= 2019;
+		return this.year >= 1900 && this.year <= 2019;
 	}
 
 	public boolean isValidISBN() {
