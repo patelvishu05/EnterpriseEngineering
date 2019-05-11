@@ -13,6 +13,12 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+            <Menu mnemonicParsing="false" text="Account">
+              <items>
+                <MenuItem fx:id="login" mnemonicParsing="false" onAction="#clickedLogin" text="Login" />
+                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#clickedLogout" text="Logout" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Book">
             <items>
                   <MenuItem fx:id="bookList" mnemonicParsing="false" onAction="#clickedBookList" text="Book List" />

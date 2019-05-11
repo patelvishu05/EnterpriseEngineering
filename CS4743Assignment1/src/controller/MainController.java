@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import application.Main;
+import authenticator.Authenticator;
+import authenticator.User;
 import database.BookGateway;
 import exception.DBException;
 import javafx.application.Platform;
@@ -19,8 +21,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.util.Callback;
 import model.Author;
 import model.AuthorBook;
 import model.Book;
@@ -42,6 +55,8 @@ public class MainController implements Initializable
 	@FXML private MenuItem addBook;
 	@FXML private MenuItem addAuthor;
 	@FXML private MenuItem authorList;
+	@FXML private MenuItem login;
+	@FXML private MenuItem logout;
 
 	public static ViewType currentView;  // I added this variable to keep track of current view to prompt for user to save changes if user tries to exit while in BookDetailView
 
@@ -61,10 +76,14 @@ public class MainController implements Initializable
 	public static Author previousAuthor;
 	public static Author editedAuthor;
 	//______
+	
+	//~~~~~~~~~~~
+	private Authenticator authenticator;
+	//~~~~~~~~~~~
 
 	//private constructor
 	private MainController() {
-
+		this.authenticator = new Authenticator();
 	}
 
 	//public getInstance method to return 
@@ -267,6 +286,63 @@ public class MainController implements Initializable
 	void clickedAuthorList(ActionEvent event) {
 		switchView(ViewType.VIEW5, new Book());
 	}
+	
+	
+	@FXML
+	void clickedLogin(ActionEvent event){
+		Dialog<User> dialog = new Dialog<User>();
+		GridPane grid = new GridPane();
+		TextField username = new TextField();
+		PasswordField password = new PasswordField();
+		
+		dialog.setHeaderText("Login to the Book Management System");
+		grid.add(new Label("Username :"), 1, 1);
+		grid.add(username, 2, 1);
+		grid.add(new Label("Password :"), 1, 2);
+		grid.add(password, 2, 2);
+		dialog.getDialogPane().setContent(grid);
+		
+		ButtonType ok = new ButtonType("Okay", ButtonData.OK_DONE);
+		ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		
+		dialog.getDialogPane().getButtonTypes().add(ok);
+		dialog.getDialogPane().getButtonTypes().add(cancel);
+		
+		dialog.setResultConverter(new Callback<ButtonType, User>(){
+
+			@Override
+			public User call(ButtonType b) {
+				if(b == ok && username.getText() != null && password.getText() != null)
+				{
+					User user = new User();
+					user.setUsername(username.getText());
+					user.setPassword(password.getText());
+					return user;
+				}
+				return null;
+			}
+			
+		});
+		
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner(Main.stage);
+		Optional<User> result = dialog.showAndWait();
+		
+		if(result.isPresent())
+		{
+			User loggedUser = result.get();
+			int session = authenticator.validateLogin(loggedUser.getUsername(), loggedUser.getPassword());
+			System.out.println(session + "\t" + loggedUser);
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.setContentText(result.get().toString());
+//			alert.show();
+		}
+	}
+	
+	@FXML
+	void clickedLogout(ActionEvent event) {
+	}
+	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
