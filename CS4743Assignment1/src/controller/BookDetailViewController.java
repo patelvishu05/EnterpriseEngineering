@@ -242,6 +242,7 @@ public class BookDetailViewController implements MyController, Initializable
 		if(MainController.userType.equals(AccessPolicy.INTERN))
 		{
 			deleteAuthor.setDisable(true);
+			addAuthor.setDisable(true);
 			save.setDisable(true);
 		}
 		

@@ -42,8 +42,8 @@ public class AuthorListController implements Initializable, MyController
 	@FXML
 	void authorListClicked(MouseEvent event)
 	{
-		if (MainController.userType.equals(AccessPolicy.INTERN))
-			return;
+//		if (MainController.userType.equals(AccessPolicy.INTERN))
+//			return;
 		Author author = authorList.getSelectionModel().getSelectedItem();
 		System.out.println(author);
 		if(event.getClickCount() == 2 && author != null)

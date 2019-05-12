@@ -8,6 +8,7 @@ public class Authenticator
 	private List<User> userList;
 	private List<Session> sessionList;
 	private AccessPolicy policy;
+	public static String loggedUserName;
 	
 	public Authenticator()
 	{
@@ -22,6 +23,7 @@ public class Authenticator
 		{
 			if(user.getUsername().equals(username) && user.getPassword().equals(password))
 			{
+				loggedUserName = user.getName();
 				Session session = new Session(user);
 				sessionList.add(session);
 				return session.getSessionId();

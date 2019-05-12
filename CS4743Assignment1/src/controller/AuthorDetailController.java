@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import application.Main;
+import authenticator.AccessPolicy;
 import database.AuthorTableGateway;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -105,6 +106,12 @@ public class AuthorDetailController implements Initializable, MyController
 		authorLastName.setText(author.getLastName());
 		authorWebsite.setText(author.getWebsite());
 		authorBday.setText(author.getDateOfBirth() == LocalDate.MIN ? "" + (("" + author.getDateOfBirth()).replaceAll(".*", "")) : "" + author.getDateOfBirth() );
+		
+		if(MainController.userType.equals(AccessPolicy.INTERN))
+		{
+			ok.setDisable(true);
+		}
+		
 	}	//end of initalize method
 	
 	/**

@@ -32,8 +32,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import model.Author;
@@ -176,7 +178,7 @@ public class MainController implements Initializable
 	{
 		try
 		{
-			if (currentView == ViewType.VIEW2) 
+			if (currentView == ViewType.VIEW2 && !(userType.equals(AccessPolicy.INTERN))) 
 			{
 				if(!Book.equalsBook(editedBook,previousBook)) 
 				{
@@ -207,7 +209,7 @@ public class MainController implements Initializable
 	{
 		try
 		{
-			if (currentView == ViewType.VIEW2) 
+			if (currentView == ViewType.VIEW2 && !(userType.equals(AccessPolicy.INTERN))) 
 			{
 				if(!Book.equalsBook(editedBook,previousBook)) 
 				{
@@ -237,7 +239,7 @@ public class MainController implements Initializable
 	{
 		try
 		{
-			if (currentView == ViewType.VIEW2) 
+			if (currentView == ViewType.VIEW2 && !(userType.equals(AccessPolicy.INTERN))) 
 			{
 				if(!Book.equalsBook(editedBook,previousBook)) 
 				{
@@ -336,10 +338,26 @@ public class MainController implements Initializable
 		{
 			User loggedUser = result.get();
 			this.sessionId = authenticator.validateLogin(loggedUser.getUsername(), loggedUser.getPassword());
+			if(this.sessionId == 0)
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText("Invalid Login Credentials");
+				alert.setContentText("Either the username or pasword is incorrect.\n" + 
+						"Or the User is not authenticated to use the system");
+				alert.show();
+			}
+			else
+			{
+				VBox vbox = new VBox();
+				Label userLabel = new Label("Hello " + Authenticator.loggedUserName);
+				vbox.getChildren().add(userLabel);
+				Label welcomeLabel = new Label("Welcome to the Book Management System !!");
+				vbox.getChildren().add(welcomeLabel);
+				userLabel.setStyle("-fx-font-size:2.5em;");
+				welcomeLabel.setStyle("-fx-font-size:2.5em;");
+				borderPane.setCenter(vbox);				
+			}
 			System.out.println(sessionId + "\t" + loggedUser);
-//			Alert alert = new Alert(AlertType.INFORMATION);
-//			alert.setContentText(result.get().toString());
-//			alert.show();
 		}
 		updateGUI();
 	}
