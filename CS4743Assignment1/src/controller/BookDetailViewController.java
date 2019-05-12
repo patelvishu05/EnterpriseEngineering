@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import application.Main;
+import authenticator.AccessPolicy;
 import database.AuthorTableGateway;
 import database.BookGateway;
 import database.PublisherTableGateway;
@@ -238,6 +239,12 @@ public class BookDetailViewController implements MyController, Initializable
 
 		beautify();
 		populateAuthorTable();
+		if(MainController.userType.equals(AccessPolicy.INTERN))
+		{
+			deleteAuthor.setDisable(true);
+			save.setDisable(true);
+		}
+		
 	}	//end of initialize method
 
 
@@ -446,6 +453,8 @@ public class BookDetailViewController implements MyController, Initializable
 	void handleAuthorClicked(MouseEvent event)
 	{
 		AuthorBook authorSelected = authorTable.getSelectionModel().getSelectedItem();
+		if (MainController.userType.equals(AccessPolicy.INTERN))
+			return;
 		if(event.getClickCount() == 2 && authorSelected != null)
 		{
 			System.out.println(authorSelected);

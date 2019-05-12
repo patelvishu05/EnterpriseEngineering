@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import application.Main;
+import authenticator.AccessPolicy;
 import authenticator.Authenticator;
 import authenticator.User;
 import database.BookGateway;
@@ -21,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -78,7 +80,9 @@ public class MainController implements Initializable
 	//______
 	
 	//~~~~~~~~~~~
+	int sessionId;
 	private Authenticator authenticator;
+	public static String userType;
 	//~~~~~~~~~~~
 
 	//private constructor
@@ -331,22 +335,94 @@ public class MainController implements Initializable
 		if(result.isPresent())
 		{
 			User loggedUser = result.get();
-			int session = authenticator.validateLogin(loggedUser.getUsername(), loggedUser.getPassword());
-			System.out.println(session + "\t" + loggedUser);
+			this.sessionId = authenticator.validateLogin(loggedUser.getUsername(), loggedUser.getPassword());
+			System.out.println(sessionId + "\t" + loggedUser);
 //			Alert alert = new Alert(AlertType.INFORMATION);
 //			alert.setContentText(result.get().toString());
 //			alert.show();
 		}
+		updateGUI();
 	}
 	
 	@FXML
 	void clickedLogout(ActionEvent event) {
+		this.sessionId = 0;
+		switchToHomeView();
+		updateGUI();
+	}
+	
+	/**
+	 * switchToHomeView method helps switch to home view
+	 */
+	public void switchToHomeView() {
+		try 
+		{
+			URL url = Main.class.getResource("../view/MainView.fxml");
+			FXMLLoader loader = new FXMLLoader(url);
+			MainController controller = MainController.getInstance();
+			loader.setController(controller);
+			Parent rootNode = loader.load();			
+			controller.setBorderPane((BorderPane) rootNode);
+			Main.stage.setScene(new Scene(rootNode));
+			Main.stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		updateGUI();
+	}
+	
+	public void updateGUI()
+	{
+		if(sessionId == 0)
+		{
+			login.setDisable(false);
+		}
+		else
+		{
+			login.setDisable(true);
+		}
+		
+		//if not logged in, logout should be disabled
+		if(sessionId == 0)
+			logout.setDisable(true);
+		else
+			logout.setDisable(false);
+		
+		if(authenticator.hasAccess(this.sessionId, AccessPolicy.ADMIN))
+		{
+			userType = AccessPolicy.ADMIN;
+			authorList.setDisable(false);
+			bookList.setDisable(false);
+			addAuthor.setDisable(false);
+			addBook.setDisable(false);
+		}
+		else if(authenticator.hasAccess(this.sessionId, AccessPolicy.DATA_ENTRY))
+		{
+			userType = AccessPolicy.DATA_ENTRY;
+			authorList.setDisable(false);
+			bookList.setDisable(false);
+			addAuthor.setDisable(false);
+			addBook.setDisable(false);
+		}
+		else if(authenticator.hasAccess(this.sessionId, AccessPolicy.INTERN))
+		{
+			userType = AccessPolicy.INTERN;
+			authorList.setDisable(false);
+			bookList.setDisable(false);
+		}
+		else
+		{
+			userType = AccessPolicy.INTERN;
+			authorList.setDisable(true);
+			bookList.setDisable(true);
+			addBook.setDisable(true);
+			addAuthor.setDisable(true);
+		}
 	}
 
 	//-------------ACCESSORS-------------//

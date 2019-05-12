@@ -22,13 +22,13 @@
           <Menu mnemonicParsing="false" text="Book">
             <items>
                   <MenuItem fx:id="bookList" mnemonicParsing="false" onAction="#clickedBookList" text="Book List" />
-              <MenuItem fx:id="addbook" mnemonicParsing="false" onAction="#clickedAddBook" text="Add book" />
+              <MenuItem fx:id="addBook" mnemonicParsing="false" onAction="#clickedAddBook" text="Add book" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Author">
               <items>
-                <MenuItem fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" text="Add Author" />
                   <MenuItem fx:id="authorList" mnemonicParsing="false" onAction="#clickedAuthorList" text="Author List" />
+                <MenuItem fx:id="addAuthor" mnemonicParsing="false" onAction="#addAuthorClicked" text="Add Author" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Exit">

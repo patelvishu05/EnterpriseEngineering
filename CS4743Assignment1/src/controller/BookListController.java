@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import authenticator.AccessPolicy;
 import database.BookGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,6 +63,10 @@ public class BookListController implements MyController
 		booksObservableList.addAll(bookArrayList);	
 		booklist.setItems(booksObservableList);
 		booklist.setStyle("-fx-font-size:1.5em;");
+		if(!MainController.userType.equals(AccessPolicy.ADMIN))
+		{
+			delete.setDisable(true);
+		}
 	}
 
 	/**
@@ -93,6 +98,8 @@ public class BookListController implements MyController
 		//Handles mouse click events perfectly and switches view to detailed view only if
 		//you double click on the book
 		//String bookSelected = booklist.getSelectionModel().getSelectedItem().getTitle();
+		if (MainController.userType.equals(AccessPolicy.INTERN))
+			return;
 		Book bookSelected = booklist.getSelectionModel().getSelectedItem();
 		System.out.println(bookSelected);
 		if(event.getClickCount() == 2 && bookSelected != null)

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import authenticator.AccessPolicy;
 import database.AuthorTableGateway;
 import database.BookGateway;
 import javafx.collections.FXCollections;
@@ -41,6 +42,8 @@ public class AuthorListController implements Initializable, MyController
 	@FXML
 	void authorListClicked(MouseEvent event)
 	{
+		if (MainController.userType.equals(AccessPolicy.INTERN))
+			return;
 		Author author = authorList.getSelectionModel().getSelectedItem();
 		System.out.println(author);
 		if(event.getClickCount() == 2 && author != null)
@@ -53,6 +56,10 @@ public class AuthorListController implements Initializable, MyController
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		helper();
+		if(!MainController.userType.equals(AccessPolicy.ADMIN))
+		{
+			delete.setDisable(true);
+		}
 	}
 	
 	public void helper() {

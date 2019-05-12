@@ -11,9 +11,9 @@ public class Authenticator
 	
 	public Authenticator()
 	{
-		this.userList = allowedUsers(); 
 		this.sessionList = new ArrayList<Session>();
 		this.policy = new AccessPolicy();
+		this.userList = allowedUsers(); 
 	}
 	
 	public int validateLogin(String username, String password)
@@ -44,16 +44,16 @@ public class Authenticator
 		ArrayList<User> userList = new ArrayList<User>();
 		
 		User wilma = new User("Wilma Williams","wilma","arugula");
-		this.policy.createUserPolicy(wilma.getUsername(),true,false,false);
 		userList.add(wilma);
+		this.policy.createUserPolicy(wilma.getUsername(),true,false,false);
 		
 		User leroy = new User("Leroy Jenkins","leroy","wipeout");
-		this.policy.createUserPolicy(leroy.getUsername(), false,true,false);
 		userList.add(leroy);
+		this.policy.createUserPolicy(leroy.getUsername(), false,true,false);
 		
 		User sasquatch = new User("Sasquatch Jones","sasquatch","jerky");
-		this.policy.createUserPolicy(sasquatch.getUsername(), false,false,true);
 		userList.add(sasquatch);
+		this.policy.createUserPolicy(sasquatch.getUsername(), false,false,true);
 		
 		return userList;
 	}
