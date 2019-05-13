@@ -25,8 +25,8 @@ public class Book
 	private int year;
 	private String ISBN;
 	private int publisher;
-	private LocalDateTime lastModified; 
-
+	private LocalDateTime lastModified;
+	
 	public Book() {
 		this.id = 0;
 		this.title = "";
@@ -123,7 +123,7 @@ public class Book
 
 		MainController.auditChange = getChanges(book,l);
 		ArrayList<Integer> primaryKeys = new ArrayList<Integer>();
-		for(Book b : BookGateway.getInstance().getBooks())
+		for(Book b : BookGateway.getInstance().getBooks(MainController.start,MainController.end))
 			primaryKeys.add(b.getId());
 		if(!(primaryKeys.contains(book.getId()))) 
 		{

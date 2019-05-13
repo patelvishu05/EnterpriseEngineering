@@ -1,5 +1,13 @@
 package authenticator;
 
+/**
+ * Access Policy class helps defines different levels of
+ * access policies for the potntial users using our system
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 import java.util.HashMap;
 
 public class AccessPolicy 
@@ -16,6 +24,12 @@ public class AccessPolicy
 		createUserPolicy("default",false,false,false);
 	}
 	
+	/**
+	 * createUserPolicy helps create policy for the given user with
+	 * various provided access definitions
+	 * @param login
+	 * @param entries
+	 */
 	public void createUserPolicy(String login, boolean ... entries)
 	{
 		HashMap<String, Boolean> userTable = new HashMap<String, Boolean>();
@@ -27,6 +41,14 @@ public class AccessPolicy
 		policies.put(login, userTable);
 	}
 	
+	/**
+	 * canUserAccess function tells us whether a particular
+	 * user access to specific feature in our system or not
+	 * 
+	 * @param username
+	 * @param features
+	 * @return
+	 */
 	public boolean canUserAccess(String username, String features)
 	{
 		if(!this.policies.containsKey("default"))
@@ -42,6 +64,8 @@ public class AccessPolicy
 		return false;
 	}
 
+	//-----------------ACCESSORS--------------//
+	
 	public HashMap<String, HashMap<String, Boolean>> getPolicies() {
 		return policies;
 	}
@@ -49,4 +73,4 @@ public class AccessPolicy
 	public void setPolicies(HashMap<String, HashMap<String, Boolean>> policies) {
 		this.policies = policies;
 	}
-}
+}	//end of AccessPolicy class

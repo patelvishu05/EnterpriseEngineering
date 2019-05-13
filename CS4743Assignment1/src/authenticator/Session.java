@@ -1,5 +1,12 @@
 package authenticator;
 
+/**
+ * Session is a model for defining a session for
+ * our authentication system
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ */
 public class Session 
 {
 	public static int nextId = 1;
@@ -11,6 +18,8 @@ public class Session
 		this.sessionUser = user;
 		this.sessionId = nextId++;
 	}
+	
+	//--------------------ACCESSORS-----------------------//
 
 	public int getSessionId() {
 		return sessionId;
@@ -28,6 +37,4 @@ public class Session
 		this.sessionUser = sessionUser;
 	}
 	
-	
-
-}
+}	//end of class Session

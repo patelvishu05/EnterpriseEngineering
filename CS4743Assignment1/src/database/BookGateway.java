@@ -49,16 +49,19 @@ public class BookGateway
 	 * saves it to a list and sends it to the callee.
 	 * @return books- list of books
 	 */
-	public List<Book> getBooks()
+	public List<Book> getBooks(int upperLimit, int endLimit)
 	{
 		List<Book> books = new ArrayList<Book>();
 		ResultSet rs = null;
-		Statement statement = null;
+		PreparedStatement statement = null;
 		Book book = null;
 		try
 		{
-			statement = this.connection.createStatement();
-			rs = statement.executeQuery("SELECT * FROM BookDatabase");
+			String dbQuery = "SELECT * FROM BookDatabase LIMIT ?,?";
+			statement = this.connection.prepareStatement(dbQuery);
+			statement.setInt(1, upperLimit);
+			statement.setInt(2, endLimit);
+			rs = statement.executeQuery();
 			while(rs.next())
 			{
 				book = new Book();
@@ -72,6 +75,14 @@ public class BookGateway
 				//				System.out.println("Test: " + book.getTitle() + " time in book " + book.getLastModified() );
 				books.add(book);
 			}
+			
+			String dbQuery2 = "SELECT COUNT(*) FROM BookDatabase;";
+			statement = this.connection.prepareStatement(dbQuery2);
+			rs = statement.executeQuery();
+			
+			rs.next();
+			MainController.allSize = rs.getInt(1);
+			
 			rs.close();
 			statement.close();
 		}
@@ -367,6 +378,12 @@ public class BookGateway
 		logger.info("Book updated");
 	}	//end of update method
 	
+	/**
+	 * searchBooks helps us search for user searched books from
+	 * the database and return it to the user
+	 * @param searchWord
+	 * @return List<Book>
+	 */
 	public List<Book> searchBooks(String searchWord)
 	{
 		List<Book> books = new ArrayList<Book>();
@@ -376,7 +393,8 @@ public class BookGateway
 		
 		try
 		{
-			String dbQuery = "SELECT * FROM BookDatabase WHERE title REGEXP ?;";
+//			String dbQuery = "SELECT * FROM BookDatabase WHERE title REGEXP ?;";
+			String dbQuery = "SELECT * FROM BookDatabase WHERE title LIKE ?;";
 			st = this.connection.prepareStatement(dbQuery);
 			st.setString(1, searchWord);
 
@@ -397,6 +415,14 @@ public class BookGateway
 				books.add(book);
 			}
 			
+			String dbQuery2 = "SELECT COUNT(*) FROM BookDatabase WHERE title LIKE ?;";
+			st = this.connection.prepareStatement(dbQuery2);
+			st.setString(1, searchWord);
+			rs = st.executeQuery();
+			
+			rs.next();
+			MainController.searchSize = rs.getInt(1);
+			System.out.println("*****************" + MainController.searchSize);
 			rs.close();
 			st.close();
 		}

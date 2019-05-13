@@ -18,7 +18,14 @@ import javafx.scene.input.MouseEvent;
 import model.Author;
 import model.Book;
 import model.ViewType;
-
+/**
+ * AuthorListController is a controller class and listens / reacts
+ * to events happening on AuthorListView and depending on the
+ * action carries out various tasks like adding / deleting
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ */
 public class AuthorListController implements Initializable, MyController
 {
 	@FXML private ListView<Author> authorList;
@@ -29,6 +36,10 @@ public class AuthorListController implements Initializable, MyController
 
 	}
 
+	/**
+	 * deleteAuthor method deletes and author from the database
+	 * @param event
+	 */
 	@FXML
 	void deleteAuthor(ActionEvent event) {
 		int bookSelected = authorList.getSelectionModel().getSelectedIndex();
@@ -39,11 +50,16 @@ public class AuthorListController implements Initializable, MyController
 		}
 	}
 	
+	/**
+	 * authorListClicked method checks to see if an item inside it
+	 * was double clicked if so it allows them to modify the underlying 
+	 * author details
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void authorListClicked(MouseEvent event)
 	{
-//		if (MainController.userType.equals(AccessPolicy.INTERN))
-//			return;
 		Author author = authorList.getSelectionModel().getSelectedItem();
 		System.out.println(author);
 		if(event.getClickCount() == 2 && author != null)
@@ -69,4 +85,4 @@ public class AuthorListController implements Initializable, MyController
 		authorList.setItems(oAuthor);
 	}
 
-}
+}	//end of class AuthorListController

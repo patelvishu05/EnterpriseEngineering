@@ -1,12 +1,19 @@
 package authenticator;
 
+/**
+ * User class is a model to our Authenticator system
+ * for defining User specific attributes to the auth system
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ */
 public class User 
 {
 	private String name;
 	private String username;
 	private String password;
 	
-	public User (){
+	public User () {
 		
 	}
 	
@@ -21,6 +28,8 @@ public class User
 		return this.name + "\t" + this.username + "\t" + this.password;
 	}
 
+	//---------------ACCESSORS-------------------//
+	
 	public String getName() {
 		return name;
 	}
@@ -44,7 +53,5 @@ public class User
 	public void setPassword(String password) {
 		this.password = Encryptor.encryptSHA(password);
 	}
-	
-	
 
-}
+}	//end of class User

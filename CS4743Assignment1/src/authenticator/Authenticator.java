@@ -1,5 +1,13 @@
 package authenticator;
 
+/**
+ * Authenticator class helps us authenticate a user 
+ * and tells us whether they have access to specific
+ * areas in our awesome application
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +25,15 @@ public class Authenticator
 		this.userList = allowedUsers(); 
 	}
 	
+	/**
+	 * validateLogin checks to see if username and password matches
+	 * with the ones in our system and accordingly initiates a session
+	 * if it is valid
+	 * 
+	 * @param username
+	 * @param password
+	 * @return int
+	 */
 	public int validateLogin(String username, String password)
 	{
 		for(User user : userList)
@@ -32,6 +49,10 @@ public class Authenticator
 		return 0;
 	}
 	
+	/**
+	 * logout logs the user out of the application
+	 * @param sessionId
+	 */
 	public void logout (int sessionId)
 	{
 		for (int i = sessionList.size() - 1; i>=0; i-- ) {
@@ -41,6 +62,13 @@ public class Authenticator
 		}
 	}
 	
+	/**
+	 * allowedUsers adds in allowed users to the HashMao which
+	 * can be later used to see for potential existing users
+	 * in our system to verify their credentials
+	 * 
+	 * @return ArrayList<User>
+	 */
 	public ArrayList<User> allowedUsers()
 	{
 		ArrayList<User> userList = new ArrayList<User>();
@@ -60,6 +88,13 @@ public class Authenticator
 		return userList;
 	}
 	
+	/**
+	 * getUserNameFromSessionId helps get user name from the current
+	 * session id
+	 * 
+	 * @param sessionId
+	 * @return String
+	 */
 	public String getUserNameFromSessionId(int sessionId)
 	{
 		if (sessionId == 0)
@@ -72,6 +107,15 @@ public class Authenticator
 		return "";
 	}
 	
+	/**
+	 * canAccess function tells us whether a particular
+	 * session can access can access specific features of
+	 * our app or not
+	 * 
+	 * @param sessionId
+	 * @param features
+	 * @return
+	 */
 	public boolean hasAccess(int sessionId, String features)
 	{
 		for(Session s : sessionList)
@@ -82,4 +126,4 @@ public class Authenticator
 		return false;
 	}
 
-}
+}	//end of class Authenticator

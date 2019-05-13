@@ -86,6 +86,13 @@ public class MainController implements Initializable
 	private Authenticator authenticator;
 	public static String userType;
 	//~~~~~~~~~~~
+	
+	//------
+	public static int start=0;
+	public static int end=50;
+	public static int searchSize;
+	public static int allSize;
+	//------
 
 	//private constructor
 	private MainController() {
@@ -112,7 +119,7 @@ public class MainController implements Initializable
 		{
 			case VIEW1: viewString = "../view/BookListView.fxml";
 						setDisplayLabelText("Book List");
-						List<Book> books = BookGateway.getInstance().getBooks();
+						List<Book> books = BookGateway.getInstance().getBooks(start,end);
 						controller = new BookListController(books);
 						currentView = ViewType.VIEW1; 
 						System.out.println("Current view changed to VIEW1"); 
@@ -293,7 +300,11 @@ public class MainController implements Initializable
 		switchView(ViewType.VIEW5, new Book());
 	}
 	
-	
+	/**
+	 * clickedLogin method helps display a login dialog and helps
+	 * user login to the system
+	 * @param event
+	 */
 	@FXML
 	void clickedLogin(ActionEvent event){
 		Dialog<User> dialog = new Dialog<User>();
@@ -362,6 +373,10 @@ public class MainController implements Initializable
 		updateGUI();
 	}
 	
+	/**
+	 * clickedLogout method helps user logout of the system
+	 * @param event
+	 */
 	@FXML
 	void clickedLogout(ActionEvent event) {
 		this.sessionId = 0;
@@ -394,6 +409,10 @@ public class MainController implements Initializable
 		updateGUI();
 	}
 	
+	/**
+	 * updateGUI enables/disables specific application areas depending
+	 * on user access policies
+	 */
 	public void updateGUI()
 	{
 		if(sessionId == 0)

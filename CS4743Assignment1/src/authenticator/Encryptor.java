@@ -3,6 +3,14 @@ package authenticator;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
+/**
+ * Encryptor class helps us encrypt regular passwords to
+ * SHA
+ * 
+ * @author Vishalkumar Patel
+ * @author Juan-Diaz Sada
+ *
+ */
 public class Encryptor 
 {
 	final protected static char[] hexArray = "0123456789abcdef".toCharArray();
@@ -20,6 +28,11 @@ public class Encryptor
 	    return new String(hexChars);
 	}
 	
+	/**
+	 * encryptSHA encrypts password to SHA
+	 * @param msg
+	 * @return
+	 */
 	public static String encryptSHA(String msg) 
 	{
 		if(msg == null || msg.length() < 1)
@@ -41,4 +54,4 @@ public class Encryptor
 		}
 		return h;
 	}
-}
+}	//end of Encryptor class

@@ -528,5 +528,4 @@ public class BookDetailViewController implements MyController, Initializable
 		}
 	}
 
-
 }	//end of BookDetailViewController class
