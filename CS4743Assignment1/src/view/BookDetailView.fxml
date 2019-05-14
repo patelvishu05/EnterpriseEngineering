@@ -31,36 +31,36 @@
                   <Font size="30.0" />
                </font>
             </Text>
-            <TextArea fx:id="bookTitle" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="bookTitle" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
-            <TextArea fx:id="bookSummary" prefHeight="155.0" prefWidth="552.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            </TextField>
+            <TextField fx:id="bookSummary" prefHeight="155.0" prefWidth="552.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
-            <TextArea fx:id="bookYear" prefHeight="149.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            </TextField>
+            <TextField fx:id="bookYear" prefHeight="149.0" prefWidth="566.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
-            <TextArea fx:id="bookISBN" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            </TextField>
+            <TextField fx:id="bookISBN" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
+            </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID :" textAlignment="RIGHT" wrappingWidth="149.6708984375" GridPane.halignment="RIGHT">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <TextArea fx:id="bookId" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1">
+            <TextField fx:id="bookId" prefHeight="66.0" prefWidth="566.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
-            </TextArea>
+            </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Publisher id :" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <font>
                   <Font size="30.0" />

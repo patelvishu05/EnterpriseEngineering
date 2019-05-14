@@ -229,11 +229,16 @@ public class BookGateway
 	 */
 	public void deleteBook(Book book)
 	{
-		String dbQuery = "DELETE FROM BookDatabase WHERE (`id` = ?);";
+		String dbQuery = "DELETE FROM author_book WHERE book_id = ?;";
+		String dbQuery2 = "DELETE FROM BookDatabase WHERE (`id` = ?);";
 		PreparedStatement ps = null;
 		try
 		{
 			ps = connection.prepareStatement(dbQuery);
+			ps.setInt(1, book.getId());
+			ps.executeUpdate();
+			
+			ps = connection.prepareStatement(dbQuery2);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
 			ps.close();

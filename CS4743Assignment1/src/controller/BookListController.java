@@ -103,9 +103,12 @@ public class BookListController implements MyController
 	public void deleteBook(ActionEvent event)
 	{
 		int bookSelected = booklist.getSelectionModel().getSelectedIndex();
+		Book book = booksObservableList.get(bookSelected);
 		if(bookSelected >= 0 && bookSelected < booksObservableList.size())
 		{
-			BookGateway.getInstance().deleteBook(booksObservableList.get(bookSelected));
+			BookGateway.getInstance().deleteBook(book);
+			this.bookArrayList.remove(book);
+			MainController.allSize--;
 			initialize();
 		}
 	}

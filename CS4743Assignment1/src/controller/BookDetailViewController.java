@@ -61,11 +61,11 @@ public class BookDetailViewController implements MyController, Initializable
 {
 	@FXML private Button save;
 	@FXML private Button auditTrail;
-	@FXML private TextArea bookId;
-	@FXML private TextArea bookTitle;
-	@FXML private TextArea bookSummary;
-	@FXML private TextArea bookYear;
-	@FXML private TextArea bookISBN;
+	@FXML private TextField bookId;
+	@FXML private TextField bookTitle;
+	@FXML private TextField bookSummary;
+	@FXML private TextField bookYear;
+	@FXML private TextField bookISBN;
 	@FXML private ComboBox<Publisher> bookPublisher;
 
 	@FXML private TableView<AuthorBook> authorTable;
@@ -119,6 +119,12 @@ public class BookDetailViewController implements MyController, Initializable
 			editedbook.setLastModified(previousBook.getLastModified());
 			editedbook.save(previousBook,editedbook);
 			//}
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Save Successful !!");
+			alert.setContentText("The book " + editedbook.getTitle() + " has been successfully saved to database !!");
+			alert.show();
+			MainController.start = 0;
+			MainController.end = 50;
 			MainController.getInstance().switchView(ViewType.VIEW1,new Book());
 		} 
 		catch (DBException e) {
